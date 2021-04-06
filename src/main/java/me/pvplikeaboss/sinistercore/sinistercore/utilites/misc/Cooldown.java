@@ -99,8 +99,13 @@ public class Cooldown {
                 UUID pUUID = UUID.fromString(sUUID);
                 for(String kit : cfgKits.getConfig().getConfigurationSection("cooldown."+pUUID).getKeys(false)) {
                     try {
+                        String endDateStr = cfgKits.getConfig().getString("cooldown." + pUUID + "." + kit);
+                        if(endDateStr.equalsIgnoreCase("never")) {
+                            kitCooldownMap.add(new KitCooldownMap(pUUID, kit, null));
+                            continue;
+                        }
                         SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd/HH/mm/ss");
-                        Date date = sdf.parse(cfgKits.getConfig().getString("cooldown." + pUUID + "." + kit));
+                        Date date = sdf.parse(endDateStr);
                         String str = Time.getTimeLeftStr(date);
                         if(str == null) {// remove entry if kit cooldown is over
                             cfgKits.getConfig().set("cooldown." + pUUID + "." + kit, null);

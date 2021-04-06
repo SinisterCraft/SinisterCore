@@ -76,12 +76,12 @@ public class Cooldown {
 
             Date end = cd.end;
             if(end == null) {
+                cfgKits.getConfig().set("cooldown."+pUUID.toString()+"."+kit, "never");
                 continue;
             }
 
             // only save if time isnt up
-            String str = Time.getTimeLeftStr(cd.end);
-            if(str == null) {
+            if(Time.getTimeLeft(cd.end) == -1) {
                 continue;
             }
 

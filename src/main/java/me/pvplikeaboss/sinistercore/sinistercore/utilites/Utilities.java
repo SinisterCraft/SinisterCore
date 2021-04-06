@@ -52,6 +52,10 @@ public class Utilities {
         this.broadcast = new BroadcastUtils(plugin);
     }
 
+    public void unload() {
+        this.cooldown.saveKitCooldown();
+    }
+
     public Object getUtil(int id) {
         switch(id) {
             case 0: {

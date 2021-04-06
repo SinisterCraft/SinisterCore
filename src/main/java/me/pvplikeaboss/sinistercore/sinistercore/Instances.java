@@ -32,7 +32,12 @@ public class Instances {
     public static HashMap<PlayerObject, PlayerObject> pendingTpaRequests = null;// TODO: migrate to playerobject list for less ram usage
 
     public static void reload_instances() {
+        unload_instances();
         configs.reload();
+    }
+
+    public static void unload_instances() {
+        utilities.unload();
     }
 
     public enum InstanceType {

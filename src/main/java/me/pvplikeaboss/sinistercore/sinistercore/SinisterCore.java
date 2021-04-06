@@ -128,6 +128,7 @@ public class SinisterCore extends JavaPlugin {
 
     public void unloadAll() {
         players.clear();
+        Instances.unload_instances();
         Runtime.getRuntime().gc();
     }
 

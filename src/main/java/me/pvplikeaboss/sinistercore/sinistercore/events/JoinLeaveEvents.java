@@ -37,14 +37,14 @@ public class JoinLeaveEvents implements Listener {
 
     @EventHandler
     public void onPreJoin(AsyncPlayerPreLoginEvent e) {
-        //TODO: load all player data and player objects
         if(plugin.getConfig().getBoolean("features.punishment.enabled")) {
             UUID pUUID = e.getUniqueId();
             PlayerObject player = plugin.getPlayer(pUUID);
+
             if(player == null) {
                 return;
             }
-            player.setIsPlayerOnline(true);
+
             if (player.isBanned()) {
                 e.disallow(AsyncPlayerPreLoginEvent.Result.KICK_BANNED, this.punish.getBanMessage(player));
             }

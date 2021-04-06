@@ -1,0 +1,38 @@
+features:
+  chat:
+    factions: true
+    enabled: true
+  economy:
+    enabled: true
+  kits:
+    enabled: true
+  teleport:
+    enabled: true
+    delay: 5
+    tpactive: 30
+  punishment:
+    enabled: true
+  clearlag:
+    enabled: true
+    delay: 300
+combat-log:
+  allowed-cmds:
+    - msg
+    - r
+    - t
+    - ptime
+    - pweather
+    - weather
+    - time
+    - broadcast
+    - alert
+cmd-messages:
+  help:
+    - &6 help page
+    - &7 put something here
+  apply:
+    - &6 go to example.com
+    - &6 to apply for staff
+  discord:
+    - &6 please join our discord
+    - &7 at discord.gg/example

@@ -9,6 +9,7 @@ me\pvplikeaboss\sinistercore\sinistercore\modules\files\configs\csv\items\Legacy
 me\pvplikeaboss\sinistercore\sinistercore\utilites\typeutils\NumberUtil.class
 me\pvplikeaboss\sinistercore\sinistercore\modules\files\configs\Configs.class
 me\pvplikeaboss\sinistercore\sinistercore\modules\clearlag\ClearlagModule$1.class
+me\pvplikeaboss\sinistercore\sinistercore\modules\files\configs\yml\PlayerConfig.class
 me\pvplikeaboss\sinistercore\sinistercore\utilites\misc\Time.class
 me\pvplikeaboss\sinistercore\sinistercore\events\DamageEvents.class
 me\pvplikeaboss\sinistercore\sinistercore\modules\files\configs\yml\HomeConfig.class

@@ -148,11 +148,27 @@ public class TeleportCommands {
                     homeName = args.get(0);
                 }
 
+                int home_count = 0;
+
                 if (cfgHome.getConfig().isSet("homes." + sender.playerUUID)) {
                     for (String home : cfgHome.getConfig().getConfigurationSection("homes." + sender.playerUUID + "").getKeys(false)) {
                         if (home.equalsIgnoreCase(homeName)) {
                             cfgHome.getConfig().set("homes." + sender.playerUUID + "." + home, null);
                         }
+                        home_count++;
+                    }
+                }
+
+                if(!sender.getPlayer().hasPermission("sinistercore.home.multiple.*")) {
+                    int max_homes = 0;
+                    for (int i = 1; i < 50; i++) {
+                        if(sender.getPlayer().hasPermission("sinistercore.home.multiple."+i)) {
+                            max_homes = i;
+                        }
+                    }
+                    if(home_count >= max_homes) {
+                        utilMsgs.infoMessage(sender, "&aCant set more than &b"+max_homes+"&a homes!");
+                        return true;
                     }
                 }
 
@@ -165,9 +181,9 @@ public class TeleportCommands {
                 cfgHome.saveConfig();
 
                 utilMsgs.infoMessage(sender, "&aHome &b" + homeName + " &aset!");
-            } else {
-                utilMsgs.logErrorMessage("&aConsole Cant Run This Command!");
+                return true;
             }
+            utilMsgs.logErrorMessage("&aConsole Cant Run This Command!");
             return true;
         } else if (name.equalsIgnoreCase("delhome")) {
             String homeName = "home";
@@ -256,6 +272,11 @@ public class TeleportCommands {
                 World world = plugin.getServer().getWorld(plugin.getConfig().getString("spawn.world"));
                 Location to = new Location(world, x, y, z, yaw, pitch);
                 if (args.size() > 0) {// teleport other player to spawn
+                    if(context.isPlayer()) {
+                        if(!sender.getPlayer().hasPermission("sinistercore.spawn.other")) {
+                            utilMsgs.errorMessage(sender,"&9No permission to teleport others!");
+                        }
+                    }
                     String playerName = null;
                     if ((playerName = utilPlayer.playerOnline(args.get(0))) != null) {
                         PlayerObject targetPlayer = plugin.getPlayer(playerName);
@@ -313,12 +334,14 @@ public class TeleportCommands {
                     }
                     return true;
                 }
+
                 boolean found = false;
                 for (String warpName : plugin.getConfig().getConfigurationSection("warps").getKeys(false)) {
                     if (warpName.equalsIgnoreCase(args.get(0))) {
                         found = true;
                     }
                 }
+
                 if (!found) {
                     if (context.isPlayer()) {
                         utilMsgs.errorMessage(sender, "&aWarp &b" + args.get(0) + "&a doesn't exist!");
@@ -337,6 +360,11 @@ public class TeleportCommands {
                 Location to = new Location(world, x, y, z, yaw, pitch);
 
                 if (args.size() > 1) {// teleport other player to warp
+                    if(context.isPlayer()) {
+                        if(!sender.getPlayer().hasPermission("sinistercore.warp.other")) {
+                            utilMsgs.errorMessage(sender,"&9No permission to teleport others!");
+                        }
+                    }
                     String playerName = null;
                     if ((playerName = utilPlayer.playerOnline(args.get(1))) != null) {
                         PlayerObject targetPlayer = plugin.getPlayer(playerName);
@@ -355,7 +383,11 @@ public class TeleportCommands {
                     }
                 } else if (args.size() == 1) {// teleport sender to warp
                     if (context.isPlayer()) {
-                        sender.teleportPlayer(to, true);
+                        if(sender.getPlayer().hasPermission("sinistercore.warp."+args.get(0).toLowerCase())) {
+                            sender.teleportPlayer(to, true);
+                        } else {
+                            utilMsgs.errorMessage(sender,"&9No permission to teleport to &b"+args.get(0)+"&9!");
+                        }
                     } else {
                         utilMsgs.logErrorMessage("&aConsole Cant Run This Command!");
                     }

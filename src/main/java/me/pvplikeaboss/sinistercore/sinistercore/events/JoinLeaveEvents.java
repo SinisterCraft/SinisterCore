@@ -65,6 +65,10 @@ public class JoinLeaveEvents implements Listener {
 
         if(player.getPlayer().hasPlayedBefore()) {
             utilBroadcast.rawBroadcast("&8[&b+&8] &6" + player.playerDisplayName + " &6Has Joined!");
+            Location lastLogoutLocation = player.getLastPlayerLogoutLocation();
+            if(lastLogoutLocation != null) {
+                player.teleportPlayer(lastLogoutLocation, false);
+            }
         } else {
             utilBroadcast.rawBroadcast("&8[&b+&8] &6Welcome " + player.playerDisplayName + " &6Has Joined For The First Time!");
             if(plugin.getConfig().getBoolean("features.teleport.enabled")) {
@@ -99,6 +103,7 @@ public class JoinLeaveEvents implements Listener {
         player.setIsPlayerOnline(false);
         player.setIsVanish(false);
         player.setRecieveMsgs(true);
+        player.setLastPlayerLogoutLocation(e.getPlayer().getLocation());
 
         plugin.getServer().broadcastMessage(ChatColor.translateAlternateColorCodes('&',
                 "&8[&c+&8] &7" + player.playerDisplayName + " &7Has Left!"));

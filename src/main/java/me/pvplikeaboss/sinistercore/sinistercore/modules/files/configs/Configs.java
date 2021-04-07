@@ -3,10 +3,7 @@ package me.pvplikeaboss.sinistercore.sinistercore.modules.files.configs;
 import me.pvplikeaboss.sinistercore.sinistercore.SinisterCore;
 import me.pvplikeaboss.sinistercore.sinistercore.modules.files.configs.csv.items.LegacyItemDB;
 import me.pvplikeaboss.sinistercore.sinistercore.modules.files.configs.csv.items.methods.AbstractItemDB;
-import me.pvplikeaboss.sinistercore.sinistercore.modules.files.configs.yml.EconConfig;
-import me.pvplikeaboss.sinistercore.sinistercore.modules.files.configs.yml.HomeConfig;
-import me.pvplikeaboss.sinistercore.sinistercore.modules.files.configs.yml.KitConfig;
-import me.pvplikeaboss.sinistercore.sinistercore.modules.files.configs.yml.PunishmentConfig;
+import me.pvplikeaboss.sinistercore.sinistercore.modules.files.configs.yml.*;
 import org.bukkit.configuration.file.FileConfiguration;
 
 public class Configs {
@@ -20,6 +17,7 @@ public class Configs {
     public KitConfig cfgKits = null;
     public PunishmentConfig cfgPunish = null;
     public EconConfig cfgEcon = null;
+    public PlayerConfig cfgPlayers = null;
 
     //
     // csv configs
@@ -42,6 +40,7 @@ public class Configs {
         cfgKits = new KitConfig(plugin);
         cfgPunish = new PunishmentConfig(plugin);
         cfgEcon = new EconConfig(plugin);
+        cfgPlayers = new PlayerConfig(plugin);
         itemDB = new LegacyItemDB(plugin);
     }
 
@@ -63,6 +62,9 @@ public class Configs {
         cfgEcon.unload();
         cfgEcon.load();
 
+        cfgPlayers.unload();
+        cfgPlayers.load();
+
         itemDB.reloadConfig();
     }
 
@@ -82,6 +84,9 @@ public class Configs {
             }
             case 4: {
                 return itemDB;
+            }
+            case 5: {
+                return cfgPlayers;
             }
         }
         return null;

@@ -36,6 +36,7 @@ public class PlayerObject implements Comparable<PlayerObject> {
     public boolean isInCombat = false;
     public Date endOfCombat = null;
     public Location lastPlayerDeathLocation = null;
+    public Location lastPlayerLogoutLocation = null;
 
     enum Permission {
         PERMISSION_FOUND,
@@ -137,6 +138,12 @@ public class PlayerObject implements Comparable<PlayerObject> {
         return;
     }
 
+    public Location getLastPlayerLogoutLocation() { return thisObject.lastPlayerLogoutLocation; }
+    public void setLastPlayerLogoutLocation(Location loc) {
+        thisObject.lastPlayerLogoutLocation = loc;
+        return;
+    }
+
     /*
 
     Get/Set all booleans
@@ -166,16 +173,18 @@ public class PlayerObject implements Comparable<PlayerObject> {
 
     public boolean getIsVanish() { return thisObject.isVanish; }
     public void setIsVanish(boolean state) {
-        if(thisObject.isVanish && state == false) {
-            for(PlayerObject player : plugin.getPlayers()) {
-                if(player.isPlayerOnline) {
-                    player.getPlayer().showPlayer(this.getPlayer());
+        if(thisObject.isPlayerOnline) {
+            if (thisObject.isVanish && state == false) {
+                for (PlayerObject player : plugin.getPlayers()) {
+                    if (player.isPlayerOnline) {
+                        player.getPlayer().showPlayer(this.getPlayer());
+                    }
                 }
-            }
-        } else if((!thisObject.isVanish) && (state == true)) {
-            for(PlayerObject player : plugin.getPlayers()) {
-                if(player.isPlayerOnline) {
-                    player.getPlayer().hidePlayer(this.getPlayer());
+            } else if ((!thisObject.isVanish) && (state == true)) {
+                for (PlayerObject player : plugin.getPlayers()) {
+                    if (player.isPlayerOnline) {
+                        player.getPlayer().hidePlayer(this.getPlayer());
+                    }
                 }
             }
         }

@@ -19,6 +19,7 @@ import me.pvplikeaboss.sinistercore.sinistercore.modules.punishment.Punishment;
 import me.pvplikeaboss.sinistercore.sinistercore.utilites.misc.Cooldown;
 import me.pvplikeaboss.sinistercore.sinistercore.utilites.misc.Messages;
 import me.pvplikeaboss.sinistercore.sinistercore.utilites.misc.Misc;
+import me.pvplikeaboss.sinistercore.sinistercore.utilites.serverutils.PlayerUtils;
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
@@ -48,16 +49,24 @@ public class SinisterCore extends JavaPlugin {
     public void loadPlayers() {
         players = new ArrayList<>();
         players.clear();
-        for(Player p : this.getServer().getOnlinePlayers()) {// load up all players
-            if(p.getUniqueId() == null) {
-                utilMsgs.logErrorMessage("Invalid uuid loading players");
-                continue;
-            }
-            players.add(new PlayerObject(this, p.getUniqueId()));
-        }
 
-        for(OfflinePlayer p : this.getServer().getOfflinePlayers()) {
-            players.add(new PlayerObject(this, p.getUniqueId()));
+        PlayerUtils playerUtils = (PlayerUtils) Instances.getInstance(Instances.InstanceType.Utilities, 3);
+        players.addAll(playerUtils.getPlayers());
+    }
+
+    public void refreshPlayers() {// add new players
+        for(Player player : this.getServer().getOnlinePlayers()) {
+            boolean found = false;
+            for(PlayerObject tmpplayer : players) {
+                if(tmpplayer.playerUUID.compareTo(player.getUniqueId()) == 0) {
+                    found = true;
+                    break;
+                }
+            }
+
+            if(found == false) {
+                players.add(new PlayerObject(this, player.getUniqueId()));
+            }
         }
     }
 
@@ -67,7 +76,10 @@ public class SinisterCore extends JavaPlugin {
                 return p;
             }
         }
-        loadPlayers();
+
+        // if we get here its a new player or player doesnt exist...
+        refreshPlayers();
+
         for(PlayerObject p : players) {
             if(p.playerName.equalsIgnoreCase(pName)) {
                 return p;
@@ -83,7 +95,9 @@ public class SinisterCore extends JavaPlugin {
                 return p;
             }
         }
-        loadPlayers();
+        // if we get here its a new player or player doesnt exist...
+        refreshPlayers();
+
         for(PlayerObject p : players) {
             if(p.playerUUID.compareTo(pUUID) == 0) {
                 return p;
@@ -127,12 +141,16 @@ public class SinisterCore extends JavaPlugin {
     }
 
     public void unloadAll() {
+        PlayerUtils playerUtils = (PlayerUtils) Instances.getInstance(Instances.InstanceType.Utilities, 3);
+        playerUtils.savePlayers(players);
         players.clear();
         Instances.unload_instances();
         Runtime.getRuntime().gc();
     }
 
     public void reloadAll() {
+        PlayerUtils playerUtils = (PlayerUtils) Instances.getInstance(Instances.InstanceType.Utilities, 3);
+        playerUtils.savePlayers(players);
         players.clear();
         loadPlayers();
         Instances.reload_instances();

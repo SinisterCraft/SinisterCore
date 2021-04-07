@@ -29,7 +29,7 @@ public class ChatEvents implements Listener {
 
             if(plugin.getConfig().getBoolean("features.punishment.enabled")) {
                 if (player.isMuted()) {
-                    utilMsgs.errorMessage(player, "&c&lYou are muted!");
+                    utilMsgs.errorMessage(player, "&9Chat> &7You are &6muted&7!");
                     return;
                 }
             }

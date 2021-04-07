@@ -45,19 +45,19 @@ public class Punishment {
                         }
                     }
                 }
-                ret.append("&8[&9Sinister&cCraft&8] &6Ban System &7(Developed by &4&lPvPLikeABoss&r&7)\n");
-                ret.append("&6Reason: &4"+reason+"\n");
-                ret.append("&6Date of ban: &4"+banDate+"\n");
+                ret.append("&cYou have been banned!\n");
+                ret.append("&7Reason&e: &6"+reason+"\n");
+                ret.append("&7Date of ban&e: &6"+banDate+"\n");
                 if(timeLeft != null) {
-                    ret.append("&6Time left: &4" + timeLeft + "\n");
+                    ret.append("&7Time left&e: &7" + timeLeft + "\n");
                 }
-                ret.append("&aYou can appeal on our website &chttps://www.sinistermc.xyz\n");
+                ret.append("&4You can appeal on our website &chttps://www.sinistermc.xyz\n");
             } else {
-                ret.append("&8[&9Sinister&cCraft&8] Ban System (Developed by PvPLikeABoss)\n");
+                ret.append("&cPunish\n");
                 ret.append("Unknown Error: Player not found\n");
             }
         } else {
-            ret.append("&8[&9Sinister&cCraft&8] Ban System (Developed by PvPLikeABoss)\n");
+            ret.append("&cPunish\n");
             ret.append("Unknown Error: Player not banned\n");
         }
         return ChatColor.translateAlternateColorCodes('&', ret.toString());

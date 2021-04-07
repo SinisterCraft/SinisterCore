@@ -25,16 +25,15 @@ public class ChatHandler {
 
         if(plugin.getConfig().getBoolean("features.chat.factions")) {
             String factionName = FactionsAPI.getPlayerFactionTagRelation(this.plugin, player, recipient);
-            newMessage.append("&8[" + factionName + "&8] ");
+            newMessage.append("&7(" + factionName + "&7) ");
         }
 
         newMessage.append(PexAPI.getPlayerPrefix(player));
-        newMessage.append(" ");
+        newMessage.append(" &7");
 
         newMessage.append(player.playerDisplayName);
-        newMessage.append(" &8> &3");
+        newMessage.append(" &3: &7");
         newMessage.append(message);
-
         return ChatColor.translateAlternateColorCodes('&', newMessage.toString());
     }
 }

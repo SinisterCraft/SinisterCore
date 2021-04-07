@@ -18,7 +18,7 @@ public class Messages {
     }
 
     public void errorMessage(PlayerObject p, String error) {
-        p.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&', "&4&lError: &f"+error));
+        p.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&', "&9Error> &f"+error));
     }
 
     public void logInfoMessage(String info) {
@@ -26,6 +26,6 @@ public class Messages {
     }
 
     public void infoMessage(PlayerObject p, String info) {
-        p.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&', "&5&lInfo: &f"+info));
+        p.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&', "&9Information> &f"+info));
     }
 }

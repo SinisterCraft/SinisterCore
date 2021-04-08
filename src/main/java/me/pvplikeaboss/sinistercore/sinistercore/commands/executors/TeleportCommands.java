@@ -274,7 +274,7 @@ public class TeleportCommands {
                 if (args.size() > 0) {// teleport other player to spawn
                     if(context.isPlayer()) {
                         if(!sender.getPlayer().hasPermission("sinistercore.spawn.other")) {
-                            utilMsgs.errorMessage(sender,"&9No permission to teleport others!");
+                            utilMsgs.permMessage(sender);
                         }
                     }
                     String playerName = null;

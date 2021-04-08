@@ -18,14 +18,18 @@ public class Messages {
     }
 
     public void errorMessage(PlayerObject p, String error) {
-        p.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&', "&9Error> &f"+error));
+        p.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&', "&9Error> &7"+error));
     }
-
+    
+    public void permMessage(PlayerObject p){
+        p.getPlayer.sendMessage(ChatColor.translateAlternativeColorCodes('&', "&9Permissions> &7You do not have permission to do that."));
+    }
+    
     public void logInfoMessage(String info) {
         plugin.getLogger().log(Level.INFO, info);
     }
 
     public void infoMessage(PlayerObject p, String info) {
-        p.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&', "&9Information> &f"+info));
+        p.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&', "&9Information> &7"+info));
     }
 }

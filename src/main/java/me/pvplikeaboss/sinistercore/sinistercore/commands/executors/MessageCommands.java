@@ -54,7 +54,7 @@ public class MessageCommands {
                             PlayerObject targetPlayer = plugin.getPlayer(targetName);
 
                             if(targetPlayer.getRecieveMsgs() == false) {
-                                utilMsgs.errorMessage(sender, "&9Recipient has private messages disabled");
+                                utilMsgs.errorMessage(sender, "&7Recipient has private messages disabled");
                                 return true;
                             }
 
@@ -81,15 +81,15 @@ public class MessageCommands {
                             messageHashMap.put(sender.playerUUID, targetPlayer.playerUUID);
                             return true;
                         } else {
-                            utilMsgs.errorMessage(sender, "&9Player not online!");
+                            utilMsgs.errorMessage(sender, "&7Player not online!");
                             return true;
                         }
                     } else {
-                        utilMsgs.errorMessage(sender, "&9Player not exists!");
+                        utilMsgs.errorMessage(sender, "&7Player not exists!");
                         return true;
                     }
                 } else {
-                    utilMsgs.errorMessage(sender, "&9Usage: /msg <player> <message>");
+                    utilMsgs.errorMessage(sender, "&7Usage: /msg <player> <message>");
                     return true;
                 }
             } else {
@@ -124,14 +124,14 @@ public class MessageCommands {
                     }
 
                     if (targetUUID == null) {
-                        utilMsgs.errorMessage(sender, "&9No active messages");
+                        utilMsgs.errorMessage(sender, "&7No active messages");
                         return true;
                     }
 
                     PlayerObject targetPlayer = plugin.getPlayer(targetUUID);
 
                     if(targetPlayer.getRecieveMsgs() == false) {
-                        utilMsgs.errorMessage(sender, "&9Recipient has private messages disabled");
+                        utilMsgs.errorMessage(sender, "&7Recipient has private messages disabled");
                         return true;
                     }
 
@@ -148,7 +148,7 @@ public class MessageCommands {
                     sendMessage(sender, targetPlayer, messageBuilder.toString());
                     return true;
                 } else {
-                    utilMsgs.errorMessage(sender, "&9Usage: /r <message>");
+                    utilMsgs.errorMessage(sender, "&7Usage: /r <message>");
                     return true;
                 }
             } else {

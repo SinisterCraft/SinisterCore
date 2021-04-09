@@ -31,7 +31,7 @@ public class MovementEvents implements Listener {
                 if (player.playerUUID == e.getPlayer().getUniqueId()) {
                     teleportHashMap.remove(i);
                     Bukkit.getScheduler().cancelTask(i);
-                    player.sendMessage("&4You Moved! Teleportation Canceled");
+                    player.sendMessage("&4You Moved! &7Teleportation Canceled");
                 }
             }
         }

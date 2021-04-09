@@ -64,13 +64,13 @@ public class JoinLeaveEvents implements Listener {
         }
 
         if(player.getPlayer().hasPlayedBefore()) {
-            utilBroadcast.rawBroadcast("&8[&b+&8] &6" + player.playerDisplayName + " &6Has Joined!");
+            utilBroadcast.rawBroadcast("&8[&b+&8] &7" + player.playerDisplayName + " &6Has Joined!");
             Location lastLogoutLocation = player.getLastPlayerLogoutLocation();
             if(lastLogoutLocation != null) {
                 player.teleportPlayer(lastLogoutLocation, false);
             }
         } else {
-            utilBroadcast.rawBroadcast("&8[&b+&8] &6Welcome " + player.playerDisplayName + " &6Has Joined For The First Time!");
+            utilBroadcast.rawBroadcast("&8[&b+&8] &7Welcome &6" + player.playerDisplayName + " &7Has Joined For The First Time!");
             if(plugin.getConfig().getBoolean("features.teleport.enabled")) {
                 double x = plugin.getConfig().getDouble("spawn.x");
                 double y = plugin.getConfig().getDouble("spawn.y");
@@ -88,7 +88,7 @@ public class JoinLeaveEvents implements Listener {
                 final EconomyResponse result = ecoImplementer.depositPlayer(player.playerName, 5000);
                 if(!result.transactionSuccess()) {
                     utilMsgs.logErrorMessage("Failed to set default balance on player "+player.playerName+"!");
-                    utilMsgs.infoMessage(player, "&9Failed to set default balance. Contact staff!");
+                    utilMsgs.infoMessage(player, "&7Failed to set default balance. Contact staff!");
                 }
             }
         }
@@ -106,7 +106,7 @@ public class JoinLeaveEvents implements Listener {
         player.setLastPlayerLogoutLocation(e.getPlayer().getLocation());
 
         plugin.getServer().broadcastMessage(ChatColor.translateAlternateColorCodes('&',
-                "&8[&c+&8] &7" + player.playerDisplayName + " &7Has Left!"));
+                "&8[&c+&8] &6" + player.playerDisplayName + " &7Has Left!"));
         e.setQuitMessage("");
     }
 }

@@ -31,34 +31,34 @@ public class ServerCommands {
                     for(World world : Bukkit.getWorlds()) {
                         world.setStorm(false);
                     }
-                    utilMsgs.infoMessage(sender, "&9Turning off weather on server");
+                    utilMsgs.infoMessage(sender, "&7Turning off weather on server");
                     return true;
                 } else if(weatherType.equalsIgnoreCase("rain") || weatherType.equalsIgnoreCase("on")) {
                     for(World world : Bukkit.getWorlds()) {
                         world.setStorm(true);
                     }
-                    utilMsgs.infoMessage(sender, "&9Turning on weather on server");
+                    utilMsgs.infoMessage(sender, "&7Turning on weather on server");
                     return true;
                 }// else {// no need can just fallback to usage prints
             }
-            utilMsgs.infoMessage(sender, "&6Usage: &9/weather clear");
-            utilMsgs.infoMessage(sender, "&6Usage: &9/weather rain");
+            utilMsgs.infoMessage(sender, "&7Usage: /weather clear");
+            utilMsgs.infoMessage(sender, "&7Usage: /weather rain");
             return true;
         } else if(name.equalsIgnoreCase("time")) {
             if(context.getArgs().size() == 1) {
                 String timeType = context.argAt(0);
                 if(timeType.equalsIgnoreCase("day")) {
                     sender.getPlayer().setPlayerTime(0, false);
-                    utilMsgs.infoMessage(sender, "&9Set time day on server");
+                    utilMsgs.infoMessage(sender, "&7Set time day on server");
                     return true;
                 } else if(timeType.equalsIgnoreCase("night")) {
                     sender.getPlayer().setPlayerTime(14000, false);
-                    utilMsgs.infoMessage(sender, "&9Set time night on server");
+                    utilMsgs.infoMessage(sender, "&7Set time night on server");
                     return true;
                 }// else {// no need can just fallback to usage prints
             }
-            utilMsgs.infoMessage(sender, "&6Usage: &9/time day");
-            utilMsgs.infoMessage(sender, "&6Usage: &9/time night");
+            utilMsgs.infoMessage(sender, "&7Usage: /time day");
+            utilMsgs.infoMessage(sender, "&7Usage: /time night");
             return true;
         } else if(name.equalsIgnoreCase("spawnmob")) {
             if(sender != null) {
@@ -112,14 +112,14 @@ public class ServerCommands {
                     } else if(context.argAt(0).equalsIgnoreCase("Zombie")) {
                         world.spawnCreature(TargetLocation, EntityType.ZOMBIE);
                     } else {
-                        utilMsgs.errorMessage(sender, "&9Invalid mob type!");
-                        utilMsgs.infoMessage(sender, "&9Mob Types: &bZombie&9, &bVillager&9, &bSquid&9, &bSpider&9, &bSlime");
+                        utilMsgs.errorMessage(sender, "&7Invalid mob type!");
+                        //utilMsgs.infoMessage(sender, "&7Mob Types: &7Zombie&9, &bVillager&9, &bSquid&9, &bSpider&9, &bSlime");
                         return true;
                     }
-                    utilMsgs.infoMessage(sender, "&9Spawned mob at player location!");
+                    utilMsgs.infoMessage(sender, "&7Spawned mob at player location!");
                     return true;
                 }
-                utilMsgs.infoMessage(sender, "&6Usage: &9/spawnmob <mob>");
+                utilMsgs.infoMessage(sender, "&7Usage: /spawnmob <mob>");
                 return true;
             }
             utilMsgs.logErrorMessage("must be ran as player");
@@ -140,7 +140,7 @@ public class ServerCommands {
                 return true;
             }
             if(sender != null) {
-                utilMsgs.infoMessage(sender, "&6Usage: &9/broadcast <message>");
+                utilMsgs.infoMessage(sender, "&7Usage: /broadcast <message>");
             }
             utilMsgs.logInfoMessage("usage: broadcast <message>");
             return true;
@@ -160,7 +160,7 @@ public class ServerCommands {
                 return true;
             }
             if(sender != null) {
-                utilMsgs.infoMessage(sender, "&6Usage: &9/alert <message>");
+                utilMsgs.infoMessage(sender, "&7Usage: /alert <message>");
             }
             utilMsgs.logInfoMessage("usage: alert <message>");
             return true;
@@ -180,7 +180,7 @@ public class ServerCommands {
                 return true;
             }
             if(sender != null) {
-                utilMsgs.infoMessage(sender, "&6Usage: &9/rbroadcast <message>");
+                utilMsgs.infoMessage(sender, "&7Usage: /rbroadcast <message>");
             }
             utilMsgs.logInfoMessage("usage: rbroadcast <message>");
             return true;

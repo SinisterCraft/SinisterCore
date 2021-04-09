@@ -36,19 +36,21 @@ public class CombatTagEvents implements Listener {
 
             if(timeLeft == -1) {//player no longer in combat
                 player.setIsInCombat(false, null);
-                utilMsgs.infoMessage(player, "You are no longer in combat!");
+                utilMsgs.infoMessage(player, "&7You are no longer in combat!");
                 return;
             }
-            if(plugin.getConfig().isSet("combat-log.allowed-cmds")) {
+
+            // this wont fucking work
+            /*if(plugin.getConfig().isSet("combat-log.allowed-cmds")) {
                 for (String allowedCmd : plugin.getConfig().getConfigurationSection("combat-log.allowed-cmds").getKeys(false)) {
                     if (e.getMessage().equalsIgnoreCase(allowedCmd)) {
                         return;
                     }
                 }
-            }
+            }*/
 
-            utilMsgs.errorMessage(player, "&9You are not allowed to send commands in combat!");
-            utilMsgs.errorMessage(player, "&9Please wait &b"+timeLeft+" &9seconds.");
+            utilMsgs.errorMessage(player, "&7You are not allowed to send commands in combat!");
+            utilMsgs.errorMessage(player, "&7Please wait &6"+timeLeft+" &7seconds.");
             e.setCancelled(true);
             return;
         }
@@ -61,7 +63,7 @@ public class CombatTagEvents implements Listener {
             Date end = player.getEndOfCombat();
             if(Time.getTimeLeft(end) == -1) {//player no longer in combat
                 player.setIsInCombat(false, null);
-                utilMsgs.infoMessage(player, "You are no longer in combat!");
+                utilMsgs.infoMessage(player, "&7You are no longer in combat!");
             }
         }
     }
@@ -71,7 +73,7 @@ public class CombatTagEvents implements Listener {
         PlayerObject player = plugin.getPlayer(e.getPlayer().getUniqueId());
 
         if (player.getIsInCombat()) {
-            utilBroadcast.rawBroadcast("&9Sinister&6Combat &8>> &bPlayer &a" + player.playerDisplayName + " &bhas combat logged");
+            utilBroadcast.rawBroadcast("&9Sinister&6Combat &8>> &7Player &6" + player.playerDisplayName + " &7has combat logged");
             player.getPlayer().setHealth(0);
             player.setIsInCombat(false, null);// reset combat after killing player
             //todo; leave IsInCombat true and when player joins back send a information message
@@ -88,12 +90,12 @@ public class CombatTagEvents implements Listener {
 
             if(!player.getIsInCombat()) {
                 player.setIsInCombat(true, endOfCombat);
-                utilMsgs.infoMessage(player, "&9You are now in combat!");
+                utilMsgs.infoMessage(player, "&7You are now in combat!");
             }
 
             if(!attacker.getIsInCombat()) {
                 attacker.setIsInCombat(true, endOfCombat);
-                utilMsgs.infoMessage(attacker, "&9You are now in combat!");
+                utilMsgs.infoMessage(attacker, "&7You are now in combat!");
             }
         }
     }

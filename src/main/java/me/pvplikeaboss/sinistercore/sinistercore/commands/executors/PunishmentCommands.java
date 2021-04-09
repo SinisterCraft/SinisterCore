@@ -42,7 +42,7 @@ public class PunishmentCommands {
 
                     player.kickPlayer(reason);
                     if(sender != null) {
-                        utilMsgs.infoMessage(sender, "&6Player &b" + newName + "&6 has been kicked for the reason &b" + reason);
+                        utilMsgs.infoMessage(sender, "&7Player &6" + newName + "&7 has been kicked for the reason &6" + reason);
                     } else {
                         utilMsgs.logInfoMessage("Player "+newName+" has been kicked for the reason "+reason);
                     }
@@ -55,9 +55,9 @@ public class PunishmentCommands {
                 }
             } else {
                 if(context.isPlayer()) {
-                    utilMsgs.errorMessage(sender, "&bUsage: /kick <name> <reason>");
+                    utilMsgs.errorMessage(sender, "&7Usage: /kick <name> <reason>");
                 } else {
-                    utilMsgs.logErrorMessage("&bUsage: /kick <name> <reason>");
+                    utilMsgs.logErrorMessage("&7Usage: /kick <name> <reason>");
                 }
             }
             return true;
@@ -83,25 +83,25 @@ public class PunishmentCommands {
 
                     player.setMute(sender, reason, null, true);
                     if(sender != null) {
-                        utilMsgs.infoMessage(sender, "&6Player &b" + newName + "&6 has been muted for the reason &b" + reason);
+                        utilMsgs.infoMessage(sender, "&7Player &6" + newName + "&7 has been muted for the reason &6" + reason);
                     } else {
                         utilMsgs.logInfoMessage("Player "+newName+" has been muted for the reason "+reason);
                     }
                     if(player.isPlayerOnline) {
-                        utilMsgs.infoMessage(player, "&6You've been muted for the reason &b" + reason);
+                        utilMsgs.infoMessage(player, "&7You've been muted for the reason &6" + reason);
                     }
                 } else {
                     if(context.isPlayer()) {
-                        utilMsgs.errorMessage(sender, "Player doesn't exist!");
+                        utilMsgs.errorMessage(sender, "&7Player doesn't exist!");
                     } else {
                         utilMsgs.logErrorMessage("Player doesn't exist!");
                     }
                 }
             } else {
                 if(context.isPlayer()) {
-                    utilMsgs.errorMessage(sender, "&bUsage: /mute <name> <reason>");
+                    utilMsgs.errorMessage(sender, "&7Usage: /mute <name> <reason>");
                 } else {
-                    utilMsgs.logErrorMessage("&bUsage: /mute <name> <reason>");
+                    utilMsgs.logErrorMessage("&7Usage: /mute <name> <reason>");
                 }
             }
             return true;
@@ -130,34 +130,34 @@ public class PunishmentCommands {
                     endDate = Time.parseDate(length);
                     if(endDate == null) {
                         if(sender != null) {
-                            utilMsgs.infoMessage(sender, "&6Invalid time... Try (/tempmute <player> 15d <reason>)");
+                            utilMsgs.infoMessage(sender, "&7Invalid time... Try (/tempmute <player> 15d <reason>)");
                         } else {
-                            utilMsgs.logInfoMessage("&6Invalid time... Try (/tempmute <player> 15d <reason>)");
+                            utilMsgs.logInfoMessage("&7Invalid time... Try (/tempmute <player> 15d <reason>)");
                         }
                         return true;
                     }
 
                     player.setMute(sender, reason, endDate, true);
                     if(sender != null) {
-                        utilMsgs.infoMessage(sender, "&6Player &b" + newName + "&6 has been temp muted for &b"+length+"&6 the reason &b" + reason);
+                        utilMsgs.infoMessage(sender, "&7Player &6" + newName + "&7 has been temp muted for &6"+length+"&7 the reason &6" + reason);
                     } else {
                         utilMsgs.logInfoMessage("Player "+newName+" has been temp muted for "+length+" for the reason "+reason);
                     }
                     if(player.isPlayerOnline) {
-                        utilMsgs.infoMessage(player, "&6You've been temp muted for &b"+length+"&6 for the reason &b" + reason);
+                        utilMsgs.infoMessage(player, "&7You've been temp muted for &6"+length+"&7 for the reason &6" + reason);
                     }
                 } else {
                     if(context.isPlayer()) {
-                        utilMsgs.errorMessage(sender, "Player doesn't exist!");
+                        utilMsgs.errorMessage(sender, "&7Player doesn't exist!");
                     } else {
                         utilMsgs.logErrorMessage("Player doesn't exist!");
                     }
                 }
             } else {
                 if(context.isPlayer()) {
-                    utilMsgs.errorMessage(sender, "&bUsage: /tempmute <name> <length> <reason>");
+                    utilMsgs.errorMessage(sender, "&7Usage: /tempmute <name> <length> <reason>");
                 } else {
-                    utilMsgs.logErrorMessage("&bUsage: /tempmute <name> <length> <reason>");
+                    utilMsgs.logErrorMessage("&7Usage: /tempmute <name> <length> <reason>");
                 }
             }
             return true;
@@ -173,20 +173,20 @@ public class PunishmentCommands {
                     PlayerObject player = plugin.getPlayer(newName);
                     player.setMute(null, null, null, false);
                     if(sender != null) {
-                        utilMsgs.infoMessage(sender, "&6Player &b" + newName + "&6 has been unmuted");
+                        utilMsgs.infoMessage(sender, "&7Player &6" + newName + "&7 has been unmuted");
                     } else {
                         utilMsgs.logInfoMessage("Player "+newName+" has been unmuted");
                     }
                 } else {
                     if(context.isPlayer()) {
-                        utilMsgs.errorMessage(sender, "Player doesn't exist!");
+                        utilMsgs.errorMessage(sender, "&7Player doesn't exist!");
                     } else {
                         utilMsgs.logErrorMessage("Player doesn't exist!");
                     }
                 }
             } else {
                 if(context.isPlayer()) {
-                    utilMsgs.errorMessage(sender, "&bUsage: /unmute <name>");
+                    utilMsgs.errorMessage(sender, "&7Usage: /unmute <name>");
                 } else {
                     utilMsgs.logErrorMessage("&bUsage: /unmute <name>");
                 }
@@ -218,22 +218,22 @@ public class PunishmentCommands {
 
                     player.setBanned(sender, reason, null, true);
                     if(sender != null) {
-                        utilMsgs.infoMessage(sender, "&6Player &b" + newName + "&6 has been banned for the reason &b" + reason);
+                        utilMsgs.infoMessage(sender, "&7Player &6" + newName + "&7 has been banned for the reason &6" + reason);
                     } else {
                         utilMsgs.logInfoMessage("Player "+newName+" has been banned for the reason "+reason);
                     }
                 } else {
                     if(context.isPlayer()) {
-                        utilMsgs.errorMessage(sender, "Player doesn't exist!");
+                        utilMsgs.errorMessage(sender, "&7Player doesn't exist!");
                     } else {
                         utilMsgs.logErrorMessage("Player doesn't exist!");
                     }
                 }
             } else {
                 if(context.isPlayer()) {
-                    utilMsgs.errorMessage(sender, "&bUsage: /ban <name> <reason>");
+                    utilMsgs.errorMessage(sender, "&7Usage: /ban <name> <reason>");
                 } else {
-                    utilMsgs.logErrorMessage("&bUsage: /ban <name> <reason>");
+                    utilMsgs.logErrorMessage("&7Usage: /ban <name> <reason>");
                 }
             }
             return true;
@@ -262,31 +262,31 @@ public class PunishmentCommands {
                     endDate = Time.parseDate(length);
                     if(endDate == null) {
                         if(sender != null) {
-                            utilMsgs.infoMessage(sender, "&6Invalid time... Try (/tempban <player> 15d <reason>)");
+                            utilMsgs.infoMessage(sender, "&7Invalid time... Try (/tempban <player> 15d <reason>)");
                         } else {
-                            utilMsgs.logInfoMessage("&6Invalid time... Try (/tempban <player> 15d <reason>)");
+                            utilMsgs.logInfoMessage("&7Invalid time... Try (/tempban <player> 15d <reason>)");
                         }
                         return true;
                     }
 
                     player.setBanned(sender, reason, endDate, true);
                     if(sender != null) {
-                        utilMsgs.infoMessage(sender, "&6Player &b" + newName + "&6 has been temp banned for "+length+" the reason &b" + reason);
+                        utilMsgs.infoMessage(sender, "&7Player &6" + newName + "&7 has been temp banned for &6"+length+" &7the reason &6" + reason);
                     } else {
                         utilMsgs.logInfoMessage("Player "+newName+" has been temp banned for "+length+" the reason "+reason);
                     }
                 } else {
                     if(context.isPlayer()) {
-                        utilMsgs.errorMessage(sender, "Player doesn't exist!");
+                        utilMsgs.errorMessage(sender, "&7Player doesn't exist!");
                     } else {
                         utilMsgs.logErrorMessage("Player doesn't exist!");
                     }
                 }
             } else {
                 if(context.isPlayer()) {
-                    utilMsgs.errorMessage(sender, "&bUsage: /tempban <name> <length> <reason>");
+                    utilMsgs.errorMessage(sender, "&7Usage: /tempban <name> <length> <reason>");
                 } else {
-                    utilMsgs.logErrorMessage("&bUsage: /tempban <name> <length> <reason>");
+                    utilMsgs.logErrorMessage("&7Usage: /tempban <name> <length> <reason>");
                 }
             }
             return true;
@@ -302,22 +302,22 @@ public class PunishmentCommands {
                     PlayerObject player = plugin.getPlayer(newName);
                     player.setBanned(null, null, null, false);
                     if(sender != null) {
-                        utilMsgs.infoMessage(sender, "&6Player &b" + newName + "&6 has been unbanned");
+                        utilMsgs.infoMessage(sender, "&7Player &6" + newName + "&7 has been unbanned");
                     } else {
                         utilMsgs.logInfoMessage("Player "+newName+" has been unbanned");
                     }
                 } else {
                     if(context.isPlayer()) {
-                        utilMsgs.errorMessage(sender, "Player doesn't exist!");
+                        utilMsgs.errorMessage(sender, "&7Player doesn't exist!");
                     } else {
                         utilMsgs.logErrorMessage("Player doesn't exist!");
                     }
                 }
             } else {
                 if(context.isPlayer()) {
-                    utilMsgs.errorMessage(sender, "&bUsage: /unban <name>");
+                    utilMsgs.errorMessage(sender, "&7Usage: /unban <name>");
                 } else {
-                    utilMsgs.logErrorMessage("&bUsage: /unban <name>");
+                    utilMsgs.logErrorMessage("&7Usage: /unban <name>");
                 }
             }
             return true;

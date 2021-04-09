@@ -39,10 +39,10 @@ public class EconomyCommands {
 
                     balance = ecoImplementer.getBalance(context.getSender().getName());
 
-                    utilMsgs.infoMessage(sender, "&6Your balance is &b$"+balance+"&6!");
+                    utilMsgs.infoMessage(sender, "&7Your balance is &6$"+balance+"&7!");
                     return true;
                 }
-                utilMsgs.logErrorMessage("&bUsage: /bal <name>");
+                utilMsgs.logErrorMessage("&7Usage: /bal <name>");
                 return true;
             } else if(args.size() == 1) {
                 String pname = args.get(0);
@@ -55,24 +55,24 @@ public class EconomyCommands {
                         balance = ecoImplementer.getBalance(plugin.getServer().getOfflinePlayer(newName));
                     }
                     if (sender != null) {
-                        utilMsgs.infoMessage(sender, "&6Player &b" + newName + "'s &6balance is &b$" + balance + "&6!");
+                        utilMsgs.infoMessage(sender, "&7Player &6" + newName + "'s &7balance is &6$" + balance + "&7!");
                     } else {
-                        utilMsgs.logInfoMessage("&6Player &b" + newName + "'s &6balance is &b$" + balance + "&6!");
+                        utilMsgs.logInfoMessage("&7Player &6" + newName + "'s &7balance is &6$" + balance + "&7!");
                     }
                     return true;
                 }
                 if(sender != null) {
-                    utilMsgs.errorMessage(sender, "&bPlayer Doesn't Exists!");
+                    utilMsgs.errorMessage(sender, "&7Player Doesn't Exists!");
                 } else {
-                    utilMsgs.logErrorMessage("&bPlayer Doesn't Exists!");
+                    utilMsgs.logErrorMessage("&7Player Doesn't Exists!");
                 }
                 return true;
             }
             if(sender != null) {
-                utilMsgs.errorMessage(sender, "&bUsage: /bal");
-                utilMsgs.errorMessage(sender, "&bUsage: /bal <name>");
+                utilMsgs.errorMessage(sender, "&7Usage: /bal");
+                utilMsgs.errorMessage(sender, "&7Usage: /bal <name>");
             } else {
-                utilMsgs.logErrorMessage("&bUsage: /bal <name>");
+                utilMsgs.logErrorMessage("&7Usage: /bal <name>");
             }
             return true;
         } else if(name.equalsIgnoreCase("pay")) {
@@ -85,7 +85,7 @@ public class EconomyCommands {
                     try {
                         amount = Double.parseDouble(args.get(1));
                     } catch(NumberFormatException e) {
-                        utilMsgs.errorMessage(sender, "&bInvalid amount! Use a number (1050.20)");
+                        utilMsgs.errorMessage(sender, "&7Invalid amount! Use a number (1050.20)");
                         return true;
                     }
 
@@ -93,7 +93,7 @@ public class EconomyCommands {
                     if((newName = utilPlayers.playerExists(pname)) != null) {
                         PlayerObject targetPlayer = plugin.getPlayer(newName);
                         if(ecoImplementer.getBalance(sender.playerName) < amount) {// check if player has enough money
-                            utilMsgs.errorMessage(sender, "&6You do not have enough funds!");
+                            utilMsgs.errorMessage(sender, "&7You do not have enough funds!");
                             return true;
                         }
 
@@ -101,18 +101,18 @@ public class EconomyCommands {
 
                         if (utilPlayers.playerOnline(pname) != null) {
                             ecoImplementer.depositPlayer(targetPlayer.playerName, amount);
-                            utilMsgs.infoMessage(targetPlayer, "&9Player &6"+sender.playerName+"&9 has sent you &6$"+amount+"&9!");
+                            utilMsgs.infoMessage(targetPlayer, "&7Player &6"+sender.playerName+"&7 has sent you &6$"+amount+"&7!");
                         } else {
                             ecoImplementer.depositPlayer(targetPlayer.getOfflinePlayer(), amount);
                         }
 
-                        utilMsgs.infoMessage(sender, "&6Sent player &b" + newName + " &6money in the amount of &b$" + amount + "&6!");
+                        utilMsgs.infoMessage(sender, "&7Sent player &6" + newName + " &7money in the amount of &6$" + amount + "&7!");
                         return true;
                     }
-                    utilMsgs.errorMessage(sender, "&bPlayer Doesn't Exists!");
+                    utilMsgs.errorMessage(sender, "&7Player Doesn't Exists!");
                     return true;
                 }
-                utilMsgs.errorMessage(sender, "&bUsage: /pay <name> <ammount>");
+                utilMsgs.errorMessage(sender, "&7Usage: /pay <name> <ammount>");
                 return true;
             }
             utilMsgs.logErrorMessage("&aConsole Cant Run This Command!");
@@ -133,11 +133,11 @@ public class EconomyCommands {
                             amount = Double.parseDouble(args.get(2));
                         } catch(NumberFormatException e) {
                             if(sender != null) {
-                                utilMsgs.errorMessage(sender, "Invalid amount");
-                                utilMsgs.errorMessage(sender, "&bUsage: /eco deposit <name> <amount>");
+                                utilMsgs.errorMessage(sender, "&7Invalid amount");
+                                utilMsgs.errorMessage(sender, "&7Usage: /eco deposit <name> <amount>");
                             } else {
                                 utilMsgs.logErrorMessage("Invalid amount");
-                                utilMsgs.logErrorMessage("&bUsage: /eco deposit <name> <amount>");
+                                utilMsgs.logErrorMessage("&7Usage: /eco deposit <name> <amount>");
                             }
                             return true;
                         }
@@ -152,24 +152,24 @@ public class EconomyCommands {
                             }
 
                             if(sender != null) {
-                                utilMsgs.infoMessage(sender, "&6Deposited &b$"+amount+" &6into &b"+newName+"'s &6account!");
+                                utilMsgs.infoMessage(sender, "&7Deposited &6$"+amount+" &7into &6"+newName+"'s &7account!");
                             } else {
-                                utilMsgs.logInfoMessage("&6Deposited &b$"+amount+" &6into &b"+newName+"'s &6account!");
+                                utilMsgs.logInfoMessage("&7Deposited &6$"+amount+" &7into &6"+newName+"'s &7account!");
                             }
                             return true;
                         }
 
                         if(sender != null) {
-                            utilMsgs.errorMessage(sender, "Player doesn't exist!");
+                            utilMsgs.errorMessage(sender, "&7Player doesn't exist!");
                         } else {
                             utilMsgs.logErrorMessage("Player doesn't exist!");
                         }
                         return true;
                     }
                     if(sender != null) {
-                        utilMsgs.errorMessage(sender, "&bUsage: /eco deposit <name> <amount>");
+                        utilMsgs.errorMessage(sender, "&7Usage: /eco deposit <name> <amount>");
                     } else {
-                        utilMsgs.logErrorMessage("&bUsage: /eco deposit <name> <amount>");
+                        utilMsgs.logErrorMessage("&7Usage: /eco deposit <name> <amount>");
                     }
                     return true;
                 } else if(subcmd.equalsIgnoreCase("withdraw")) {
@@ -181,10 +181,10 @@ public class EconomyCommands {
                         } catch(NumberFormatException e) {
                             if(sender != null) {
                                 utilMsgs.errorMessage(sender, "Invalid amount");
-                                utilMsgs.errorMessage(sender, "&bUsage: /eco withdraw <name> <amount>");
+                                utilMsgs.errorMessage(sender, "&7Usage: /eco withdraw <name> <amount>");
                             } else {
                                 utilMsgs.logErrorMessage("Invalid amount");
-                                utilMsgs.logErrorMessage("&bUsage: /eco withdraw <name> <amount>");
+                                utilMsgs.logErrorMessage("&7Usage: /eco withdraw <name> <amount>");
                             }
                             return true;
                         }
@@ -198,23 +198,23 @@ public class EconomyCommands {
                             }
 
                             if(sender != null) {
-                                utilMsgs.infoMessage(sender, "&6Withdrawn &b$"+amount+" &6from &b"+newName+"'s &6account!");
+                                utilMsgs.infoMessage(sender, "&7Withdrawn &6$"+amount+" &7from &6"+newName+"'s &7account!");
                             } else {
-                                utilMsgs.logInfoMessage("&6Withdrawn &b$"+amount+" &6from &b"+newName+"'s &6account!");
+                                utilMsgs.logInfoMessage("&7Withdrawn &6$"+amount+" &7from &6"+newName+"'s &7account!");
                             }
                             return true;
                         }
                         if(sender != null) {
-                            utilMsgs.errorMessage(sender, "Player doesn't exist!");
+                            utilMsgs.errorMessage(sender, "&7Player doesn't exist!");
                         } else {
                             utilMsgs.logErrorMessage("Player doesn't exist!");
                         }
                         return true;
                     }
                     if(sender != null) {
-                        utilMsgs.errorMessage(sender, "&bUsage: /eco withdraw <name> <amount>");
+                        utilMsgs.errorMessage(sender, "&7Usage: /eco withdraw <name> <amount>");
                     } else {
-                        utilMsgs.logErrorMessage("&bUsage: /eco withdraw <name> <amount>");
+                        utilMsgs.logErrorMessage("&7Usage: /eco withdraw <name> <amount>");
                     }
                     return true;
                 } else if(subcmd.equalsIgnoreCase("set")) {
@@ -225,11 +225,11 @@ public class EconomyCommands {
                             amount = Double.parseDouble(args.get(2));
                         } catch(NumberFormatException e) {
                             if(sender != null) {
-                                utilMsgs.errorMessage(sender, "Invalid amount");
-                                utilMsgs.errorMessage(sender, "&bUsage: /eco set <name> <amount>");
+                                utilMsgs.errorMessage(sender, "&7Invalid amount");
+                                utilMsgs.errorMessage(sender, "&7Usage: /eco set <name> <amount>");
                             } else {
-                                utilMsgs.logErrorMessage("Invalid amount");
-                                utilMsgs.logErrorMessage("&bUsage: /eco set <name> <amount>");
+                                utilMsgs.logErrorMessage("&7Invalid amount");
+                                utilMsgs.logErrorMessage("&7Usage: /eco set <name> <amount>");
                             }
                             return true;
                         }
@@ -247,36 +247,36 @@ public class EconomyCommands {
                             }
 
                             if(sender != null) {
-                                utilMsgs.infoMessage(sender, "&6Set &b$"+amount+" &6as &b"+newName+"'s &6balance!");
+                                utilMsgs.infoMessage(sender, "&7Set &6$"+amount+" &7as &6"+newName+"'s &7balance!");
                             } else {
-                                utilMsgs.logInfoMessage("&6Set &b$"+amount+" &6as &b"+newName+"'s &6balance!");
+                                utilMsgs.logInfoMessage("&7Set &6$"+amount+" &7as &6"+newName+"'s &7balance!");
                             }
                             return true;
                         }
                         if(sender != null) {
-                            utilMsgs.errorMessage(sender, "Player doesn't exist!");
+                            utilMsgs.errorMessage(sender, "&7Player doesn't exist!");
                         } else {
-                            utilMsgs.logErrorMessage("Player doesn't exist!");
+                            utilMsgs.logErrorMessage("&7Player doesn't exist!");
                         }
                         return true;
                     }
                     if(sender != null) {
-                        utilMsgs.errorMessage(sender, "&bUsage: /eco set <name> <amount>");
+                        utilMsgs.errorMessage(sender, "&7Usage: /eco set <name> <amount>");
                     } else {
-                        utilMsgs.logErrorMessage("&bUsage: /eco set <name> <amount>");
+                        utilMsgs.logErrorMessage("&7Usage: /eco set <name> <amount>");
                     }
                     return true;
                 }
                 // fall through to below
             }
             if(sender != null) {
-                utilMsgs.errorMessage(sender, "&bUsage: /eco set <name> <amount>");
-                utilMsgs.errorMessage(sender, "&bUsage: /eco withdraw <name> <amount>");
-                utilMsgs.errorMessage(sender, "&bUsage: /eco deposit <name> <amount>");
+                utilMsgs.errorMessage(sender, "&7Usage: /eco set <name> <amount>");
+                utilMsgs.errorMessage(sender, "&7Usage: /eco withdraw <name> <amount>");
+                utilMsgs.errorMessage(sender, "&7Usage: /eco deposit <name> <amount>");
             } else {
-                utilMsgs.logErrorMessage("&bUsage: /eco set <name> <amount>");
-                utilMsgs.logErrorMessage("&bUsage: /eco withdraw <name> <amount>");
-                utilMsgs.logErrorMessage("&bUsage: /eco deposit <name> <amount>");
+                utilMsgs.logErrorMessage("&7Usage: /eco set <name> <amount>");
+                utilMsgs.logErrorMessage("&7Usage: /eco withdraw <name> <amount>");
+                utilMsgs.logErrorMessage("&7Usage: /eco deposit <name> <amount>");
             }
             return true;
         } else {

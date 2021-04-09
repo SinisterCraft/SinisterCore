@@ -22,7 +22,7 @@ public class Messages {
     }
     
     public void permMessage(PlayerObject p){
-        p.getPlayer.sendMessage(ChatColor.translateAlternativeColorCodes('&', "&9Permissions> &7You do not have permission to do that."));
+        p.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&', "&9Permissions> &7You do not have permission to do that."));
     }
     
     public void logInfoMessage(String info) {

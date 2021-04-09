@@ -66,30 +66,30 @@ public class TeleportCommands {
                             Location loc = new Location(plugin.getServer().getWorld(sWorld), x, y, z, yaw, pitch);
                             p.teleportPlayer(loc, false);
                             if (context.isPlayer()) {
-                                utilMsgs.infoMessage(sender, "&aTeleported player &b" + p.playerName + " &sto &b" + homeName + "&a!");
+                                utilMsgs.infoMessage(sender, "&7Teleported player &6" + p.playerName + " &7to &6" + homeName + "&7!");
                             } else {
-                                utilMsgs.logErrorMessage("&aTeleported player &b" + p.playerName + " &sto &b" + homeName + "&a!");
+                                utilMsgs.logErrorMessage("&7Teleported player &6" + p.playerName + " &7to &6" + homeName + "&7!");
                             }
                             return true;
                         } else {
                             if (context.isPlayer()) {
-                                utilMsgs.infoMessage(sender, "&aHome &b" + homeName + " &anot exists!");
+                                utilMsgs.infoMessage(sender, "&7Home &6" + homeName + " &7not exists!");
                             } else {
-                                utilMsgs.logErrorMessage("&aHome &b" + homeName + " &anot exists!");
+                                utilMsgs.logErrorMessage("&7Home &6" + homeName + " &7not exists!");
                             }
                         }
                     } else {
                         if (context.isPlayer()) {
-                            utilMsgs.errorMessage(sender, "&aPlayer " + p.playerName + " has no homes!");
+                            utilMsgs.errorMessage(sender, "&7Player &6" + p.playerName + "&7 has no homes!");
                         } else {
-                            utilMsgs.logErrorMessage("&aPlayer " + p.playerName + " has no homes!");
+                            utilMsgs.logErrorMessage("&7Player &6" + p.playerName + "&7 has no homes!");
                         }
                     }
                 } else {
                     if (context.isPlayer()) {
-                        utilMsgs.logErrorMessage("&aPlayer &b" + args.get(1) + " Offline/Not exists!");
+                        utilMsgs.logErrorMessage("&7Player &6" + args.get(1) + " &7Offline/Not exists!");
                     } else {
-                        utilMsgs.logErrorMessage("&aPlayer &b" + args.get(1) + " Offline/Not exists!");
+                        utilMsgs.logErrorMessage("&7Player &6" + args.get(1) + " &7Offline/Not exists!");
                     }
                 }
             } else {
@@ -108,6 +108,7 @@ public class TeleportCommands {
                     if (cfgHome.getConfig().isSet("homes." + sender.playerUUID)) {
                         int homesLen = 0;
                         StringBuilder homeList = new StringBuilder();
+                        int size = cfgHome.getConfig().getConfigurationSection("homes." + sender.playerUUID + "").getKeys(false).size();
                         for (String home : cfgHome.getConfig().getConfigurationSection("homes." + sender.playerUUID + "").getKeys(false)) {
                             if (doList == false && home.equalsIgnoreCase(homeName)) {
                                 int x = cfgHome.getConfig().getInt("homes." + sender.playerUUID + "." + home + ".x");
@@ -120,22 +121,28 @@ public class TeleportCommands {
                                 sender.teleportPlayer(loc, true);
                                 return true;
                             }
+
+                            if(homesLen == size-1) {
+                                homesLen++;
+                                homeList.append("&7"+home);
+                                break;
+                            }
                             homesLen++;
-                            homeList.append(home+" ");
+                            homeList.append("&7"+home+"&6, ");
                         }
                         if(homesLen == 0) {
-                            utilMsgs.errorMessage(sender, "&aYou has no homes!");
+                            utilMsgs.errorMessage(sender, "&7You have no homes!");
                             return true;
                         }
                         if(doList == false && isArgs == true) {
-                            utilMsgs.infoMessage(sender, "&aHome &b" + homeName + " &anot found!");
+                            utilMsgs.infoMessage(sender, "&7Home &6" + homeName + " &7not found!");
                         }
-                        utilMsgs.infoMessage(sender, "Available Homes: "+homeList.toString());
+                        utilMsgs.infoMessage(sender, "&7Available Homes: "+homeList.toString());
                     } else {
-                        utilMsgs.errorMessage(sender, "&aYou has no homes!");
+                        utilMsgs.errorMessage(sender, "&7You has no homes!");
                     }
                 } else {
-                    utilMsgs.logErrorMessage("&aConsole Cant Run This Command!");
+                    utilMsgs.logErrorMessage("&7Console Cant Run This Command!");
                 }
             }
             return true;
@@ -167,7 +174,7 @@ public class TeleportCommands {
                         }
                     }
                     if(home_count >= max_homes) {
-                        utilMsgs.infoMessage(sender, "&aCant set more than &b"+max_homes+"&a homes!");
+                        utilMsgs.infoMessage(sender, "&7Cant set more than &6"+max_homes+"&7 homes!");
                         return true;
                     }
                 }
@@ -180,7 +187,7 @@ public class TeleportCommands {
                 cfgHome.getConfig().set("homes." + sender.playerUUID + "." + homeName + ".world", loc.getWorld().getName());
                 cfgHome.saveConfig();
 
-                utilMsgs.infoMessage(sender, "&aHome &b" + homeName + " &aset!");
+                utilMsgs.infoMessage(sender, "&7Home &6" + homeName + " &7set!");
                 return true;
             }
             utilMsgs.logErrorMessage("&aConsole Cant Run This Command!");
@@ -202,32 +209,32 @@ public class TeleportCommands {
                         if (found) {
                             cfgHome.getConfig().set("homes." + p.playerUUID + "." + homeName, null);
                             if (context.isPlayer()) {
-                                utilMsgs.infoMessage(sender, "&aPlayer " + p.playerName + "'s home &b" + homeName + " &ahas been deleted!");
+                                utilMsgs.infoMessage(sender, "&7Player &6" + p.playerName + "'s &7home &6" + homeName + " &7has been deleted!");
                             } else {
-                                utilMsgs.logErrorMessage("&aPlayer " + p.playerName + "'s home &b" + homeName + " &ahas been deleted!");
+                                utilMsgs.logErrorMessage("&7Player &6" + p.playerName + "'s &7home &6" + homeName + " &7has been deleted!");
                             }
                             return true;
                         } else {
                             if (context.isPlayer()) {
-                                utilMsgs.infoMessage(sender, "&aHome &b" + homeName + " &anot found!");
+                                utilMsgs.infoMessage(sender, "&7Home &6" + homeName + " &7not found!");
                             } else {
-                                utilMsgs.logErrorMessage("&aHome &b" + homeName + " &anot found!");
+                                utilMsgs.logErrorMessage("&7Home &6" + homeName + " &7not found!");
                             }
                             return true;
                         }
                     } else {
                         if (context.isPlayer()) {
-                            utilMsgs.errorMessage(sender, "&aPlayer " + p.playerName + " has no homes!");
+                            utilMsgs.errorMessage(sender, "&7Player &6" + p.playerName + "&7 has no homes!");
                         } else {
-                            utilMsgs.logErrorMessage("&aPlayer " + p.playerName + " has no homes!");
+                            utilMsgs.logErrorMessage("&7Player &6" + p.playerName + " &7has no homes!");
                         }
                         return true;
                     }
                 } else {
                     if (context.isPlayer()) {
-                        utilMsgs.errorMessage(sender, "&aPlayer &b" + args.get(1) + " Offline/Not exists!");
+                        utilMsgs.errorMessage(sender, "&7Player &6" + args.get(1) + " &7Offline/Not exists!");
                     } else {
-                        utilMsgs.logErrorMessage("&aPlayer &b" + args.get(1) + " Offline/Not exists!");
+                        utilMsgs.logErrorMessage("&7Player &6" + args.get(1) + " &7Offline/Not exists!");
                     }
                     return true;
                 }
@@ -245,23 +252,23 @@ public class TeleportCommands {
                     }
                     if (found) {
                         cfgHome.getConfig().set("homes." + sender.playerUUID + "." + homeName, null);
-                        utilMsgs.infoMessage(sender, "&aHome &b" + homeName + " &adeleted!");
+                        utilMsgs.infoMessage(sender, "&7Home &6" + homeName + " &7deleted!");
                     } else {
-                        utilMsgs.infoMessage(sender, "&aHome &b" + homeName + " &anot found!");
+                        utilMsgs.infoMessage(sender, "&7Home &6" + homeName + " &7not found!");
                     }
                 } else {
-                    utilMsgs.errorMessage(sender, "&aYou have no homes!");
+                    utilMsgs.errorMessage(sender, "&7You have no homes!");
                 }
             } else {
-                utilMsgs.logErrorMessage("&bUsage: /delhome <home> <player>");
+                utilMsgs.logErrorMessage("&7Usage: /delhome <home> <player>");
             }
             return true;
         } else if (name.equalsIgnoreCase("spawn")) {
             if (!plugin.getConfig().isSet("spawn")) {
                 if (context.isPlayer()) {
-                    utilMsgs.errorMessage(sender, "&aNo spawn set!");
+                    utilMsgs.errorMessage(sender, "&7No spawn set!");
                 } else {
-                    utilMsgs.logErrorMessage("&aNo spawn set!");
+                    utilMsgs.logErrorMessage("&7No spawn set!");
                 }
             } else {
                 double x = plugin.getConfig().getDouble("spawn.x");
@@ -282,22 +289,22 @@ public class TeleportCommands {
                         PlayerObject targetPlayer = plugin.getPlayer(playerName);
                         targetPlayer.teleportPlayer(to, false);
                         if (context.isPlayer()) {
-                            utilMsgs.infoMessage(sender, "&aTeleported Player &b" + targetPlayer.playerName + "&a to spawn!");
+                            utilMsgs.infoMessage(sender, "&7Teleported Player &6" + targetPlayer.playerName + "&7 to spawn!");
                         } else {
-                            utilMsgs.logInfoMessage("&aTeleported Player &b" + targetPlayer.playerName + "&a to spawn!");
+                            utilMsgs.logInfoMessage("&7Teleported Player &6" + targetPlayer.playerName + "&7 to spawn!");
                         }
                     } else {
                         if (context.isPlayer()) {
-                            utilMsgs.errorMessage(sender, "&aPlayer &b" + args.get(1) + " Offline/Not exists!");
+                            utilMsgs.errorMessage(sender, "&7Player &6" + args.get(1) + " &7Offline/Not exists!");
                         } else {
-                            utilMsgs.logErrorMessage("&aPlayer &b" + args.get(1) + " Offline/Not exists!");
+                            utilMsgs.logErrorMessage("&7Player &6" + args.get(1) + " &7Offline/Not exists!");
                         }
                     }
                 } else {// teleport sender to spawn
                     if (context.isPlayer()) {
                         sender.teleportPlayer(to, true);
                     } else {
-                        utilMsgs.logErrorMessage("&bUsage: /spawn <player>");
+                        utilMsgs.logErrorMessage("&7Usage: /spawn <player>");
                     }
                 }
             }
@@ -305,32 +312,37 @@ public class TeleportCommands {
         } else if (name.equalsIgnoreCase("warp")) {
             if (!plugin.getConfig().isSet("warps")) {
                 if (context.isPlayer()) {
-                    utilMsgs.errorMessage(sender, "&aNo available warps!");
+                    utilMsgs.errorMessage(sender, "&7No available warps!");
                 } else {
-                    utilMsgs.logErrorMessage("&aNo available warps!");
+                    utilMsgs.logErrorMessage("&7No available warps!");
                 }
                 return true;
             } else {
                 if (args.size() == 0) {
                     StringBuilder warpList = new StringBuilder();
                     int warpsLen = 0;
+                    int size = plugin.getConfig().getConfigurationSection("warps").getKeys(false).size();
                     for (String tmp : plugin.getConfig().getConfigurationSection("warps").getKeys(false)) {
+                        if(warpsLen == size-1) {
+                            warpsLen++;
+                            warpList.append("&7"+tmp);
+                        }
                         warpsLen++;
-                        warpList.append(tmp+" ");
+                        warpList.append("&7"+tmp+"&6, ");
                     }
                     if(warpsLen == 0) {
                         if (context.isPlayer()) {
-                            utilMsgs.errorMessage(sender, "&aNo available warps!");
+                            utilMsgs.errorMessage(sender, "&7No available warps!");
                         } else {
-                            utilMsgs.logErrorMessage("&aNo available warps!");
+                            utilMsgs.logErrorMessage("&7No available warps!");
                         }
                         return true;
                     }
                     if (context.isPlayer()) {
-                        utilMsgs.errorMessage(sender, "&bUsage: /warp <name>");
-                        utilMsgs.errorMessage(sender, "Available Warps: "+warpList);
+                        utilMsgs.errorMessage(sender, "&7Usage: /warp <name>");
+                        utilMsgs.errorMessage(sender, "&7Available Warps: "+warpList);
                     } else {
-                        utilMsgs.logErrorMessage("&bUsage: /warp <name> <player>");
+                        utilMsgs.logErrorMessage("&7Usage: /warp <name> <player>");
                     }
                     return true;
                 }
@@ -344,9 +356,9 @@ public class TeleportCommands {
 
                 if (!found) {
                     if (context.isPlayer()) {
-                        utilMsgs.errorMessage(sender, "&aWarp &b" + args.get(0) + "&a doesn't exist!");
+                        utilMsgs.errorMessage(sender, "&7Warp &6" + args.get(0) + "&7 doesn't exist!");
                     } else {
-                        utilMsgs.logErrorMessage("&aWarp &b" + args.get(0) + "&a doesn't exist!");
+                        utilMsgs.logErrorMessage("&7Warp &6" + args.get(0) + "&7 doesn't exist!");
                     }
                     return true;
                 }
@@ -362,7 +374,7 @@ public class TeleportCommands {
                 if (args.size() > 1) {// teleport other player to warp
                     if(context.isPlayer()) {
                         if(!sender.getPlayer().hasPermission("sinistercore.warp.other")) {
-                            utilMsgs.errorMessage(sender,"&9No permission to teleport others!");
+                            utilMsgs.errorMessage(sender,"&7No permission to teleport others!");
                         }
                     }
                     String playerName = null;
@@ -370,15 +382,15 @@ public class TeleportCommands {
                         PlayerObject targetPlayer = plugin.getPlayer(playerName);
                         targetPlayer.teleportPlayer(to, false);
                         if (context.isPlayer()) {
-                            utilMsgs.infoMessage(sender, "&aTeleported Player &b" + targetPlayer.playerName + "&a to warp &b" + args.get(0) + "&a!");
+                            utilMsgs.infoMessage(sender, "&7Teleported Player &6" + targetPlayer.playerName + "&7 to warp &6" + args.get(0) + "&7!");
                         } else {
-                            utilMsgs.logInfoMessage("&aTeleported Player &b" + targetPlayer.playerName + "&a to warp &b" + args.get(0) + "&a!");
+                            utilMsgs.logInfoMessage("&7Teleported Player &6" + targetPlayer.playerName + "&7 to warp &6" + args.get(0) + "&7!");
                         }
                     } else {
                         if (context.isPlayer()) {
-                            utilMsgs.errorMessage(sender, "&aPlayer &b" + args.get(1) + " Offline/Not exists!");
+                            utilMsgs.errorMessage(sender, "&7Player &6" + args.get(1) + " &7Offline/Not exists!");
                         } else {
-                            utilMsgs.logErrorMessage("&aPlayer &b" + args.get(1) + " Offline/Not exists!");
+                            utilMsgs.logErrorMessage("&7Player &6" + args.get(1) + " &7Offline/Not exists!");
                         }
                     }
                 } else if (args.size() == 1) {// teleport sender to warp
@@ -386,10 +398,10 @@ public class TeleportCommands {
                         if(sender.getPlayer().hasPermission("sinistercore.warp."+args.get(0).toLowerCase())) {
                             sender.teleportPlayer(to, true);
                         } else {
-                            utilMsgs.errorMessage(sender,"&9No permission to teleport to &b"+args.get(0)+"&9!");
+                            utilMsgs.errorMessage(sender,"&7No permission to teleport to &6"+args.get(0)+"&7!");
                         }
                     } else {
-                        utilMsgs.logErrorMessage("&aConsole Cant Run This Command!");
+                        utilMsgs.logErrorMessage("&7Console Cant Run This Command!");
                     }
                 }
             }
@@ -412,12 +424,12 @@ public class TeleportCommands {
                     plugin.getConfig().set("warps." + args.get(0) + ".pitch", playerLocation.getPitch());
                     plugin.getConfig().set("warps." + args.get(0) + ".world", playerLocation.getWorld().getName());
                     plugin.saveConfig();
-                    utilMsgs.infoMessage(sender, "&aSet warp &b" + args.get(0) + "&a!");
+                    utilMsgs.infoMessage(sender, "&7Set warp &6" + args.get(0) + "&7!");
                 } else {
-                    utilMsgs.errorMessage(sender, "&bUsage: /setwarp <name>");
+                    utilMsgs.errorMessage(sender, "&7Usage: /setwarp <name>");
                 }
             } else {
-                utilMsgs.logErrorMessage("&aConsole Cant Run This Command!");
+                utilMsgs.logErrorMessage("&7Console Cant Run This Command!");
             }
             return true;
         } else if (name.equalsIgnoreCase("setspawn")) {
@@ -433,9 +445,9 @@ public class TeleportCommands {
                 plugin.getConfig().set("spawn.pitch", playerLocation.getPitch());
                 plugin.getConfig().set("spawn.world", playerLocation.getWorld().getName());
                 plugin.saveConfig();
-                utilMsgs.infoMessage(sender, "&aSet spawn!");
+                utilMsgs.infoMessage(sender, "&7Set spawn!");
             } else {
-                utilMsgs.logErrorMessage("&aConsole Cant Run This Command!");
+                utilMsgs.logErrorMessage("&7Console Cant Run This Command!");
             }
             return true;
         } else if (name.equalsIgnoreCase("delwarp")) {
@@ -443,13 +455,13 @@ public class TeleportCommands {
                 for (String warpName : plugin.getConfig().getConfigurationSection("warps").getKeys(false)) {
                     if (warpName.equalsIgnoreCase(args.get(0))) {
                         plugin.getConfig().set("warps." + args.get(0), null);
-                        utilMsgs.infoMessage(sender, "&aDeleted warp &b" + args.get(0) + "&a!");
+                        utilMsgs.infoMessage(sender, "&7Deleted warp &6" + args.get(0) + "&7!");
                         return true;
                     }
                 }
-                utilMsgs.errorMessage(sender, "&aWarp &b" + args.get(0) + " &aDoesn't exist!");
+                utilMsgs.errorMessage(sender, "&7Warp &6" + args.get(0) + " &7Doesn't exist!");
             } else {
-                utilMsgs.errorMessage(sender, "&bUsage: /delwarp <name>");
+                utilMsgs.errorMessage(sender, "&7Usage: /delwarp <name>");
             }
             return true;
         } else if (name.equalsIgnoreCase("tp")) {
@@ -461,7 +473,7 @@ public class TeleportCommands {
                     PlayerObject p2 = plugin.getPlayer(playerName1);
                     p1.teleportPlayer(p2.getPlayer().getLocation(), false);
                 } else {
-                    utilMsgs.errorMessage(sender, "&aPlayer Offline/Not exists!");
+                    utilMsgs.errorMessage(sender, "&7Player Offline/Not exists!");
                 }
             } else if (args.size() == 1) {// tp this player to player
                 if (context.isPlayer()) {
@@ -471,14 +483,14 @@ public class TeleportCommands {
                         PlayerObject p2 = plugin.getPlayer(playerName);
                         p1.teleportPlayer(p2.getPlayer().getLocation(), false);
                     } else {
-                        utilMsgs.errorMessage(sender, "&aPlayer Offline/Not exists!");
+                        utilMsgs.errorMessage(sender, "&7Player Offline/Not exists!");
                     }
                 } else {
-                    utilMsgs.errorMessage(sender, "&bUsage: /tp <from player> <to player>");
+                    utilMsgs.errorMessage(sender, "&7Usage: /tp <from player> <to player>");
                 }
             } else {
-                utilMsgs.errorMessage(sender, "&bUsage: /tp <player>");
-                utilMsgs.errorMessage(sender, "&bUsage: /tp <from player> <to player>");
+                utilMsgs.errorMessage(sender, "&7Usage: /tp <player>");
+                utilMsgs.errorMessage(sender, "&7Usage: /tp <from player> <to player>");
             }
             return true;
         } else if (name.equalsIgnoreCase("tpo")) {
@@ -487,9 +499,9 @@ public class TeleportCommands {
                     PlayerObject playerObject = plugin.getPlayer(player.getUniqueId());
                     playerObject.teleportPlayer(sender.getPlayer().getLocation(), false);
                 }
-                utilMsgs.infoMessage(sender, "&aTeleported all players to location!");
+                utilMsgs.infoMessage(sender, "&7Teleported all players to location!");
             } else {
-                utilMsgs.logErrorMessage("&aConsole Cant Run This Command!");
+                utilMsgs.logErrorMessage("&7Console Cant Run This Command!");
             }
             return true;
         } else if (name.equalsIgnoreCase("tpa")) {
@@ -506,8 +518,8 @@ public class TeleportCommands {
                             for (PlayerObject tmpp : pendingTpaRequests.keySet()) {
                                 PlayerObject tmpp2 = pendingTpaRequests.get(tmpp);
                                 if (tmpp == p1 || tmpp == p2 || tmpp2 == p1 || tmpp2 == p2) {
-                                    utilMsgs.infoMessage(tmpp, "&aCanceled previous tpa request.");
-                                    utilMsgs.infoMessage(tmpp2, "&aCanceled previous tpa request.");
+                                    utilMsgs.infoMessage(tmpp, "&7Canceled previous tpa request.");
+                                    utilMsgs.infoMessage(tmpp2, "&7Canceled previous tpa request.");
                                     pendingTpaRequests.remove(tmpp);
                                     found = true;
                                 }
@@ -515,27 +527,27 @@ public class TeleportCommands {
                         }
 
                         pendingTpaRequests.put(p1, p2);
-                        utilMsgs.infoMessage(p1, "&aSent Teleport Request!");
-                        utilMsgs.infoMessage(p2, "&aPlayer &b" + p1.playerName + " &awishes to teleport to you &b(&6/tpyes&9,&6 /tpno&b).");
+                        utilMsgs.infoMessage(p1, "&7Sent Teleport Request!");
+                        utilMsgs.infoMessage(p2, "&7Player &6" + p1.playerName + " &7wishes to teleport to you. &8(&6/tpyes&7,&6 /tpno&8)");
                         int delay = plugin.getConfig().getInt("features.teleport.tpactive");
                         Bukkit.getScheduler().scheduleAsyncDelayedTask(plugin, new Runnable() {
                             @Override
                             public void run() {
                                 if (pendingTpaRequests.containsKey(p1) && pendingTpaRequests.get(p1).equals(p2)) {
                                     pendingTpaRequests.remove(p1);
-                                    utilMsgs.infoMessage(p1, "&aTpa Request Timed Out!");
-                                    utilMsgs.infoMessage(p2, "&aTpa Request Timed Out!");
+                                    utilMsgs.infoMessage(p1, "&7Tpa Request Timed Out!");
+                                    utilMsgs.infoMessage(p2, "&7Tpa Request Timed Out!");
                                 }
                             }
                         }, delay * 20L);
                     } else {
-                        utilMsgs.errorMessage(sender, "&aPlayer Offline/Not exists!");
+                        utilMsgs.errorMessage(sender, "&7Player Offline/Not exists!");
                     }
                 } else {
-                    utilMsgs.errorMessage(sender, "&bUsage: /tpa <player>");
+                    utilMsgs.errorMessage(sender, "&7Usage: /tpa <player>");
                 }
             } else {
-                utilMsgs.logErrorMessage("&aConsole Cant Run This Command!");
+                utilMsgs.logErrorMessage("&7Console Cant Run This Command!");
             }
             return true;
         } else if (name.equalsIgnoreCase("tpahere")) {
@@ -551,8 +563,8 @@ public class TeleportCommands {
                             for (PlayerObject tmpp : pendingTpaRequests.keySet()) {
                                 PlayerObject tmpp2 = pendingTpaRequests.get(tmpp);
                                 if (tmpp == p1 || tmpp == p2 || tmpp2 == p1 || tmpp2 == p2) {
-                                    utilMsgs.infoMessage(tmpp, "&aCanceled previous tpa request.");
-                                    utilMsgs.infoMessage(tmpp2, "&aCanceled previous tpa request.");
+                                    utilMsgs.infoMessage(tmpp, "&7Canceled previous tpa request.");
+                                    utilMsgs.infoMessage(tmpp2, "&7Canceled previous tpa request.");
                                     pendingTpaRequests.remove(tmpp);
                                     found = true;
                                 }
@@ -560,27 +572,27 @@ public class TeleportCommands {
                         }
 
                         pendingTpaRequests.put(p2, p1);
-                        utilMsgs.infoMessage(p1, "&aSent Teleport Request!");
-                        utilMsgs.infoMessage(p2, "&aPlayer &b" + p1.playerName + " &awishes for you to teleport to them &b(&6/tpyes, /tpno&b).");
+                        utilMsgs.infoMessage(p1, "&7Sent Teleport Request!");
+                        utilMsgs.infoMessage(p2, "&7Player &6" + p1.playerName + " &7wishes for you to teleport to them. &8(&6/tpyes&7,&6 /tpno&8)");
                         int delay = plugin.getConfig().getInt("features.teleport.tpactive");
                         Bukkit.getScheduler().scheduleAsyncDelayedTask(plugin, new Runnable() {
                             @Override
                             public void run() {
                                 if (pendingTpaRequests.containsKey(p2) && pendingTpaRequests.get(p2).equals(p1)) {
                                     pendingTpaRequests.remove(p2);
-                                    utilMsgs.infoMessage(p1, "&aTpa Request Timed Out!");
-                                    utilMsgs.infoMessage(p2, "&aTpa Request Timed Out!");
+                                    utilMsgs.infoMessage(p1, "&7Tpa Request Timed Out!");
+                                    utilMsgs.infoMessage(p2, "&7Tpa Request Timed Out!");
                                 }
                             }
                         }, delay * 20L);
                     } else {
-                        utilMsgs.errorMessage(sender, "&aPlayer Offline/Not exists!");
+                        utilMsgs.errorMessage(sender, "&7Player Offline/Not exists!");
                     }
                 } else {
-                    utilMsgs.errorMessage(sender, "&bUsage: /tphere <player>");
+                    utilMsgs.errorMessage(sender, "&7Usage: /tphere <player>");
                 }
             } else {
-                utilMsgs.logErrorMessage("&aConsole Cant Run This Command!");
+                utilMsgs.logErrorMessage("&7Console Cant Run This Command!");
             }
             return true;
         } else if (name.equalsIgnoreCase("tpyes") || name.equalsIgnoreCase("tpaccept")) {
@@ -601,14 +613,8 @@ public class TeleportCommands {
                     }
                 }
 
-                if(toPlayer == null) {
-                    utilMsgs.logErrorMessage("toPlayer is null");
-                } else if(fromPlayer == null) {
-                    utilMsgs.logErrorMessage("FromPlayer is null");
-                }
-
-                utilMsgs.infoMessage(fromPlayer, "&aTpa Request Accepted!");
-                utilMsgs.infoMessage(toPlayer, "&aTpa Request Accepted!");
+                utilMsgs.infoMessage(fromPlayer, "&7Tpa Request Accepted!");
+                utilMsgs.infoMessage(toPlayer, "&7Tpa Request Accepted!");
                 fromPlayer.teleportPlayer(toPlayer.getPlayer().getLocation(), true);
             } else {
                 utilMsgs.logErrorMessage("&aConsole Cant Run This Command!");
@@ -620,15 +626,15 @@ public class TeleportCommands {
                 for (PlayerObject tmpp : pendingTpaRequests.keySet()) {
                     PlayerObject tmpp2 = pendingTpaRequests.get(tmpp);
                     if ((tmpp.compareTo(player) == 1) || (tmpp2.compareTo(player) == 1)) {// tpa
-                        utilMsgs.infoMessage(tmpp, "&aTpa Request Denied!");
-                        utilMsgs.infoMessage(tmpp2, "&aTpa Request Denied!");
+                        utilMsgs.infoMessage(tmpp, "&7Tpa Request Denied!");
+                        utilMsgs.infoMessage(tmpp2, "&7Tpa Request Denied!");
                         pendingTpaRequests.remove(tmpp);
                         return true;
                     }
                 }
-                utilMsgs.errorMessage(player, "&6No active teleport request!");
+                utilMsgs.errorMessage(player, "&7No active teleport request!");
             } else {
-                utilMsgs.logErrorMessage("&aConsole Cant Run This Command!");
+                utilMsgs.logErrorMessage("&7Console Cant Run This Command!");
             }
             return true;
         }

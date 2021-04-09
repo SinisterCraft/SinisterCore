@@ -28,7 +28,7 @@ public class SinisterCommands {
                 if(subCMD.equalsIgnoreCase("reload")) {
                     plugin.reloadAll();
                     if(context.isPlayer()) {
-                        utilMsgs.infoMessage(sender, "&9Reloaded SinisterCore");
+                        utilMsgs.infoMessage(sender, "&7Reloaded SinisterCore");
                     } else {
                         utilMsgs.logInfoMessage("Reloaded SinisterCore");
                     }
@@ -36,7 +36,7 @@ public class SinisterCommands {
                 }
             }
             if(context.isPlayer()) {
-                utilMsgs.infoMessage(sender, "Usage: /sinistercore reload");
+                utilMsgs.infoMessage(sender, "&7Usage: /sinistercore reload");
             } else {
                 utilMsgs.logInfoMessage("Usage: /sinistercore reload");
             }

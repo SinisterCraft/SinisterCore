@@ -42,11 +42,11 @@ public class PlayerCommands {
             if(sender != null) {
                 ItemStack itemStack = sender.getPlayer().getItemInHand();
                 if(itemStack == null || itemStack.getType() == Material.AIR) {
-                    utilMsgs.errorMessage(sender, "&9Nothing in hand");
+                    utilMsgs.errorMessage(sender, "&7Nothing in hand");
                     return true;
                 }
                 sender.getPlayer().getInventory().setHelmet(itemStack);
-                utilMsgs.infoMessage(sender, "&9Added hat sucessfully");
+                utilMsgs.infoMessage(sender, "&7Added hat sucessfully");
                 return true;
             }
             utilMsgs.logErrorMessage("only player can execute this command");
@@ -55,15 +55,15 @@ public class PlayerCommands {
             if(sender != null) {
                 ItemStack itemStack = sender.getPlayer().getItemInHand();
                 if(itemStack == null || itemStack.getType() == Material.AIR) {
-                    utilMsgs.errorMessage(sender, "&9Nothing in hand");
+                    utilMsgs.errorMessage(sender, "&7Nothing in hand");
                     return true;
                 }
                 if(itemStack.getAmount() == itemStack.getMaxStackSize()) {
-                    utilMsgs.errorMessage(sender, "&9Already max stack size!");
+                    utilMsgs.errorMessage(sender, "&7Already max stack size!");
                     return true;
                 }
                 itemStack.setAmount(itemStack.getMaxStackSize());
-                utilMsgs.infoMessage(sender, "&9Set max stack");
+                utilMsgs.infoMessage(sender, "&7Set max stack");
                 return true;
             }
             utilMsgs.logErrorMessage("only player can execute this command");
@@ -74,16 +74,16 @@ public class PlayerCommands {
                     String weatherType = context.argAt(0);
                     if(weatherType.equalsIgnoreCase("clear") || weatherType.equalsIgnoreCase("none") || weatherType.equalsIgnoreCase("off")) {
                         sender.getPlayer().setPlayerWeather(WeatherType.CLEAR);
-                        utilMsgs.infoMessage(sender, "&9Turning off weather on local player");
+                        utilMsgs.infoMessage(sender, "&7Turning off weather on local player");
                         return true;
                     } else if(weatherType.equalsIgnoreCase("rain") || weatherType.equalsIgnoreCase("on")) {
                         sender.getPlayer().setPlayerWeather(WeatherType.DOWNFALL);
-                        utilMsgs.infoMessage(sender, "&9Turning on downfall on local player");
+                        utilMsgs.infoMessage(sender, "&7Turning on downfall on local player");
                         return true;
                     }// else {// no need can just fallback to usage prints
                 }
-                utilMsgs.infoMessage(sender, "&6Usage: &9/pweather clear");
-                utilMsgs.infoMessage(sender, "&6Usage: &9/pweather rain");
+                utilMsgs.infoMessage(sender, "&7Usage: &7/pweather clear");
+                utilMsgs.infoMessage(sender, "&7Usage: &7/pweather rain");
                 return true;
             }
             utilMsgs.logErrorMessage("only player can execute this command");
@@ -94,16 +94,16 @@ public class PlayerCommands {
                     String weatherType = context.argAt(0);
                     if(weatherType.equalsIgnoreCase("day")) {
                         sender.getPlayer().setPlayerTime(0, false);
-                        utilMsgs.infoMessage(sender, "&9Set time day on local player");
+                        utilMsgs.infoMessage(sender, "&7Set time day on local player");
                         return true;
                     } else if(weatherType.equalsIgnoreCase("night")) {
                         sender.getPlayer().setPlayerTime(14000, false);
-                        utilMsgs.infoMessage(sender, "&9Set time night on local player");
+                        utilMsgs.infoMessage(sender, "&7Set time night on local player");
                         return true;
                     }// else {// no need can just fallback to usage prints
                 }
-                utilMsgs.infoMessage(sender, "&6Usage: &9/ptime day");
-                utilMsgs.infoMessage(sender, "&6Usage: &9/ptime night");
+                utilMsgs.infoMessage(sender, "&7Usage: &7/ptime day");
+                utilMsgs.infoMessage(sender, "&7Usage: &7/ptime night");
                 return true;
             }
             utilMsgs.logErrorMessage("only player can execute this command");
@@ -114,23 +114,23 @@ public class PlayerCommands {
                     String targetPlayerName = null;
                     PlayerObject targetPlayer = null;
                     if((targetPlayerName = utilPlayers.playerExists(context.argAt(0))) == null) {
-                        utilMsgs.errorMessage(sender, "&9Player not exists!");
+                        utilMsgs.errorMessage(sender, "&7Player not exists!");
                         return true;
                     }
 
                     targetPlayer = plugin.getPlayer(targetPlayerName);
 
                     if(!targetPlayer.isPlayerOnline) {
-                        utilMsgs.errorMessage(sender, "&9Player is offline!");
+                        utilMsgs.errorMessage(sender, "&7Player is offline!");
                         return true;
                     }
 
                     Inventory targetPlayerInv = targetPlayer.getPlayer().getInventory();
                     sender.getPlayer().openInventory(targetPlayerInv);
-                    utilMsgs.infoMessage(sender, "&9Opening player's inventory");
+                    utilMsgs.infoMessage(sender, "&7Opening player's inventory");
                     return true;
                 }
-                utilMsgs.infoMessage(sender, "&6Usage: &9/invsee <player>");
+                utilMsgs.infoMessage(sender, "&7Usage: &7/invsee <player>");
                 return true;
             }
             utilMsgs.logErrorMessage("only player can execute this command");
@@ -144,26 +144,26 @@ public class PlayerCommands {
                     try {
                         enchantmentLevel = Integer.parseInt(context.argAt(1));
                     } catch(NumberFormatException e) {
-                        utilMsgs.errorMessage(sender, "&9Invalid enchantment level! (parse error!)");
+                        utilMsgs.errorMessage(sender, "&7Invalid enchantment level! (parse error!)");
                         return true;
                     }
 
                     if(enchantmentLevel > 50) {
-                        utilMsgs.errorMessage(sender, "&9Invalid enchantment level! (too high!)");
+                        utilMsgs.errorMessage(sender, "&7Invalid enchantment level! (too high!)");
                         return true;
                     }
 
                     Enchantment enchantment = Enchantments.getByName(enchantmentStr);
                     if(enchantment == null) {
-                        utilMsgs.errorMessage(sender, "&9Invalid enchantment");
+                        utilMsgs.errorMessage(sender, "&7Invalid enchantment");
                         StringBuilder enchantmentListBuilder = new StringBuilder();
-                        enchantmentListBuilder.append("&cList of available enchantments: ");
+                        enchantmentListBuilder.append("&7List of available enchantments: ");
                         int enchantmentListSize = Enchantments.keySet().size();
                         int x = 0;
                         for(String ench : Enchantments.keySet()) {
-                            enchantmentListBuilder.append("&9"+ench);
+                            enchantmentListBuilder.append("&6"+ench);
                             if(x < enchantmentListSize-1) {
-                                enchantmentListBuilder.append("&b, ");
+                                enchantmentListBuilder.append("&7, ");
                             }
                             x++;
                         }
@@ -172,17 +172,17 @@ public class PlayerCommands {
                     }
                     ItemStack item = sender.getPlayer().getItemInHand();
                     if(item == null || item.getType() == Material.AIR) {
-                        utilMsgs.errorMessage(sender, "&9Nothing in hand");
+                        utilMsgs.errorMessage(sender, "&7Nothing in hand");
                         return true;
                     }
                     ItemMeta itemMeta = item.getItemMeta();
                     itemMeta.addEnchant(enchantment, enchantmentLevel, true);
                     item.setItemMeta(itemMeta);
-                    utilMsgs.infoMessage(sender, "&9Successfully added enchantment &c"+enchantmentStr+" &9to current item");
+                    utilMsgs.infoMessage(sender, "&7Successfully added enchantment &6"+enchantmentStr+" &7to current item");
                     return true;
                 }
-                utilMsgs.infoMessage(sender, "&6Usage: &9/enchant <enchantment name> <enchantment level>");
-                utilMsgs.infoMessage(sender, "&6Usage: &9/enchant sharp 5");
+                utilMsgs.infoMessage(sender, "&7Usage: &7/enchant <enchantment name> <enchantment level>");
+                utilMsgs.infoMessage(sender, "&7Usage: &7/enchant sharp 5");
                 return true;
             }
             utilMsgs.logErrorMessage("only player can execute this command");
@@ -190,7 +190,7 @@ public class PlayerCommands {
         } else if(name.equalsIgnoreCase("workbench") || name.equalsIgnoreCase("wb")) {
             if(sender != null) {
                 sender.getPlayer().openWorkbench(null, true);
-                utilMsgs.infoMessage(sender, "&9Opening Workbench GUI");
+                utilMsgs.infoMessage(sender, "&7Opening Workbench GUI");
                 return true;
             }
             utilMsgs.logErrorMessage("only player can execute this command");
@@ -207,7 +207,7 @@ public class PlayerCommands {
                 entityPlayer.activeContainer = fakeAnvil;
                 entityPlayer.activeContainer.windowId = containerId;
                 Inventory inv = fakeAnvil.getBukkitView().getTopInventory();
-                utilMsgs.infoMessage(sender, "&9Opening Anvil GUI");
+                utilMsgs.infoMessage(sender, "&7Opening Anvil GUI");
                 return true;
             }
             utilMsgs.logErrorMessage("only player can execute this command");
@@ -222,29 +222,23 @@ public class PlayerCommands {
                 try {
                     itemStack = cfgItemDB.get(context.argAt(0));
                 } catch (Exception e) {
-                    utilMsgs.errorMessage(sender, "&9Invalid item name provided");
+                    utilMsgs.errorMessage(sender, "&7Invalid item name provided");
                     return true;
                 }
 
                 try {
                     amount = Integer.parseInt(context.argAt(1));
                 } catch (NumberFormatException e) {
-                    utilMsgs.errorMessage(sender, "&9Invalid item amount provided");
+                    utilMsgs.errorMessage(sender, "&7Invalid item amount provided");
                     return true;
                 }
-
-                if (itemStack == null) {
-                    utilMsgs.logInfoMessage("itemstack is null");
-                }
-
-                utilMsgs.logInfoMessage("itemstack type: " + itemStack.getType().toString());
 
                 itemStack.setAmount(amount);
 
                 sender.getPlayer().getInventory().addItem(itemStack);
                 sender.getPlayer().updateInventory();
 
-                utilMsgs.infoMessage(sender, "&9Given &bx" + amount + "&9 of item &b" + context.argAt(0) + "&9!");
+                utilMsgs.infoMessage(sender, "&7Given &6x" + amount + "&7 of item &6" + context.argAt(0) + "&7!");
 
                 return true;
             } else if(context.getArgs().size() == 3) {// /give player item amount
@@ -256,7 +250,7 @@ public class PlayerCommands {
                     itemStack = cfgItemDB.get(context.argAt(1));
                 } catch (Exception e) {
                     if(sender != null) {
-                        utilMsgs.errorMessage(sender, "&9Invalid item name provided");
+                        utilMsgs.errorMessage(sender, "&7Invalid item name provided");
                         return true;
                     }
                     utilMsgs.logErrorMessage("Invalid item name provided");
@@ -267,7 +261,7 @@ public class PlayerCommands {
                     amount = Integer.parseInt(context.argAt(2));
                 } catch (NumberFormatException e) {
                     if(sender != null) {
-                        utilMsgs.errorMessage(sender, "&9Invalid item amount provided");
+                        utilMsgs.errorMessage(sender, "&7Invalid item amount provided");
                         return true;
                     }
                     utilMsgs.logErrorMessage("Invalid item amount provided");
@@ -279,10 +273,10 @@ public class PlayerCommands {
                 String newName = null;
                 if ((newName = utilPlayers.playerExists(targetName)) == null) {
                     if(sender != null) {
-                        utilMsgs.errorMessage(sender, "&9Player not exists!");
+                        utilMsgs.errorMessage(sender, "&7Player not exists!");
                         return true;
                     }
-                    utilMsgs.logErrorMessage("&9Player not exists!");
+                    utilMsgs.logErrorMessage("&7Player not exists!");
                     return true;
                 }
 
@@ -290,16 +284,16 @@ public class PlayerCommands {
 
                 if (targetPlayer.isPlayerOnline) {
                     targetPlayer.getPlayer().getInventory().addItem(itemStack);
-                    utilMsgs.infoMessage(targetPlayer, "&9Given &bx" + amount + "&9 of item &b" + context.argAt(1) + "&9!");
+                    utilMsgs.infoMessage(targetPlayer, "&7Given &6x" + amount + "&7 of item &6" + context.argAt(1) + "&7!");
                     if(sender != null) {
-                        utilMsgs.infoMessage(sender, "&9Given &bx" + amount + "&9 of item &b" + context.argAt(1) + "&9 to player &b" + targetPlayer.playerName + "&9!");
+                        utilMsgs.infoMessage(sender, "&7Given &6x" + amount + "&7 of item &6" + context.argAt(1) + "&7 to player &6" + targetPlayer.playerName + "&7!");
                         return true;
                     }
                     utilMsgs.logErrorMessage("Given x" + amount + " of item " + context.argAt(1) + " to player " + targetPlayer.playerName + "!");
                     return true;
                 }
                 if(sender != null) {
-                    utilMsgs.errorMessage(sender, "&9Player is offline!");
+                    utilMsgs.errorMessage(sender, "&7Player is offline!");
                     return true;
                 }
                 utilMsgs.logErrorMessage("Player is offline!");
@@ -307,8 +301,8 @@ public class PlayerCommands {
             }
 
             if(sender != null) {
-                utilMsgs.infoMessage(sender, "&6Usage: &9/i <item> <amount>");
-                utilMsgs.infoMessage(sender, "&6Usage: &9/i <player> <item> <amount>");
+                utilMsgs.infoMessage(sender, "&7Usage: /i <item> <amount>");
+                utilMsgs.infoMessage(sender, "&7Usage: /i <player> <item> <amount>");
                 return true;
             }
             utilMsgs.logErrorMessage("Usage: /i <player> <item> <amount>");
@@ -316,7 +310,7 @@ public class PlayerCommands {
         } else if(name.equalsIgnoreCase("enderchest") || name.equalsIgnoreCase("ec")) {
             if(sender != null) {
                 sender.getPlayer().openInventory(sender.getCraftPlayer().getEnderChest());
-                utilMsgs.infoMessage(sender, "&9Opening Enderchest GUI");
+                utilMsgs.infoMessage(sender, "&7Opening Enderchest GUI");
             }
             utilMsgs.logErrorMessage("only player can execute this command");
             return true;
@@ -327,19 +321,19 @@ public class PlayerCommands {
 
                 if((targPlayerName = utilPlayers.playerExists(context.argAt(0))) == null) {
                     if (sender != null) {
-                        utilMsgs.errorMessage(sender, "&9Player not exists!");
+                        utilMsgs.errorMessage(sender, "&7Player not exists!");
                         return true;
                     }
-                    utilMsgs.logErrorMessage("&9Player not exists!");
+                    utilMsgs.logErrorMessage("&7Player not exists!");
                     return true;
                 }
 
                 if(utilPlayers.playerOnline(targPlayerName) == null) {
                     if(sender != null) {
-                        utilMsgs.errorMessage(sender, "&9Player is offline!");
+                        utilMsgs.errorMessage(sender, "&7Player is offline!");
                         return true;
                     }
-                    utilMsgs.logErrorMessage("&9Player is offline!");
+                    utilMsgs.logErrorMessage("&7Player is offline!");
                     return true;
                 }
 
@@ -357,14 +351,14 @@ public class PlayerCommands {
 
                 targPlayer.getPlayer().performCommand(commandBuilder.toString());
                 if(sender != null) {
-                    utilMsgs.infoMessage(sender, "&9Forced user &b" + targPlayerName + " &9to run command &b" + commandBuilder.toString() + "&9!");
+                    utilMsgs.infoMessage(sender, "&7Forced user &6" + targPlayerName + " &7to run command &6" + commandBuilder.toString() + "&7!");
                     return true;
                 }
                 utilMsgs.logInfoMessage("Forced user " + targPlayerName + " to run command " + commandBuilder.toString() + "!");
                 return true;
             }
             if(sender != null) {
-                utilMsgs.infoMessage(sender, "&6Usage: &9/sudo <player> <command>");
+                utilMsgs.infoMessage(sender, "&7Usage: /sudo <player> <command>");
                 return true;
             }
             utilMsgs.logErrorMessage("Usage: /sudo <player> <command>");
@@ -374,37 +368,37 @@ public class PlayerCommands {
                 if(context.getArgs().size() == 0) {
                     if(sender.getIsVanish()) {
                         sender.setIsVanish(false);
-                        utilMsgs.infoMessage(sender, "&9Vanish mode disabled!");
+                        utilMsgs.infoMessage(sender, "&7Vanish mode disabled!");
                         return true;
                     }
                     sender.setIsVanish(true);
-                    utilMsgs.infoMessage(sender, "&9Vanish mode enabled!");
+                    utilMsgs.infoMessage(sender, "&7Vanish mode enabled!");
                     return true;
                 } else if((context.getArgs().size() == 1) && (sender.getPlayer().hasPermission("sinistercore.vanish.other"))) {
                     String targetPlayerName = null;
                     if((targetPlayerName = utilPlayers.playerExists(context.argAt(0))) == null) {
-                        utilMsgs.errorMessage(sender, "&9Player not exists!");
+                        utilMsgs.errorMessage(sender, "&7Player not exists!");
                         return true;
                     }
 
                     if(utilPlayers.playerOnline(targetPlayerName) == null) {
-                        utilMsgs.errorMessage(sender, "&9Player is offline!");
+                        utilMsgs.errorMessage(sender, "&7Player is offline!");
                         return true;
                     }
 
                     PlayerObject targetPlayer = plugin.getPlayer(targetPlayerName);
                     if(targetPlayer.getIsVanish()) {
                         targetPlayer.setIsVanish(false);
-                        utilMsgs.infoMessage(sender, "&9Vanish mode disabled!");
-                        utilMsgs.infoMessage(targetPlayer, "&9Vanish mode disabled!");
+                        utilMsgs.infoMessage(sender, "&7Vanish mode disabled!");
+                        utilMsgs.infoMessage(targetPlayer, "&7Vanish mode disabled!");
                         return true;
                     }
                     targetPlayer.setIsVanish(true);
-                    utilMsgs.infoMessage(sender, "&9Vanish mode enabled!");
-                    utilMsgs.infoMessage(targetPlayer, "&9Vanish mode enabled!");
+                    utilMsgs.infoMessage(sender, "&7Vanish mode enabled!");
+                    utilMsgs.infoMessage(targetPlayer, "&7Vanish mode enabled!");
                     return true;
                 }
-                utilMsgs.infoMessage(sender, "&6Usage: &9/vanish");
+                utilMsgs.infoMessage(sender, "&7Usage: vanish");
                 return true;
             }
             utilMsgs.logErrorMessage("only player can execute this command");
@@ -415,12 +409,12 @@ public class PlayerCommands {
                 //toggle off
                 if(sender.getIsGodMode()) {
                     sender.setIsGodMode(false);
-                    utilMsgs.infoMessage(sender, "&9GodMode disabled!");
+                    utilMsgs.infoMessage(sender, "&7GodMode disabled!");
                     return true;
                 }
                 //toggle on
                 sender.setIsGodMode(true);
-                utilMsgs.infoMessage(sender, "&9GodMode enabled!");
+                utilMsgs.infoMessage(sender, "&7GodMode enabled!");
                 return true;
 
             } else if(context.getArgs().size() == 0) {// self cmd; console instance
@@ -444,7 +438,7 @@ public class PlayerCommands {
 
                 if((targetPlayerName = utilPlayers.playerExists(context.argAt(0))) == null) {// determine if we can retrieve playerObject
                     if(sender != null) {
-                        utilMsgs.errorMessage(sender, "&9Player not exists!");
+                        utilMsgs.errorMessage(sender, "&7Player not exists!");
                         return true;
                     }
                     utilMsgs.logErrorMessage("Player not exists!");
@@ -453,7 +447,7 @@ public class PlayerCommands {
 
                 if((targetPlayer = plugin.getPlayer(targetPlayerName)) == null) {// retrieve target PlayerObject from plugin
                     if(sender != null) {
-                        utilMsgs.errorMessage(sender, "&9PlayerObject is null!");
+                        utilMsgs.errorMessage(sender, "&7PlayerObject is null!");
                         return true;
                     }
                     utilMsgs.logErrorMessage("PlayerObject is null!");
@@ -462,19 +456,19 @@ public class PlayerCommands {
 
                 if(targetPlayer.getIsPlayerOnline() == false) {
                     if(sender != null) {
-                        utilMsgs.errorMessage(sender, "&9Player is offline!");
+                        utilMsgs.errorMessage(sender, "&7Player is offline!");
                         return true;
                     }
-                    utilMsgs.logErrorMessage("Playerr is offline!");
+                    utilMsgs.logErrorMessage("Player is offline!");
                     return true;
                 }
 
                 //toggle off
                 if(targetPlayer.getIsGodMode()) {
                     targetPlayer.setIsGodMode(false);
-                    utilMsgs.infoMessage(targetPlayer, "&9GodMode disabled!");
+                    utilMsgs.infoMessage(targetPlayer, "&7GodMode disabled!");
                     if(sender != null) {
-                        utilMsgs.infoMessage(sender, "&9GodMode disabled on user " + targetPlayer.playerName + "!");
+                        utilMsgs.infoMessage(sender, "&7GodMode disabled on user &6" + targetPlayer.playerName + "&7!");
                         return true;
                     }
                     utilMsgs.logInfoMessage("Godmode disabled on user "+targetPlayerName+"!");
@@ -482,9 +476,9 @@ public class PlayerCommands {
                 }
                 //toggle on
                 targetPlayer.setIsGodMode(true);
-                utilMsgs.infoMessage(targetPlayer, "&9GodMode enabled!");
+                utilMsgs.infoMessage(targetPlayer, "&7GodMode enabled!");
                 if(sender != null) {
-                    utilMsgs.infoMessage(sender, "&9GodMode disabled on user " + targetPlayer.playerName + "!");
+                    utilMsgs.infoMessage(sender, "&7GodMode disabled on user &6" + targetPlayer.playerName + "&7!");
                     return true;
                 }
                 utilMsgs.logInfoMessage("Godmode disabled on user "+targetPlayerName+"!");
@@ -493,9 +487,9 @@ public class PlayerCommands {
             }
 
             if(sender != null) {
-                utilMsgs.infoMessage(sender, "&9Usage: /godmode");
+                utilMsgs.infoMessage(sender, "&7Usage: /godmode");
                 if(sender.getPlayer().hasPermission("sinistercore.godmode.other")) {
-                    utilMsgs.infoMessage(sender, "&9Usage: /godmode <player>");
+                    utilMsgs.infoMessage(sender, "&7Usage: /godmode <player>");
                 }
                 return true;
             }
@@ -511,7 +505,7 @@ public class PlayerCommands {
             if(context.getArgs().size() == 0) {
                 if(sender != null) {
                     sender.getPlayer().getInventory().clear();
-                    utilMsgs.infoMessage(sender, "&9Cleared Inventory!");
+                    utilMsgs.infoMessage(sender, "&7Cleared Inventory!");
                     return true;
                 }
                 utilMsgs.logErrorMessage("Only player can use command!");
@@ -522,7 +516,7 @@ public class PlayerCommands {
 
                 if((targetPlayerName = utilPlayers.playerExists(context.argAt(0))) == null) {// determine if we can retrieve playerObject
                     if(sender != null) {
-                        utilMsgs.errorMessage(sender, "&9Player not exists!");
+                        utilMsgs.errorMessage(sender, "&7Player not exists!");
                         return true;
                     }
                     utilMsgs.logErrorMessage("Player not exists!");
@@ -531,7 +525,7 @@ public class PlayerCommands {
 
                 if((targetPlayer = plugin.getPlayer(targetPlayerName)) == null) {// retrieve target PlayerObject from plugin
                     if(sender != null) {
-                        utilMsgs.errorMessage(sender, "&9PlayerObject is null!");
+                        utilMsgs.errorMessage(sender, "&7PlayerObject is null!");
                         return true;
                     }
                     utilMsgs.logErrorMessage("PlayerObject is null!");
@@ -540,25 +534,25 @@ public class PlayerCommands {
 
                 if(targetPlayer.getIsPlayerOnline() == false) {
                     if(sender != null) {
-                        utilMsgs.errorMessage(sender, "&9Player is offline!");
+                        utilMsgs.errorMessage(sender, "&7Player is offline!");
                         return true;
                     }
-                    utilMsgs.logErrorMessage("Playerr is offline!");
+                    utilMsgs.logErrorMessage("Player is offline!");
                     return true;
                 }
 
                 targetPlayer.getPlayer().getInventory().clear();
 
-                utilMsgs.infoMessage(targetPlayer, "&9Cleared Inventory!");
+                utilMsgs.infoMessage(targetPlayer, "&7Cleared Inventory!");
                 if(sender != null) {
-                    utilMsgs.infoMessage(sender, "&9Cleared Player &b"+targetPlayerName+"'s &9Inventory!");
+                    utilMsgs.infoMessage(sender, "&7Cleared Player &6"+targetPlayerName+"'s &7Inventory!");
                     return true;
                 }
                 utilMsgs.logInfoMessage("Cleared Player "+targetPlayerName+"'s Inventory!");
                 return true;
             } else if(!hasPermOther) {
                 if(sender != null) {
-                    utilMsgs.infoMessage(sender, "&9No perms to clear other's inventory!");
+                    utilMsgs.infoMessage(sender, "&7No perms to clear other's inventory!");
                     return true;
                 }
                 utilMsgs.logInfoMessage("No perms to clear other's inventory!");
@@ -566,8 +560,8 @@ public class PlayerCommands {
             }
 
             if(sender != null) {
-                utilMsgs.infoMessage(sender,"&9Usage: /ci");
-                utilMsgs.infoMessage(sender, "&9Usage: /ci <player>");
+                utilMsgs.infoMessage(sender,"&7Usage: /ci");
+                utilMsgs.infoMessage(sender, "&7Usage: /ci <player>");
                 return true;
             }
             utilMsgs.logInfoMessage("Usage: /ci <player>");
@@ -577,7 +571,7 @@ public class PlayerCommands {
                 if (context.getArgs().size() > 0) {
                     ItemStack item = sender.getPlayer().getItemInHand();
                     if (item == null || item.getType() == Material.AIR) {
-                        utilMsgs.errorMessage(sender, "&9Nothing in hand");
+                        utilMsgs.errorMessage(sender, "&7Nothing in hand");
                         return true;
                     }
 
@@ -595,10 +589,10 @@ public class PlayerCommands {
                     itemMeta.setDisplayName(ChatColor.translateAlternateColorCodes('&', stringNameBuilder.toString()));
                     item.setItemMeta(itemMeta);
 
-                    utilMsgs.infoMessage(sender, "&9Successfully renamed item in hand to &c" + stringNameBuilder.toString() + " &9!");
+                    utilMsgs.infoMessage(sender, "&7Successfully renamed item in hand to &6" + stringNameBuilder.toString() + "&7!");
                     return true;
                 }
-                utilMsgs.infoMessage(sender, "&9Usage: /rename <name>");
+                utilMsgs.infoMessage(sender, "&7Usage: /rename <name>");
                 return true;
             }
             utilMsgs.logErrorMessage("Only player can use command!");
@@ -608,7 +602,7 @@ public class PlayerCommands {
                 if (context.getArgs().size() > 0) {
                     ItemStack item = sender.getPlayer().getItemInHand();
                     if (item == null || item.getType() == Material.AIR) {
-                        utilMsgs.errorMessage(sender, "&9Nothing in hand");
+                        utilMsgs.errorMessage(sender, "&7Nothing in hand");
                         return true;
                     }
 
@@ -623,14 +617,14 @@ public class PlayerCommands {
                     itemMeta.setLore(lores);
                     item.setItemMeta(itemMeta);
 
-                    utilMsgs.infoMessage(sender, "&9Successfully relored item in hand to: ");
+                    utilMsgs.infoMessage(sender, "&7Successfully relored item in hand to: ");
 
                     for (x = 0; x < lores.size(); x++) {
                         utilMsgs.infoMessage(sender, " &9> &8[&b" + x + "&8]&6: &8'&c" + lores.get(x) + "&8' &9<");
                     }
                     return true;
                 }
-                utilMsgs.infoMessage(sender, "&9Usage: /relore <line1> [line2] [line3] [...]");
+                utilMsgs.infoMessage(sender, "&7Usage: /relore <line1> [line2] [line3] [...]");
                 return true;
             }
             utilMsgs.logErrorMessage("Only player can use command!");
@@ -639,11 +633,11 @@ public class PlayerCommands {
             if(sender != null && context.getArgs().size() == 1) {// player nicknamed self
                 if(sender.getPlayerDisplayName() == null) {
                     //missing permissions to set supplied nickname
-                    utilMsgs.errorMessage(sender, "&9No permissions for supplied username");
+                    utilMsgs.errorMessage(sender, "&7No permissions for supplied username");
                     return true;
                 }
                 sender.setPlayerDisplayName(context.argAt(0));
-                utilMsgs.infoMessage(sender, "&9Successfully set player nickname!");
+                utilMsgs.infoMessage(sender, "&7Successfully set player nickname!");
                 return true;
             } else if(context.getArgs().size() == 2) {
                 if(sender == null || sender.getPlayer().hasPermission("sinistercore.nickname.other"))
@@ -653,7 +647,7 @@ public class PlayerCommands {
 
                     if((targetPlayerName = utilPlayers.playerExists(context.argAt(0))) == null) {// determine if we can retrieve playerObject
                         if(sender != null) {
-                            utilMsgs.errorMessage(sender, "&9Player not exists!");
+                            utilMsgs.errorMessage(sender, "&7Player not exists!");
                             return true;
                         }
                         utilMsgs.logErrorMessage("Player not exists!");
@@ -662,7 +656,7 @@ public class PlayerCommands {
 
                     if((targetPlayer = plugin.getPlayer(targetPlayerName)) == null) {// retrieve target PlayerObject from plugin
                         if(sender != null) {
-                            utilMsgs.errorMessage(sender, "&9PlayerObject is null!");
+                            utilMsgs.errorMessage(sender, "&7PlayerObject is null!");
                             return true;
                         }
                         utilMsgs.logErrorMessage("PlayerObject is null!");
@@ -671,7 +665,7 @@ public class PlayerCommands {
 
                     sender.setPlayerDisplayName(context.argAt(1));
                     if(sender != null) {
-                        utilMsgs.infoMessage(sender, "&9Successfully set player &b"+targetPlayerName+"'s &9nickname!");
+                        utilMsgs.infoMessage(sender, "&7Successfully set player &6"+targetPlayerName+"'s &7nickname!");
                         return true;
                     }
                     utilMsgs.logErrorMessage("Successfully set player "+targetPlayerName+"'s nickname!");
@@ -681,9 +675,9 @@ public class PlayerCommands {
             }
 
             if(sender != null) {
-                utilMsgs.infoMessage(sender, "&9Usage: /nick <nickname>");
+                utilMsgs.infoMessage(sender, "&7Usage: /nick <nickname>");
                 if(sender.getPlayer().hasPermission("sinistercore.nickname.other")) {
-                    utilMsgs.infoMessage(sender, "&9Usage: /nick <player> <nickname>");
+                    utilMsgs.infoMessage(sender, "&7Usage: /nick <player> <nickname>");
                 }
                 return true;
             }
@@ -692,7 +686,7 @@ public class PlayerCommands {
         } else if(name.equalsIgnoreCase("repair") || name.equalsIgnoreCase("fix")) {
             if(sender != null) {
                 sender.getPlayer().getItemInHand().setDurability((short)0);
-                utilMsgs.infoMessage(sender, "&9Item in hand has been repaired!");
+                utilMsgs.infoMessage(sender, "&7Item in hand has been repaired!");
                 return true;
             }
             utilMsgs.logErrorMessage("Only player can use command!");
@@ -707,7 +701,7 @@ public class PlayerCommands {
                             return true;
                         }
 
-                        utilMsgs.errorMessage(sender, "&9Player not exists!");
+                        utilMsgs.errorMessage(sender, "&7Player not exists!");
                         return true;
                     }
 
@@ -717,7 +711,7 @@ public class PlayerCommands {
                             return true;
                         }
 
-                        utilMsgs.errorMessage(sender, "&9Player not online!");
+                        utilMsgs.errorMessage(sender, "&7Player not online!");
                         return true;
                     }
 
@@ -725,20 +719,20 @@ public class PlayerCommands {
                     targetPlayer.getPlayer().setFoodLevel(20);
 
                     if(sender == null) {
-                        utilMsgs.infoMessage(targetPlayer, "&9You're Hunger Has Been Satisfied By &6Console");
+                        utilMsgs.infoMessage(targetPlayer, "&7You're Hunger Has Been Satisfied By &6Console");
                         utilMsgs.logInfoMessage("Feed player "+pName);
                         return true;
                     }
-                    utilMsgs.infoMessage(targetPlayer, "&9You're Hunger Has Been Satisfied By &6"+sender.playerName);
-                    utilMsgs.infoMessage(sender, "&9Feed player &6"+pName);
+                    utilMsgs.infoMessage(targetPlayer, "&7You're Hunger Has Been Satisfied By &6"+sender.playerName);
+                    utilMsgs.infoMessage(sender, "&7Feed player &6"+pName);
                     return true;
                 }
-                utilMsgs.errorMessage(sender, "&4Not Enough Permissions");
+                utilMsgs.errorMessage(sender, "&7Not Enough Permissions");
                 return true;
             }
             if(sender != null) {
                 sender.getPlayer().setFoodLevel(20);
-                utilMsgs.infoMessage(sender, "&9You're Hunger Has Been Satisfied");
+                utilMsgs.infoMessage(sender, "&7You're Hunger Has Been Satisfied");
                 return true;
             }
             utilMsgs.logErrorMessage("Usage: /feed <player>");
@@ -754,7 +748,7 @@ public class PlayerCommands {
                             return true;
                         }
 
-                        utilMsgs.errorMessage(sender, "&9Player not exists!");
+                        utilMsgs.errorMessage(sender, "&7Player not exists!");
                         return true;
                     }
 
@@ -764,7 +758,7 @@ public class PlayerCommands {
                             return true;
                         }
 
-                        utilMsgs.errorMessage(sender, "&9Player not online!");
+                        utilMsgs.errorMessage(sender, "&7Player not online!");
                         return true;
                     }
 
@@ -772,21 +766,21 @@ public class PlayerCommands {
                     targetPlayer.getPlayer().setHealth(20);
 
                     if(sender == null) {
-                        utilMsgs.infoMessage(targetPlayer, "&9You're Health Has Been Restored By &6Console");
+                        utilMsgs.infoMessage(targetPlayer, "&7You're Health Has Been Restored By &6Console");
                         utilMsgs.logInfoMessage("Healed sender "+pName);
                         return true;
                     }
-                    utilMsgs.infoMessage(targetPlayer, "&9You're Health Has Been Restored By &6"+sender.playerName);
-                    utilMsgs.infoMessage(sender, "&9Healed sender &6"+pName);
+                    utilMsgs.infoMessage(targetPlayer, "&7You're Health Has Been Restored By &6"+sender.playerName);
+                    utilMsgs.infoMessage(sender, "&7Healed sender &6"+pName);
                     return true;
                 }
-                utilMsgs.errorMessage(sender, "&4Not Enough Permissions");
+                utilMsgs.errorMessage(sender, "&7Not Enough Permissions");
                 return true;
             }
 
             if(sender != null) {
                 sender.getPlayer().setHealth(20);
-                utilMsgs.infoMessage(sender, "&9You're Health Has Been Restored");
+                utilMsgs.infoMessage(sender, "&7You're Health Has Been Restored");
                 return true;
             }
             utilMsgs.logErrorMessage("Usage: /heal <player>");
@@ -802,7 +796,7 @@ public class PlayerCommands {
                             return true;
                         }
 
-                        utilMsgs.errorMessage(sender, "&9Player not exists!");
+                        utilMsgs.errorMessage(sender, "&7Player not exists!");
                         return true;
                     }
 
@@ -812,7 +806,7 @@ public class PlayerCommands {
                             return true;
                         }
 
-                        utilMsgs.errorMessage(sender, "&9Player not online!");
+                        utilMsgs.errorMessage(sender, "&7Player not online!");
                         return true;
                     }
 
@@ -820,22 +814,22 @@ public class PlayerCommands {
                     targetPlayer.getPlayer().setGameMode(GameMode.CREATIVE);
 
                     if(sender == null) {
-                        utilMsgs.infoMessage(targetPlayer, "&9You've been put into creative By &6Console");
+                        utilMsgs.infoMessage(targetPlayer, "&7You've been put into creative By &6Console");
                         utilMsgs.logInfoMessage("Put sender "+pName+ " into creative");
                         return true;
                     }
 
-                    utilMsgs.infoMessage(targetPlayer, "&9You've been put into creative By &6"+sender.playerName);
-                    utilMsgs.infoMessage(sender, "&9Put sender &6"+pName+ " &9into creative");
+                    utilMsgs.infoMessage(targetPlayer, "&7You've been put into creative By &6"+sender.playerName);
+                    utilMsgs.infoMessage(sender, "&7Put sender &6"+pName+ " &7into creative");
                     return true;
                 }
-                utilMsgs.errorMessage(sender, "&4Not Enough Permissions");
+                utilMsgs.errorMessage(sender, "&7Not Enough Permissions");
                 return true;
             }
 
             if(sender != null) {
                 sender.getPlayer().setGameMode(GameMode.CREATIVE);
-                utilMsgs.infoMessage(sender, "&9You've been put in creative gamemode");
+                utilMsgs.infoMessage(sender, "&7You've been put in creative gamemode");
                 return true;
             }
             utilMsgs.logErrorMessage("Usage: /gmc <player>");
@@ -850,7 +844,7 @@ public class PlayerCommands {
                             return true;
                         }
 
-                        utilMsgs.errorMessage(sender, "&9Player not exists!");
+                        utilMsgs.errorMessage(sender, "&7Player not exists!");
                         return true;
                     }
 
@@ -860,7 +854,7 @@ public class PlayerCommands {
                             return true;
                         }
 
-                        utilMsgs.errorMessage(sender, "&9Player not online!");
+                        utilMsgs.errorMessage(sender, "&7Player not online!");
                         return true;
                     }
 
@@ -868,13 +862,13 @@ public class PlayerCommands {
                     targetPlayer.getPlayer().setGameMode(GameMode.SURVIVAL);
 
                     if(sender == null) {
-                        utilMsgs.infoMessage(targetPlayer, "&9You've been put into survival By &6Console");
+                        utilMsgs.infoMessage(targetPlayer, "&7You've been put into survival By &6Console");
                         utilMsgs.logInfoMessage("Put sender " + pName + " into survival");
                         return true;
                     }
 
-                    utilMsgs.infoMessage(targetPlayer, "&9You've been put into survival By &6"+sender.playerName);
-                    utilMsgs.infoMessage(sender, "&9Put player &6"+pName+ " &9into survival");
+                    utilMsgs.infoMessage(targetPlayer, "&7You've been put into survival By &6"+sender.playerName);
+                    utilMsgs.infoMessage(sender, "&7Put player &6"+pName+ " &7into survival");
                     return true;
                 }
                 utilMsgs.errorMessage(sender, "&4Not Enough Permissions");
@@ -898,7 +892,7 @@ public class PlayerCommands {
                             utilMsgs.logErrorMessage("Player not exists!");
                             return true;
                         }
-                        utilMsgs.errorMessage(sender, "&9Player not exists!");
+                        utilMsgs.errorMessage(sender, "&7Player not exists!");
                         return true;
                     }
 
@@ -907,7 +901,7 @@ public class PlayerCommands {
                             utilMsgs.logErrorMessage("Player not online!");
                             return true;
                         }
-                        utilMsgs.errorMessage(sender, "&9Player not online!");
+                        utilMsgs.errorMessage(sender, "&7Player not online!");
                         return true;
                     }
 
@@ -917,26 +911,26 @@ public class PlayerCommands {
                         targetPlayer.getPlayer().setAllowFlight(false);
                         targetPlayer.getPlayer().setFlying(false);
                         if (sender == null) {
-                            utilMsgs.infoMessage(targetPlayer, "&9You've been taken out of fly mode By &6Console");
+                            utilMsgs.infoMessage(targetPlayer, "&7You've been taken out of fly mode By &6Console");
                             utilMsgs.logInfoMessage("Taken player " + pName + " out of fly mode");
                             return true;
                         }
-                        utilMsgs.infoMessage(targetPlayer, "&9You've been taken out of fly mode By &6" + sender.playerName);
-                        utilMsgs.infoMessage(sender, "&9Taken player &6" + pName + " &9out of fly mode");
+                        utilMsgs.infoMessage(targetPlayer, "&7You've been taken out of fly mode By &6" + sender.playerName);
+                        utilMsgs.infoMessage(sender, "&7Taken player &6" + pName + " &7out of fly mode");
                         return true;
                     }
                     targetPlayer.getPlayer().setAllowFlight(true);
                     targetPlayer.getPlayer().setFlying(true);
                     if (sender == null) {
-                        utilMsgs.infoMessage(targetPlayer, "&9You've been put into fly mode By &6Console");
+                        utilMsgs.infoMessage(targetPlayer, "&7You've been put into fly mode By &6Console");
                         utilMsgs.logInfoMessage("Put player " + pName + " into fly mode");
                         return true;
                     }
-                    utilMsgs.infoMessage(targetPlayer, "&9You've been put into fly mode By &6" + sender.playerName);
-                    utilMsgs.infoMessage(sender, "&9Put player &6" + pName + " &9into fly mode");
+                    utilMsgs.infoMessage(targetPlayer, "&7You've been put into fly mode By &6" + sender.playerName);
+                    utilMsgs.infoMessage(sender, "&7Put player &6" + pName + " &7into fly mode");
                     return true;
                 }
-                utilMsgs.errorMessage(sender, "&4Not Enough Permissions");
+                utilMsgs.errorMessage(sender, "&7Not Enough Permissions");
                 return true;
             }
 
@@ -944,12 +938,12 @@ public class PlayerCommands {
                 if (sender.getPlayer().getAllowFlight() == true) {
                     sender.getPlayer().setAllowFlight(false);
                     sender.getPlayer().setFlying(false);
-                    utilMsgs.infoMessage(sender, "&9You've been taken out of fly mode");
+                    utilMsgs.infoMessage(sender, "&7You've been taken out of fly mode");
                     return true;
                 }
                 sender.getPlayer().setAllowFlight(true);
                 sender.getPlayer().setFlying(true);
-                utilMsgs.infoMessage(sender, "&9You've been put in fly mode");
+                utilMsgs.infoMessage(sender, "&7You've been put in fly mode");
                 return true;
             }
             utilMsgs.logErrorMessage("Usage: /fly <player>");
@@ -961,7 +955,7 @@ public class PlayerCommands {
                     sender.teleportPlayer(loc, true);
                     return true;
                 }
-                utilMsgs.errorMessage(sender, "&9No death found to teleport to!");
+                utilMsgs.errorMessage(sender, "&7No death found to teleport to!");
                 return true;
             }
             utilMsgs.logErrorMessage("only player can execute this command");

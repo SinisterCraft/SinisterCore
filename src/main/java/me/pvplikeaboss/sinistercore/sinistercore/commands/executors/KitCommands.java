@@ -44,32 +44,32 @@ public class KitCommands {
 
                         if(kit.delay == -1 && timeLeft == null) {
                             if(!kit.giveKit(sender, false)) {
-                                utilMsgs.errorMessage(sender, "&aNo permissions for kit!");
+                                utilMsgs.errorMessage(sender, "&7No permissions for kit!");
                                 return true;
                             }
                             utilCooldown.putKitCooldown(sender.playerUUID, kit.kitName, kit.delay);
-                            utilMsgs.infoMessage(sender, "&aGiven kit &b" + kitName + "&a!");
+                            utilMsgs.infoMessage(sender, "&7Given kit &6" + kitName + "&7!");
                             return true;
                         } else if(kit.delay == -1 && timeLeft != null) {
-                            utilMsgs.infoMessage(sender, "&aKit &b" + kitName + "&a is a one time kit&a!");
+                            utilMsgs.infoMessage(sender, "&7Kit &6" + kitName + "&7 is a one time kit!");
                             return true;
                         } else if (timeLeft != null) {
-                            utilMsgs.infoMessage(sender, "&aTime left to recieve kit &b" + kitName + "&a &b" + timeLeft + "&a!");
+                            utilMsgs.infoMessage(sender, "&7You will recieve kit &6" + kitName + " &7in &6" + timeLeft + "&7!");
                             return true;
                         } else if (!kit.giveKit(sender, false)) {
-                            utilMsgs.errorMessage(sender, "&aNo permissions for kit!");
+                            utilMsgs.errorMessage(sender, "&7No permissions for kit!");
                             return true;
                         } else {
-                            utilMsgs.infoMessage(sender, "&aGiven kit &b" + kitName + "&a!");
+                            utilMsgs.infoMessage(sender, "&7Given kit &6" + kitName + "&7!");
                             utilCooldown.putKitCooldown(sender.playerUUID, kit.kitName, kit.delay);
                             return true;
                         }
                     } else {
-                        utilMsgs.infoMessage(sender, "&aKit &b" + kitName + "&a not exists!");
+                        utilMsgs.infoMessage(sender, "&7Kit &6" + kitName + "&7 not exists!");
                     }
                     return true;
                 } else {
-                    utilMsgs.logErrorMessage("&aConsole Cant Run This Command!");
+                    utilMsgs.logErrorMessage("&7Console Cant Run This Command!");
                 }
                 return true;
             } else if (args.size() == 2) {
@@ -82,60 +82,68 @@ public class KitCommands {
                     if (kit.kitExists()) {
                         if (!kit.giveKit(p, true)) {
                             if(sender != null) {
-                                utilMsgs.errorMessage(sender, "&aNo permissions for kit!");
+                                utilMsgs.errorMessage(sender, "&7No permissions for kit!");
                             } else {
-                                utilMsgs.logErrorMessage("No permissions for kit!");
+                                utilMsgs.logErrorMessage("&7No permissions for kit!");
                             }
                             return true;
                         } else {
                             if (sender != null) {
-                                utilMsgs.infoMessage(sender, "&aPlayer " + p.playerName + "'s given kit &b" + kitName + "&a!");
+                                utilMsgs.infoMessage(sender, "&7Given player &6" + p.playerName + " &7kit &6" + kitName + "&7!");
                             } else {
-                                utilMsgs.logInfoMessage("&aPlayer " + p.playerName + "'s given kit &b" + kitName + "&a!");
+                                utilMsgs.logInfoMessage("&7Given player &6" + p.playerName + " &7kit &6" + kitName + "&7!");
                             }
                             return true;
                         }
                     } else {
                         if (sender != null) {
-                            utilMsgs.infoMessage(sender, "&aKit &b" + kitName + "&a not exists!");
+                            utilMsgs.infoMessage(sender, "&7Kit &6" + kitName + "&7 not exists!");
                         } else {
-                            utilMsgs.logInfoMessage("&aKit &b" + kitName + "&a not exists!");
+                            utilMsgs.logInfoMessage("&7Kit &6" + kitName + "&7 not exists!");
                         }
                         return true;
                     }
                 } else {
                     if (sender != null) {
-                        utilMsgs.errorMessage(sender, "&aPlayer &b" +target+ " Offline/Not exists!");
+                        utilMsgs.errorMessage(sender, "&7Player &6" +target+ " &7Offline/Not exists!");
                     } else {
-                        utilMsgs.logErrorMessage("&aPlayer &b" + target + " Offline/Not exists!");
+                        utilMsgs.logErrorMessage("&7Player &6" +target+ " &7Offline/Not exists!");
                     }
                     return true;
                 }
             } else if (args.size() == 0) {
                 if(cfgKits.getConfig().isSet("kits")) {
                     StringBuilder kits = new StringBuilder();
+                    int kits_size = 0;
                     for (String kit : cfgKits.getConfig().getConfigurationSection("kits").getKeys(false)) {
+                        if(context.isPlayer()) {
+                            if(!sender.getPlayer().hasPermission("sinistercore.kit."+kit.toLowerCase())) {
+                                continue;
+                            }
+                        }
                         kits.append(kit+" ");
+                        kits_size++;
                     }
-                    if (sender != null) {
-                        utilMsgs.infoMessage(sender, "&aAvailable Kits: &b"+kits);
-                    } else {
-                        utilMsgs.logInfoMessage("&aAvailable Kits: &b"+kits);
-                    }
-                    return true;
-                } else {
-                    if (sender != null) {
-                        utilMsgs.errorMessage(sender, "&aNo Available Kits!");
-                    } else {
-                        utilMsgs.logErrorMessage("&aNo Available Kits!");
-                    }
-                    return true;
+                    if(kits_size > 0) {
+                        if (sender != null) {
+                            utilMsgs.infoMessage(sender, "&7Available Kits: &6" + kits);
+                        } else {
+                            utilMsgs.logInfoMessage("&7Available Kits: &6" + kits);
+                        }
+                        return true;
+                    }// else fall back to no available kits
                 }
+                if (sender != null) {
+                    utilMsgs.errorMessage(sender, "&7No Available Kits!");
+                } else {
+                    utilMsgs.logErrorMessage("&7No Available Kits!");
+                }
+                return true;
             } else {
                 if (sender != null) {
-                    utilMsgs.errorMessage(sender, "&bUsage: /kit <name>");
+                    utilMsgs.errorMessage(sender, "&7Usage: /kit <name>");
                 } else {
-                    utilMsgs.logErrorMessage("&bUsage: /kit <name> <player>");
+                    utilMsgs.logErrorMessage("&7Usage: /kit <name> <player>");
                 }
                 return true;
             }
@@ -146,13 +154,13 @@ public class KitCommands {
                     int delay = Integer.parseInt(args.get(1));
                     KitObject kit = new KitObject(plugin, kitName);
                     kit.createKit(sender, delay);
-                    utilMsgs.infoMessage(sender, "&aCreated Kit &b" + kitName + "&a!");
+                    utilMsgs.infoMessage(sender, "&7Created Kit &6" + kitName + "&7!");
                 } else {
-                    utilMsgs.errorMessage(sender, "&bUsage: /createkit <name> <delay>");
+                    utilMsgs.errorMessage(sender, "&7Usage: /createkit <name> <delay>");
                 }
                 return true;
             } else {
-                utilMsgs.logErrorMessage("&aConsole Cant Run This Command!");
+                utilMsgs.logErrorMessage("&7Console Cant Run This Command!");
             }
             return true;
         } else if (name.equalsIgnoreCase("deletekit")) {
@@ -161,24 +169,24 @@ public class KitCommands {
                 KitObject kit = new KitObject(plugin, kitName);
                 if (kit.deleteKit()) {
                     if (sender != null) {
-                        utilMsgs.infoMessage(sender, "&aDeleted Kit &b" + kitName + "&a!");
+                        utilMsgs.infoMessage(sender, "&7Deleted Kit &6" + kitName + "&7!");
                     } else {
-                        utilMsgs.logInfoMessage("&aDeleted Kit &b" + kitName + "&a!");
+                        utilMsgs.logInfoMessage("&7Deleted Kit &6" + kitName + "&7!");
                     }
                     return true;
                 } else {
                     if (sender != null) {
-                        utilMsgs.errorMessage(sender, "&aKit &b" + kitName + " &anot exists!");
+                        utilMsgs.errorMessage(sender, "&7Kit &6" + kitName + " &7not exists!");
                     } else {
-                        utilMsgs.logErrorMessage("&aKit &b" + kitName + " &anot exists!");
+                        utilMsgs.logErrorMessage("&7Kit &6" + kitName + " &7not exists!");
                     }
                     return true;
                 }
             } else {
                 if (sender != null) {
-                    utilMsgs.errorMessage(sender, "&bUsage: /deletekit <name>");
+                    utilMsgs.errorMessage(sender, "&7Usage: /deletekit <name>");
                 } else {
-                    utilMsgs.logErrorMessage("&bUsage: /deletekit <name>");
+                    utilMsgs.logErrorMessage("&7Usage: /deletekit <name>");
                 }
                 return true;
             }

@@ -4,35 +4,143 @@ import com.massivecraft.factions.P;
 import me.pvplikeaboss.sinistercore.sinistercore.Instances;
 import me.pvplikeaboss.sinistercore.sinistercore.SinisterCore;
 import me.pvplikeaboss.sinistercore.sinistercore.commands.util.CommandContext;
+import me.pvplikeaboss.sinistercore.sinistercore.modules.economy.EconomyEntry;
+import me.pvplikeaboss.sinistercore.sinistercore.modules.files.configs.yml.EconConfig;
 import me.pvplikeaboss.sinistercore.sinistercore.objects.PlayerObject;
 import me.pvplikeaboss.sinistercore.sinistercore.utilites.misc.Messages;
 import me.pvplikeaboss.sinistercore.sinistercore.utilites.serverutils.PlayerUtils;
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.entity.Player;
 
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.UUID;
 
 public class EconomyCommands {
     private static SinisterCore plugin;
     private Messages utilMsgs;
     private PlayerUtils utilPlayers;
     private Economy ecoImplementer;
+    private EconConfig cfgEcon;
 
     public boolean onCommand(String name, CommandContext context) {
         plugin = context.getPlugin();
         utilMsgs = (Messages) Instances.getInstance(Instances.InstanceType.Utilities, 2);
         utilPlayers = (PlayerUtils) Instances.getInstance(Instances.InstanceType.Utilities, 3);
         ecoImplementer = (Economy) Instances.getInstance(Instances.InstanceType.Economy, -1);
+        cfgEcon = (EconConfig) Instances.getInstance(Instances.InstanceType.Config, 3);
         
         List<String> args = context.getArgs();
 
+        PlayerObject sender = null;
+        if(context.isPlayer()) {
+            sender = plugin.getPlayer(context.getPlayer().getUniqueId());
+        }
+
         if(name.equalsIgnoreCase("baltop")) {
-            return true;
-        } else if (name.equalsIgnoreCase("bal") || name.equalsIgnoreCase("balance") || name.equalsIgnoreCase("money")) {
-            PlayerObject sender = null;
-            if(context.isPlayer()) {
-                sender = plugin.getPlayer(context.getPlayer().getUniqueId());
+            List<EconomyEntry> entries = new ArrayList<>();
+            if (cfgEcon.getConfig().isSet("econ")) {
+                for (String sUUID : cfgEcon.getConfig().getConfigurationSection("econ").getKeys(false)) {
+                    PlayerObject p = plugin.getPlayer(UUID.fromString(sUUID));
+                    if(p == null) {
+                        continue;
+                    }
+                    entries.add(new EconomyEntry(p.playerUUID, p.playerDisplayName, BigDecimal.valueOf(cfgEcon.getConfig().getDouble("econ." + sUUID))));
+                }
+
+                entries.sort((entry1, entry2) -> entry2.getBalance().compareTo(entry1.getBalance()));
+
+                int total_pages;
+                if(entries.size() <= 10)
+                {
+                    total_pages = 1;
+                } else {
+                    double tmp = Double.valueOf(entries.size()/10);
+                    if(tmp % 1 != 0) {// we have a remainder so we need another page
+                        total_pages = (int) (tmp+1);
+                    } else {// whole number of pages
+                        total_pages = (int)tmp;
+                    }
+                }
+
+                if(args.size() == 1) {
+                    int page;
+                    try {
+                        page = Integer.parseInt(args.get(0));
+                    } catch(NumberFormatException e) {
+                        if(sender != null) {
+                            utilMsgs.errorMessage(sender, "&7Invalid page number");
+                            return true;
+                        }
+                        utilMsgs.logErrorMessage("&7Invalid page number");
+                        return true;
+                    }
+
+                    if(page > total_pages) {
+                        if(sender != null) {
+                            utilMsgs.errorMessage(sender, "&7Invalid page number (1-"+total_pages+")");
+                            return true;
+                        }
+                        utilMsgs.logErrorMessage("&7Invalid page number (1-"+total_pages+")");
+                        return true;
+                    }
+
+                    int start = page*10;
+                    int end = (page*10)+10;
+                    if(end > entries.size()) {
+                        end = entries.size();
+                    }
+
+                    if(sender != null) {
+                        utilMsgs.infoMessage(sender, "&7SinisterCraft Balance Top &8(&6"+page+"&7/&6"+total_pages+"&8)");
+                    } else {
+                        utilMsgs.logInfoMessage("&7SinisterCraft Balance Top &8(&6"+page+"&7/&6"+total_pages+"&8)");
+                    }
+
+                    for(int x = start; x < end; x++) {
+                        if(sender != null) {
+                            utilMsgs.infoMessage(sender, "&6"+entries.get(x).getPlayerName()+"&7: &6"+entries.get(x).getBalance());
+                            continue;
+                        }
+                        utilMsgs.logInfoMessage("&6"+entries.get(x).getPlayerName()+"&7: &6"+entries.get(x).getBalance());
+                        continue;
+                    }
+                    return true;
+                } else {
+                    int display;
+                    if(entries.size() > 9) {
+                        display = 10;
+                    } else {
+                        display = entries.size();
+                    }
+
+                    if(sender != null) {
+                        utilMsgs.infoMessage(sender, "&7SinisterCraft Balance Top &8(&61&7/&6"+total_pages+"&8)");
+                    } else {
+                        utilMsgs.logInfoMessage("&7SinisterCraft Balance Top &8(&61&7/&6"+total_pages+"&8)");
+                    }
+
+                    for(int x = 0; x < display; x++) {
+                        if(sender != null) {
+                            utilMsgs.infoMessage(sender, "&6"+entries.get(x).getPlayerName()+"&7: &6"+entries.get(x).getBalance());
+                            continue;
+                        }
+                        utilMsgs.logInfoMessage("&6"+entries.get(x).getPlayerName()+"&7: &6"+entries.get(x).getBalance());
+                        continue;
+                    }
+                    return true;
+                }
+            } else {
+                if(sender != null) {
+                    utilMsgs.errorMessage(sender,"&7Error retrieving player data");
+                    return true;
+                }
+                utilMsgs.logErrorMessage("&7Error retrieving player data");
+                return true;
             }
+        } else if (name.equalsIgnoreCase("bal") || name.equalsIgnoreCase("balance") || name.equalsIgnoreCase("money")) {
             if (args.size() == 0) {
                 if (sender != null) {
                     double balance = 0;
@@ -77,7 +185,6 @@ public class EconomyCommands {
             return true;
         } else if(name.equalsIgnoreCase("pay")) {
             if(context.isPlayer()) {
-                PlayerObject sender = plugin.getPlayer(context.getPlayer().getUniqueId());
                 if (args.size() == 2) {
                     String pname = args.get(0);
                     double amount = 0;
@@ -118,11 +225,6 @@ public class EconomyCommands {
             utilMsgs.logErrorMessage("&aConsole Cant Run This Command!");
             return true;
         } else if(name.equalsIgnoreCase("eco")) {
-            //todo: make admin commands
-            PlayerObject sender = null;
-            if(context.isPlayer()) {
-                sender = plugin.getPlayer(context.getPlayer().getUniqueId());
-            }
             if(args.size() > 0) {
                 String subcmd = args.get(0);
                 if(subcmd.equalsIgnoreCase("deposit")) {

@@ -151,6 +151,7 @@ public class Commands {
         //Initialize Economy Commands
 
         if(plugin.getConfig().getBoolean("features.economy.enabled")) {
+            cmds.add(new CommandBuilder(plugin, "baltop").executor(econCmd::onCommand).usage("/baltop").description("Custom SinisterCore Economy").completer(tabCompleter).build());
             cmds.add(new CommandBuilder(plugin, "bal").executor(econCmd::onCommand).usage("/bal").description("Custom SinisterCore Economy").completer(tabCompleter).build());
             cmds.add(new CommandBuilder(plugin, "balance").executor(econCmd::onCommand).usage("/bal").description("Custom SinisterCore Economy").completer(tabCompleter).build());
             cmds.add(new CommandBuilder(plugin, "money").executor(econCmd::onCommand).usage("/bal").description("Custom SinisterCore Economy").completer(tabCompleter).build());

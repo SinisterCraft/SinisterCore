@@ -42,6 +42,7 @@ me\pvplikeaboss\sinistercore\sinistercore\modules\clearlag\ClearlagModule$2.clas
 me\pvplikeaboss\sinistercore\sinistercore\utilites\misc\Misc.class
 me\pvplikeaboss\sinistercore\sinistercore\events\ChatEvents.class
 me\pvplikeaboss\sinistercore\sinistercore\objects\KitObject.class
+me\pvplikeaboss\sinistercore\sinistercore\modules\economy\EconomyEntry.class
 me\pvplikeaboss\sinistercore\sinistercore\commands\util\base\ITabContext.class
 me\pvplikeaboss\sinistercore\sinistercore\modules\API\permissionsex\PexAPI.class
 me\pvplikeaboss\sinistercore\sinistercore\modules\API\vault\VaultAPI.class

@@ -54,8 +54,24 @@ public class SinisterCore extends JavaPlugin {
         players.addAll(playerUtils.getPlayers());
     }
 
-    public void refreshPlayers() {// add new players
+    public void refreshPlayersOnline() {// add new players
         for(Player player : this.getServer().getOnlinePlayers()) {
+            boolean found = false;
+            for(PlayerObject tmpplayer : players) {
+                if(tmpplayer.playerUUID.compareTo(player.getUniqueId()) == 0) {
+                    found = true;
+                    break;
+                }
+            }
+
+            if(found == false) {
+                players.add(new PlayerObject(this, player.getUniqueId()));
+            }
+        }
+    }
+
+    public void refreshPlayersOffline() {// add new players
+        for(OfflinePlayer player : this.getServer().getOfflinePlayers()) {
             boolean found = false;
             for(PlayerObject tmpplayer : players) {
                 if(tmpplayer.playerUUID.compareTo(player.getUniqueId()) == 0) {
@@ -78,7 +94,15 @@ public class SinisterCore extends JavaPlugin {
         }
 
         // if we get here its a new player or player doesnt exist...
-        refreshPlayers();
+        refreshPlayersOnline();
+
+        for(PlayerObject p : players) {
+            if(p.playerName.equalsIgnoreCase(pName)) {
+                return p;
+            }
+        }
+
+        refreshPlayersOffline();
 
         for(PlayerObject p : players) {
             if(p.playerName.equalsIgnoreCase(pName)) {
@@ -91,18 +115,27 @@ public class SinisterCore extends JavaPlugin {
 
     public PlayerObject getPlayer(UUID pUUID) {
         for(PlayerObject p : players) {
-            if(p.playerUUID.compareTo(pUUID) == 0) {
+            if(p.playerUUID.equals(pUUID)) {
                 return p;
             }
         }
         // if we get here its a new player or player doesnt exist...
-        refreshPlayers();
+        refreshPlayersOnline();
 
         for(PlayerObject p : players) {
-            if(p.playerUUID.compareTo(pUUID) == 0) {
+            if(p.playerUUID.equals(pUUID)) {
                 return p;
             }
         }
+
+        refreshPlayersOffline();
+
+        for(PlayerObject p : players) {
+            if(p.playerUUID.equals(pUUID)) {
+                return p;
+            }
+        }
+
         return null;
     }
 

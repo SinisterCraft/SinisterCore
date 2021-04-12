@@ -145,7 +145,7 @@ public class SinisterCore extends JavaPlugin {
 
         Instances.load_instances(this);
 
-        utilMsgs = (Messages) Instances.getInstance(Instances.InstanceType.Utilities, 2);
+        loadPlayers();
 
         ClearlagModule.load(this);
         ClearlagModule.startClearLagModule();

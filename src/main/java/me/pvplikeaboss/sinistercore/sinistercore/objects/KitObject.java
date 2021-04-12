@@ -2,7 +2,7 @@ package me.pvplikeaboss.sinistercore.sinistercore.objects;
 
 import me.pvplikeaboss.sinistercore.sinistercore.Instances;
 import me.pvplikeaboss.sinistercore.sinistercore.SinisterCore;
-import me.pvplikeaboss.sinistercore.sinistercore.modules.files.configs.yml.KitConfig;
+import me.pvplikeaboss.sinistercore.sinistercore.modules.data.files.configs.yml.KitConfig;
 import me.pvplikeaboss.sinistercore.sinistercore.utilites.misc.Cooldown;
 import me.pvplikeaboss.sinistercore.sinistercore.utilites.misc.Items;
 import me.pvplikeaboss.sinistercore.sinistercore.utilites.misc.Messages;

@@ -15,6 +15,16 @@ features:
   clearlag:
     enabled: true
     delay: 300
+  mysql:
+    enabled: true
+    server:
+      host: "127.0.0.1"
+      port: "3306"
+    connection:
+      database: "sinistercore"
+      username: "root"
+      password: "pass"
+      params: "characterEncoding=latin1"
 combat-log:
   allowed-cmds:
     - msg

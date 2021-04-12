@@ -1,10 +1,9 @@
-package me.pvplikeaboss.sinistercore.sinistercore.modules.files.configs;
+package me.pvplikeaboss.sinistercore.sinistercore.modules.data.files.configs;
 
 import me.pvplikeaboss.sinistercore.sinistercore.SinisterCore;
-import me.pvplikeaboss.sinistercore.sinistercore.modules.files.configs.csv.items.LegacyItemDB;
-import me.pvplikeaboss.sinistercore.sinistercore.modules.files.configs.csv.items.methods.AbstractItemDB;
-import me.pvplikeaboss.sinistercore.sinistercore.modules.files.configs.yml.*;
-import org.bukkit.configuration.file.FileConfiguration;
+import me.pvplikeaboss.sinistercore.sinistercore.modules.data.files.configs.csv.items.LegacyItemDB;
+import me.pvplikeaboss.sinistercore.sinistercore.modules.data.files.configs.csv.items.methods.AbstractItemDB;
+import me.pvplikeaboss.sinistercore.sinistercore.modules.data.files.configs.yml.*;
 
 public class Configs {
     private SinisterCore plugin = null;

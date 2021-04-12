@@ -1,4 +1,4 @@
-package me.pvplikeaboss.sinistercore.sinistercore.modules.files.configs.yml;
+package me.pvplikeaboss.sinistercore.sinistercore.modules.data.files.configs.yml;
 
 import me.pvplikeaboss.sinistercore.sinistercore.SinisterCore;
 import org.bukkit.Bukkit;
@@ -11,14 +11,13 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class PlayerConfig {
+public class HomeConfig {
     private final SinisterCore plugin;
+    private Logger utilMsgs;
     private File configFile;
     private FileConfiguration config;
-    private Logger utilMsgs;
 
-
-    public PlayerConfig(SinisterCore p) {
+    public HomeConfig(SinisterCore p) {
         this.plugin = p;
         this.utilMsgs = Bukkit.getServer().getLogger();
         load();
@@ -31,17 +30,17 @@ public class PlayerConfig {
     }
 
     public void load() {
-        configFile = new File(plugin.getDataFolder(), "players.yml");
+        configFile = new File(plugin.getDataFolder(), "homes.yml");
         if (!configFile.exists()) {
             configFile.getParentFile().mkdirs();
-            plugin.saveResource("players.yml", false);
+            plugin.saveResource("homes.yml", false);
         }
 
         config = new YamlConfiguration();
         try {
             config.load(configFile);
         } catch (IOException | InvalidConfigurationException e) {
-            utilMsgs.log(Level.SEVERE, "Failed to load players.yml");
+            utilMsgs.log(Level.SEVERE, "Failed to load homes.yml");
         }
     }
 
@@ -56,12 +55,12 @@ public class PlayerConfig {
             e.printStackTrace();
         }
 
-        configFile = new File(plugin.getDataFolder(), "players.yml");
+        configFile = new File(plugin.getDataFolder(), "homes.yml");
         config = new YamlConfiguration();
         try {
             config.load(configFile);
         } catch (IOException | InvalidConfigurationException e) {
-            utilMsgs.log(Level.SEVERE, "Failed to reload players.yml");
+            utilMsgs.log(Level.SEVERE, "Failed to reload homes.yml");
         }
     }
 }

@@ -1,8 +1,6 @@
-package me.pvplikeaboss.sinistercore.sinistercore.modules.files.configs.yml;
+package me.pvplikeaboss.sinistercore.sinistercore.modules.data.files.configs.yml;
 
-import me.pvplikeaboss.sinistercore.sinistercore.Instances;
 import me.pvplikeaboss.sinistercore.sinistercore.SinisterCore;
-import me.pvplikeaboss.sinistercore.sinistercore.utilites.misc.Messages;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.FileConfiguration;

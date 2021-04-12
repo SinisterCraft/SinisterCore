@@ -2,17 +2,15 @@ package me.pvplikeaboss.sinistercore.sinistercore.utilites.serverutils;
 
 import me.pvplikeaboss.sinistercore.sinistercore.Instances;
 import me.pvplikeaboss.sinistercore.sinistercore.SinisterCore;
-import me.pvplikeaboss.sinistercore.sinistercore.modules.files.configs.yml.PlayerConfig;
+import me.pvplikeaboss.sinistercore.sinistercore.modules.data.files.configs.yml.PlayerConfig;
 import me.pvplikeaboss.sinistercore.sinistercore.objects.PlayerObject;
 import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.UUID;
-import java.util.logging.Level;
 
 public class PlayerUtils {
     private SinisterCore plugin;

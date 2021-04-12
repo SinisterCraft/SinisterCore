@@ -1,4 +1,4 @@
-package me.pvplikeaboss.sinistercore.sinistercore.modules.files.configs.csv.items.methods;
+package me.pvplikeaboss.sinistercore.sinistercore.modules.data.files.configs.csv.items.methods;
 
 import me.pvplikeaboss.sinistercore.sinistercore.SinisterCore;
 import me.pvplikeaboss.sinistercore.sinistercore.objects.PlayerObject;

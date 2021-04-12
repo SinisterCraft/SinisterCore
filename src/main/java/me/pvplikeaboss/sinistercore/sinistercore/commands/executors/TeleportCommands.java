@@ -3,8 +3,7 @@ package me.pvplikeaboss.sinistercore.sinistercore.commands.executors;
 import me.pvplikeaboss.sinistercore.sinistercore.Instances;
 import me.pvplikeaboss.sinistercore.sinistercore.SinisterCore;
 import me.pvplikeaboss.sinistercore.sinistercore.commands.util.CommandContext;
-import me.pvplikeaboss.sinistercore.sinistercore.modules.files.configs.csv.items.methods.AbstractItemDB;
-import me.pvplikeaboss.sinistercore.sinistercore.modules.files.configs.yml.HomeConfig;
+import me.pvplikeaboss.sinistercore.sinistercore.modules.data.files.configs.yml.HomeConfig;
 import me.pvplikeaboss.sinistercore.sinistercore.objects.PlayerObject;
 import me.pvplikeaboss.sinistercore.sinistercore.utilites.misc.Messages;
 import me.pvplikeaboss.sinistercore.sinistercore.utilites.serverutils.PlayerUtils;
@@ -326,6 +325,7 @@ public class TeleportCommands {
                         if(warpsLen == size-1) {
                             warpsLen++;
                             warpList.append("&7"+tmp);
+                            break;
                         }
                         warpsLen++;
                         warpList.append("&7"+tmp+"&6, ");
@@ -340,7 +340,7 @@ public class TeleportCommands {
                     }
                     if (context.isPlayer()) {
                         utilMsgs.errorMessage(sender, "&7Usage: /warp <name>");
-                        utilMsgs.errorMessage(sender, "&7Available Warps: "+warpList);
+                        utilMsgs.errorMessage(sender, "&cAvailable Warps: "+warpList);
                     } else {
                         utilMsgs.logErrorMessage("&7Usage: /warp <name> <player>");
                     }

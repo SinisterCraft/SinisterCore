@@ -1,9 +1,9 @@
-package me.pvplikeaboss.sinistercore.sinistercore.modules.files.configs.csv.items;
+package me.pvplikeaboss.sinistercore.sinistercore.modules.data.files.configs.csv.items;
 
 import me.pvplikeaboss.sinistercore.sinistercore.Instances;
 import me.pvplikeaboss.sinistercore.sinistercore.SinisterCore;
-import me.pvplikeaboss.sinistercore.sinistercore.modules.files.configs.csv.ManagedFile;
-import me.pvplikeaboss.sinistercore.sinistercore.modules.files.configs.csv.items.methods.AbstractItemDB;
+import me.pvplikeaboss.sinistercore.sinistercore.modules.data.files.configs.csv.ManagedFile;
+import me.pvplikeaboss.sinistercore.sinistercore.modules.data.files.configs.csv.items.methods.AbstractItemDB;
 import me.pvplikeaboss.sinistercore.sinistercore.utilites.misc.Messages;
 import me.pvplikeaboss.sinistercore.sinistercore.utilites.typeutils.EnumUtil;
 import me.pvplikeaboss.sinistercore.sinistercore.utilites.typeutils.NumberUtil;

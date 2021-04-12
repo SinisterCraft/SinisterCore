@@ -1,8 +1,6 @@
-package me.pvplikeaboss.sinistercore.sinistercore.modules.files.configs.yml;
+package me.pvplikeaboss.sinistercore.sinistercore.modules.data.files.configs.yml;
 
-import me.pvplikeaboss.sinistercore.sinistercore.Instances;
 import me.pvplikeaboss.sinistercore.sinistercore.SinisterCore;
-import me.pvplikeaboss.sinistercore.sinistercore.utilites.misc.Messages;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -13,13 +11,14 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class HomeConfig {
+public class KitConfig {
     private final SinisterCore plugin;
-    private Logger utilMsgs;
     private File configFile;
     private FileConfiguration config;
+    private Logger utilMsgs;
 
-    public HomeConfig(SinisterCore p) {
+
+    public KitConfig(SinisterCore p) {
         this.plugin = p;
         this.utilMsgs = Bukkit.getServer().getLogger();
         load();
@@ -32,19 +31,20 @@ public class HomeConfig {
     }
 
     public void load() {
-        configFile = new File(plugin.getDataFolder(), "homes.yml");
+        configFile = new File(plugin.getDataFolder(), "kits.yml");
         if (!configFile.exists()) {
             configFile.getParentFile().mkdirs();
-            plugin.saveResource("homes.yml", false);
+            plugin.saveResource("kits.yml", false);
         }
 
         config = new YamlConfiguration();
         try {
             config.load(configFile);
         } catch (IOException | InvalidConfigurationException e) {
-            utilMsgs.log(Level.SEVERE, "Failed to load homes.yml");
+            utilMsgs.log(Level.SEVERE, "Failed to load kits.yml");
         }
     }
+
 
     public FileConfiguration getConfig() {
         return this.config;
@@ -57,12 +57,12 @@ public class HomeConfig {
             e.printStackTrace();
         }
 
-        configFile = new File(plugin.getDataFolder(), "homes.yml");
+        configFile = new File(plugin.getDataFolder(), "kits.yml");
         config = new YamlConfiguration();
         try {
             config.load(configFile);
         } catch (IOException | InvalidConfigurationException e) {
-            utilMsgs.log(Level.SEVERE, "Failed to reload homes.yml");
+            utilMsgs.log(Level.SEVERE, "Failed to reload kits.yml");
         }
     }
 }

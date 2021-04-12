@@ -2,7 +2,7 @@ package me.pvplikeaboss.sinistercore.sinistercore.modules.API.vault;
 
 import me.pvplikeaboss.sinistercore.sinistercore.Instances;
 import me.pvplikeaboss.sinistercore.sinistercore.SinisterCore;
-import me.pvplikeaboss.sinistercore.sinistercore.modules.files.configs.yml.EconConfig;
+import me.pvplikeaboss.sinistercore.sinistercore.modules.data.files.configs.yml.EconConfig;
 import me.pvplikeaboss.sinistercore.sinistercore.objects.PlayerObject;
 import net.milkbowl.vault.economy.AbstractEconomy;
 import net.milkbowl.vault.economy.EconomyResponse;

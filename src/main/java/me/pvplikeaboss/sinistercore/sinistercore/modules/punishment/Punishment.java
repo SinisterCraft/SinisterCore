@@ -2,7 +2,7 @@ package me.pvplikeaboss.sinistercore.sinistercore.modules.punishment;
 
 import me.pvplikeaboss.sinistercore.sinistercore.Instances;
 import me.pvplikeaboss.sinistercore.sinistercore.SinisterCore;
-import me.pvplikeaboss.sinistercore.sinistercore.modules.files.configs.yml.PunishmentConfig;
+import me.pvplikeaboss.sinistercore.sinistercore.modules.data.files.configs.yml.PunishmentConfig;
 import me.pvplikeaboss.sinistercore.sinistercore.objects.PlayerObject;
 import me.pvplikeaboss.sinistercore.sinistercore.utilites.misc.Time;
 import org.bukkit.ChatColor;

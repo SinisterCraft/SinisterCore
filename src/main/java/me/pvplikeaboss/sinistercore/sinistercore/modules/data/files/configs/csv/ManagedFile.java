@@ -1,4 +1,4 @@
-package me.pvplikeaboss.sinistercore.sinistercore.modules.files.configs.csv;
+package me.pvplikeaboss.sinistercore.sinistercore.modules.data.files.configs.csv;
 
 import me.pvplikeaboss.sinistercore.sinistercore.SinisterCore;
 import org.bukkit.Bukkit;

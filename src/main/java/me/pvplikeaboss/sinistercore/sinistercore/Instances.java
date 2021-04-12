@@ -7,6 +7,7 @@ import me.pvplikeaboss.sinistercore.sinistercore.modules.API.vault.EconomyImplem
 import me.pvplikeaboss.sinistercore.sinistercore.modules.API.vault.VaultAPI;
 import me.pvplikeaboss.sinistercore.sinistercore.modules.chat.ChatHandler;
 import me.pvplikeaboss.sinistercore.sinistercore.modules.data.files.configs.Configs;
+import me.pvplikeaboss.sinistercore.sinistercore.modules.data.mysql.MysqlConnector;
 import me.pvplikeaboss.sinistercore.sinistercore.modules.punishment.Punishment;
 import me.pvplikeaboss.sinistercore.sinistercore.objects.PlayerObject;
 import me.pvplikeaboss.sinistercore.sinistercore.utilites.Utilities;
@@ -14,11 +15,13 @@ import net.milkbowl.vault.economy.Economy;
 
 import java.util.HashMap;
 import java.util.UUID;
+import java.util.logging.Level;
 
 public class Instances {
     private static SinisterCore plugin;
 
     public static Configs configs = null;
+    public static MysqlConnector mysqlConn = null;
     public static Utilities utilities = null;
     public static Events events = null;
     public static Commands commands = null;
@@ -43,6 +46,7 @@ public class Instances {
         Events,
         Commands,
         Config,
+        Database,
         Chat,
         Punishment,
         Economy,

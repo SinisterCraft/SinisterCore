@@ -8,14 +8,15 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 public class MysqlConnector {
-    private SinisterCore plugin = null;
-    private Connection databaseConnection = null;
+    private static SinisterCore plugin = null;
+    private static Connection databaseConnection = null;
 
     public MysqlConnector(SinisterCore p) {
         this.plugin = p;
     }
 
-    public boolean initMysqlConnection() {
+    public static boolean initMysqlConnection(SinisterCore p) {
+        plugin = p;
         if(plugin.getConfig().getBoolean("features.mysql.enabled")) {
             try {
                 String host = plugin.getConfig().getString("features.mysql.server.host");
@@ -64,7 +65,7 @@ public class MysqlConnector {
         return false;
     }
 
-    public Connection getDatabaseConnection() {
-        return this.databaseConnection;
+    public static Connection getDatabaseConnection() {
+        return databaseConnection;
     }
 }

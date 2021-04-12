@@ -1,6 +1,7 @@
 package me.pvplikeaboss.sinistercore.sinistercore;
 
 import me.pvplikeaboss.sinistercore.sinistercore.modules.clearlag.ClearlagModule;
+import me.pvplikeaboss.sinistercore.sinistercore.modules.data.mysql.MysqlConnector;
 import me.pvplikeaboss.sinistercore.sinistercore.objects.PlayerObject;
 import me.pvplikeaboss.sinistercore.sinistercore.utilites.misc.Messages;
 import me.pvplikeaboss.sinistercore.sinistercore.utilites.serverutils.PlayerUtils;
@@ -11,6 +12,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import java.util.logging.Level;
 
 public class SinisterCore extends JavaPlugin {
     public List<PlayerObject> players = null;
@@ -18,6 +20,8 @@ public class SinisterCore extends JavaPlugin {
     private Messages utilMsgs = null;
 
     public String prefix = "[SinisterCore]";
+
+    public boolean useMysql = false;
 
     public void onEnable() {
         this.loadAll();
@@ -32,7 +36,7 @@ public class SinisterCore extends JavaPlugin {
         players.clear();
 
         PlayerUtils playerUtils = (PlayerUtils) Instances.getInstance(Instances.InstanceType.Utilities, 3);
-        players.addAll(playerUtils.getPlayers());
+        players.addAll(playerUtils.loadPlayers());
     }
 
     public void refreshPlayersOnline() {// add new players
@@ -132,23 +136,16 @@ public class SinisterCore extends JavaPlugin {
     }
 
     public void loadAll() {
+        if(getConfig().getBoolean("features.mysql.enabled")) {
+            useMysql = true;
+            if (!MysqlConnector.initMysqlConnection(this)) {
+                getLogger().log(Level.SEVERE, "Failed to initalize mysql database!");
+            }
+        }
+
         Instances.load_instances(this);
 
         utilMsgs = (Messages) Instances.getInstance(Instances.InstanceType.Utilities, 2);
-
-        players = new ArrayList<>();
-        /*for(Player p : this.getServer().getOnlinePlayers()) {// load up all players
-            if(p.getUniqueId() == null) {
-                Messages utilMsgs = (Messages) Instances.getInstance(Instances.InstanceType.Utilities, 2);
-                utilMsgs.logErrorMessage("Invalid uuid loading players");
-                continue;
-            }
-            players.add(new PlayerObject(this, p.getUniqueId()));
-        }*/
-
-        for(OfflinePlayer p : this.getServer().getOfflinePlayers()) {
-            players.add(new PlayerObject(this, p.getUniqueId()));
-        }
 
         ClearlagModule.load(this);
         ClearlagModule.startClearLagModule();

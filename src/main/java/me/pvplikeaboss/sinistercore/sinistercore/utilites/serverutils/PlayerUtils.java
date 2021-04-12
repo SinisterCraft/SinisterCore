@@ -36,7 +36,7 @@ public class PlayerUtils {
         }
 
         for(Player p : plugin.getServer().getOnlinePlayers()) {
-            if(p.getName().equalsIgnoreCase(name)) {
+            if(p.getName().equalsIgnoreCase(name) || p.getDisplayName().equalsIgnoreCase(name)) {
                 return p.getName();
             }
         }
@@ -46,7 +46,7 @@ public class PlayerUtils {
 
     public String playerOnline(String pName) {
         for(Player p : plugin.getServer().getOnlinePlayers()) {
-            if(p.getName().equalsIgnoreCase(pName)) {
+            if(p.getName().equalsIgnoreCase(pName) || p.getDisplayName().equalsIgnoreCase(pName)) {
                 return p.getName();
             }
         }

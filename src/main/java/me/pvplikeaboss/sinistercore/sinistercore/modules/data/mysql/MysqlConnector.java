@@ -40,11 +40,11 @@ public class MysqlConnector {
                     mysqlQuery.append("CREATE TABLE IF NOT EXISTS `players` (                ");
                     mysqlQuery.append("  `player_id` INT(4) UNSIGNED NOT NULL AUTO_INCREMENT,");
                     mysqlQuery.append("  `player_uuid` CHAR(36) NOT NULL UNIQUE,             ");
-                    mysqlQuery.append("  `isGodMode` INT(4) UNSIGNED NOT NULL UNIQUE,        ");
-                    mysqlQuery.append("  `isVanish` INT(4) UNSIGNED NOT NULL UNIQUE,         ");
-                    mysqlQuery.append("  `recieveMsgs` INT(4) UNSIGNED NOT NULL UNIQUE,      ");
-                    mysqlQuery.append("  `lastPlayerLogoutLocation` CHAR(64) NOT NULL UNIQUE,");
-                    mysqlQuery.append("  `lastPlayerDeathLocation` CHAR(64) NOT NULL UNIQUE, ");
+                    mysqlQuery.append("  `isGodMode` CHAR(8) NOT NULL,                       ");
+                    mysqlQuery.append("  `isVanish` CHAR(8) NOT NULL,                        ");
+                    mysqlQuery.append("  `recieveMsgs` CHAR(8) NOT NULL,                     ");
+                    mysqlQuery.append("  `lastPlayerLogoutLocation` CHAR(64) NOT NULL,       ");
+                    mysqlQuery.append("  `lastPlayerDeathLocation` CHAR(64) NOT NULL,        ");
                     mysqlQuery.append("  PRIMARY KEY (`player_id`),                          ");
                     mysqlQuery.append("  KEY (`player_uuid`)                                 ");
                     mysqlQuery.append(")                                                     ");

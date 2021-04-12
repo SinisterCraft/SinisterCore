@@ -21,7 +21,7 @@ public class SinisterTabCompleter  implements TabExecutor {
         int x = 0;
         for(PlayerObject playerObject : plugin.getPlayers()) {
             if(playerObject.isPlayerOnline) {
-                usernames.add(playerObject.playerName);
+                usernames.add(playerObject.playerDisplayName);
                 x++;
             } else {
                 continue;

@@ -60,6 +60,26 @@ public class PlayerObject implements Comparable<PlayerObject> {
         this.thisObject = this;
     }
 
+    public PlayerObject(SinisterCore p) {// make a blank player object
+        this.plugin = p;
+        this.utilPlayer = (PlayerUtils) Instances.getInstance(Instances.InstanceType.Utilities, 3);
+        this.utilMsgs = (Messages) Instances.getInstance(Instances.InstanceType.Utilities, 2);
+        this.punish = (Punishment) Instances.getInstance(Instances.InstanceType.Punishment, -1);
+        this.thisObject = this;
+    }
+
+    public PlayerObject initialize(UUID pUUID) {
+        this.playerUUID = pUUID;
+        if(this.isPlayerOnline = this.utilPlayer.playerOnline(pUUID)) {
+            this.playerName = plugin.getServer().getPlayer(pUUID).getName();
+            this.playerDisplayName = plugin.getServer().getPlayer(pUUID).getDisplayName();
+        } else {
+            this.playerName = plugin.getServer().getOfflinePlayer(pUUID).getName();
+            this.playerDisplayName = this.playerName;//cant get displayname cus offline
+        }
+        return this.thisObject;
+    }
+
     /*
 
     Get/Set Strings

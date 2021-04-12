@@ -73,7 +73,7 @@ public class SinisterCore extends JavaPlugin {
 
     public PlayerObject getPlayer(String pName) {
         for(PlayerObject p : players) {
-            if(p.playerName.equalsIgnoreCase(pName)) {
+            if(p.playerName.equalsIgnoreCase(pName) || p.playerDisplayName.equalsIgnoreCase(pName)) {
                 return p;
             }
         }
@@ -82,7 +82,7 @@ public class SinisterCore extends JavaPlugin {
         refreshPlayersOnline();
 
         for(PlayerObject p : players) {
-            if(p.playerName.equalsIgnoreCase(pName)) {
+            if(p.playerName.equalsIgnoreCase(pName) || p.playerDisplayName.equalsIgnoreCase(pName)) {
                 return p;
             }
         }
@@ -90,7 +90,7 @@ public class SinisterCore extends JavaPlugin {
         refreshPlayersOffline();
 
         for(PlayerObject p : players) {
-            if(p.playerName.equalsIgnoreCase(pName)) {
+            if(p.playerName.equalsIgnoreCase(pName) || p.playerDisplayName.equalsIgnoreCase(pName)) {
                 return p;
             }
         }

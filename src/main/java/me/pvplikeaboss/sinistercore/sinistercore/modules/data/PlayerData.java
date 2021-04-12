@@ -75,14 +75,14 @@ public class PlayerData {
                     y = playerCfg.getConfig().getDouble("players." + player.playerUUID + ".lastPlayerLogoutLocation.y");
                     z = playerCfg.getConfig().getDouble("players." + player.playerUUID + ".lastPlayerLogoutLocation.z");
                     worldStr = playerCfg.getConfig().getString("players." + player.playerUUID + ".lastPlayerLogoutLocation.world");
-                    player.setLastPlayerDeathLocation(new Location(plugin.getServer().getWorld(worldStr), x, y, z));
+                    player.setLastPlayerLogoutLocation(new Location(plugin.getServer().getWorld(worldStr), x, y, z));
                 }
 
                 ret.add(player);
             }
             return ret;
         } else {
-            return PlayerDatabase.getAllPlayers();
+            return PlayerDatabase.getAllPlayers(plugin);
         }
     }
 }

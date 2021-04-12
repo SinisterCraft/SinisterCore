@@ -4,6 +4,7 @@ import me.pvplikeaboss.sinistercore.sinistercore.Instances;
 import me.pvplikeaboss.sinistercore.sinistercore.SinisterCore;
 import me.pvplikeaboss.sinistercore.sinistercore.modules.data.files.configs.yml.EconConfig;
 import me.pvplikeaboss.sinistercore.sinistercore.objects.PlayerObject;
+import me.pvplikeaboss.sinistercore.sinistercore.utilites.serverutils.PlayerUtils;
 import net.milkbowl.vault.economy.AbstractEconomy;
 import net.milkbowl.vault.economy.EconomyResponse;
 import org.bukkit.OfflinePlayer;
@@ -76,12 +77,13 @@ public class EconomyImplementer extends AbstractEconomy {
 
     
     public double getBalance(String s) {
-        PlayerObject player = plugin.getPlayer(s);
-        if(player != null) {
-            if(!player.isPlayerOnline) {
-                return getBalance(player.getOfflinePlayer());
+        PlayerUtils playerUtils = (PlayerUtils) Instances.getInstance(Instances.InstanceType.Utilities, 3);
+        String pName = playerUtils.playerExists(s);
+        if(pName != null) {
+            if(plugin.getServer().getPlayer(pName) == null) {
+                return getBalance(plugin.getServer().getOfflinePlayer(pName));
             } else {
-                UUID playerUUID = player.playerUUID;
+                UUID playerUUID = plugin.getServer().getPlayer(pName).getUniqueId();
                 if (cfgEcon.getConfig().isSet("econ")) {
                     for (String sUUID : cfgEcon.getConfig().getConfigurationSection("econ").getKeys(false)) {
                         if (playerUUID.compareTo(UUID.fromString(sUUID)) == 0) {

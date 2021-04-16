@@ -1,9 +1,9 @@
 features:
   chat:
-    factions: true
+    factions: false
     enabled: true
   economy:
-    enabled: true
+    enabled: false
   kits:
     enabled: true
   teleport:
@@ -22,9 +22,9 @@ features:
       port: "3306"
     connection:
       database: "sinistercore"
-      username: "root"
-      password: "pass"
-      params: "characterEncoding=latin1"
+      username: "permissionsex"
+      password: "ilovethe69"
+      params: "characterEncoding=latin1&useConfigs=maxPerformance"
 combat-log:
   allowed-cmds:
     - msg

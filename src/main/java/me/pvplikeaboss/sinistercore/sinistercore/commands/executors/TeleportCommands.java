@@ -438,6 +438,7 @@ public class TeleportCommands {
                 if (plugin.getConfig().isSet("spawn")) {
                     plugin.getConfig().set("spawn", null);
                 }
+                playerLocation.getWorld().setSpawnLocation((int) playerLocation.getX(), (int) playerLocation.getBlockY(), (int) playerLocation.getBlockZ());
                 plugin.getConfig().set("spawn.x", playerLocation.getX());
                 plugin.getConfig().set("spawn.y", playerLocation.getY());
                 plugin.getConfig().set("spawn.z", playerLocation.getZ());

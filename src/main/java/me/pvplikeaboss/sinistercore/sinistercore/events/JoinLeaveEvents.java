@@ -71,7 +71,7 @@ public class JoinLeaveEvents implements Listener {
             }
         } else {
             utilBroadcast.rawBroadcast("&8[&b+&8] &7Welcome &6" + player.playerDisplayName + " &7Has Joined For The First Time!");
-            if(plugin.getConfig().getBoolean("features.teleport.enabled")) {
+            if(plugin.getConfig().getBoolean("features.teleport.enabled") && plugin.getConfig().isSet("spawn")) {
                 double x = plugin.getConfig().getDouble("spawn.x");
                 double y = plugin.getConfig().getDouble("spawn.y");
                 double z = plugin.getConfig().getDouble("spawn.z");

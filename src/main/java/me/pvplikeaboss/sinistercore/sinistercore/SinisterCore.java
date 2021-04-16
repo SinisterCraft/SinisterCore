@@ -21,6 +21,8 @@ public class SinisterCore extends JavaPlugin {
 
     public String prefix = "[SinisterCore]";
 
+    public MysqlConnector mysqlConnector = null;
+
     public boolean useMysql = false;
 
     public void onEnable() {
@@ -36,7 +38,10 @@ public class SinisterCore extends JavaPlugin {
         players.clear();
 
         PlayerUtils playerUtils = (PlayerUtils) Instances.getInstance(Instances.InstanceType.Utilities, 3);
-        players.addAll(playerUtils.loadPlayers());
+        List<PlayerObject> tmpPlayers = playerUtils.loadPlayers();
+        if(tmpPlayers != null) {// if no players in database or file
+            players.addAll(tmpPlayers);
+        }
     }
 
     public void refreshPlayersOnline() {// add new players

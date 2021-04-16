@@ -6,10 +6,7 @@ import me.pvplikeaboss.sinistercore.sinistercore.objects.PlayerObject;
 import org.bukkit.Location;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -92,7 +89,7 @@ public class PlayerDatabase {
     }
 
     public static List<PlayerObject> getAllPlayers(SinisterCore plugin) {
-        List<PlayerObject> players = new ArrayList<>();
+        List<PlayerObject> players = null;// leave null until first player is found
 
         Connection mysqlConn = MysqlConnector.getDatabaseConnection();
         try {
@@ -116,85 +113,110 @@ public class PlayerDatabase {
                 String lastDeathLocation = rs.getString("lastPlayerDeathLocation");
 
                 if (lastLogoutLocation.length() > 0) {
-                    try {
-                        String[] values = lastLogoutLocation.split(",");
-                        x = Double.parseDouble(values[0]);
-                        y = Double.parseDouble(values[1]);
-                        z = Double.parseDouble(values[2]);
-                        worldStr = values[3];
-                        player.setLastPlayerLogoutLocation(new Location(plugin.getServer().getWorld(worldStr), x, y, z));
-                    } catch(NumberFormatException e) {
-                        e.printStackTrace();
+                    if (!lastLogoutLocation.equalsIgnoreCase("null")) {
+                        try {
+                            String[] values = lastLogoutLocation.split(",");
+                            x = Double.parseDouble(values[0]);
+                            y = Double.parseDouble(values[1]);
+                            z = Double.parseDouble(values[2]);
+                            worldStr = values[3];
+                            player.setLastPlayerLogoutLocation(new Location(plugin.getServer().getWorld(worldStr), x, y, z));
+                        } catch (NumberFormatException e) {
+                            e.printStackTrace();
+                        }
                     }
                 }
 
                 if (lastDeathLocation.length() > 0) {
-                    try {
-                        String[] values = lastDeathLocation.split(",");
-                        x = Double.parseDouble(values[0]);
-                        y = Double.parseDouble(values[1]);
-                        z = Double.parseDouble(values[2]);
-                        worldStr = values[3];
-                        player.setLastPlayerDeathLocation(new Location(plugin.getServer().getWorld(worldStr), x, y, z));
-                    } catch (NumberFormatException e) {
-                        e.printStackTrace();
+                    if(!lastDeathLocation.equalsIgnoreCase("null")) {
+                        try {
+                            String[] values = lastDeathLocation.split(",");
+                            x = Double.parseDouble(values[0]);
+                            y = Double.parseDouble(values[1]);
+                            z = Double.parseDouble(values[2]);
+                            worldStr = values[3];
+                            player.setLastPlayerDeathLocation(new Location(plugin.getServer().getWorld(worldStr), x, y, z));
+                        } catch (NumberFormatException e) {
+                            e.printStackTrace();
+                        }
                     }
                 }
-
+                if(players == null) {
+                    players = new ArrayList<>();
+                }
                 players.add(player);
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return null;
+        return players;
     }
 
     public static void savePlayer(PlayerObject p) {
-        String logoutLocStr = p.getLastPlayerLogoutLocation().getX()+","+p.getLastPlayerLogoutLocation().getY()+","+p.getLastPlayerLogoutLocation().getZ()+","+p.getLastPlayerLogoutLocation().getWorld().getName();
-        String deathLocStr = p.getLastPlayerDeathLocation().getX()+","+p.getLastPlayerDeathLocation().getY()+","+p.getLastPlayerDeathLocation().getZ()+","+p.getLastPlayerDeathLocation().getWorld().getName();
+        String logoutLocStr = "null";
+        if(p.getLastPlayerLogoutLocation() != null) {
+            logoutLocStr = p.getLastPlayerLogoutLocation().getX()+","+p.getLastPlayerLogoutLocation().getY()+","+p.getLastPlayerLogoutLocation().getZ()+","+p.getLastPlayerLogoutLocation().getWorld().getName();
+        }
+        String deathLocStr = "null";
+        if(p.getLastPlayerDeathLocation() != null) {
+            deathLocStr = p.getLastPlayerDeathLocation().getX()+","+p.getLastPlayerDeathLocation().getY()+","+p.getLastPlayerDeathLocation().getZ()+","+p.getLastPlayerDeathLocation().getWorld().getName();
+        }
 
         if(playerExists(p.playerUUID)) {// update
             Connection mysqlConn = MysqlConnector.getDatabaseConnection();
             try {
-                PreparedStatement preparedStatement = null;
-                String setGodModeStatement = "UPDATE `players` SET `isGodMode` = '"+ p.getIsGodMode() +"' WHERE `player_uuid` = '"+p.playerUUID+"';";
-                String setVanishStatement = "UPDATE `players` SET `isVanish` = '"+ p.getIsVanish() +"' WHERE `player_uuid` = '"+p.playerUUID+"';";
-                String setRecvMsgsStatement = "UPDATE `players` SET `recieveMsgs` = '"+ p.getRecieveMsgs() +"' WHERE `player_uuid` = '"+p.playerUUID+"';";
+                String setGodModeStatement = "UPDATE players SET isGodMode = ? WHERE player_uuid = ?;";
+                String setVanishStatement = "UPDATE players SET isVanish = ? WHERE player_uuid = ?;";
+                String setRecvMsgsStatement = "UPDATE players SET recieveMsgs = ? WHERE player_uuid = ?;";
 
-                String setLogoutLocStatement = "UPDATE `players` SET `lastPlayerLogoutLocation` = '"+ logoutLocStr +"' WHERE `player_uuid` = '"+p.playerUUID+"';";
-                String setDeathLocStatement = "UPDATE `players` SET `lastPlayerDeathLocation` = '"+ deathLocStr +"' WHERE `player_uuid` = '"+p.playerUUID+"';";
+                String setLogoutLocStatement = "UPDATE players SET lastPlayerLogoutLocation = ? WHERE player_uuid = ?;";
+                String setDeathLocStatement = "UPDATE players SET lastPlayerDeathLocation = ? WHERE player_uuid = ?;";
 
-                preparedStatement = mysqlConn.prepareStatement(setGodModeStatement);
-                preparedStatement.executeQuery();
-                preparedStatement = null;
+                PreparedStatement stmt = mysqlConn.prepareStatement(setGodModeStatement);
+                stmt.setString(1, Boolean.toString(p.getIsGodMode()));
+                stmt.setString(2, p.playerUUID.toString());
+                stmt.executeUpdate();
+                stmt.close();
 
-                preparedStatement = mysqlConn.prepareStatement(setVanishStatement);
-                preparedStatement.executeQuery();
-                preparedStatement = null;
+                stmt = mysqlConn.prepareStatement(setVanishStatement);
+                stmt.setString(1, Boolean.toString(p.getIsVanish()));
+                stmt.setString(2, p.playerUUID.toString());
+                stmt.executeUpdate();
+                stmt.close();
 
-                preparedStatement = mysqlConn.prepareStatement(setRecvMsgsStatement);
-                preparedStatement.executeQuery();
-                preparedStatement = null;
+                stmt = mysqlConn.prepareStatement(setRecvMsgsStatement);
+                stmt.setString(1, Boolean.toString(p.getRecieveMsgs()));
+                stmt.setString(2, p.playerUUID.toString());
+                stmt.executeUpdate();
+                stmt.close();
 
-                preparedStatement = mysqlConn.prepareStatement(setLogoutLocStatement);
-                preparedStatement.executeQuery();
-                preparedStatement = null;
+                stmt = mysqlConn.prepareStatement(setLogoutLocStatement);
+                stmt.setString(1, logoutLocStr);
+                stmt.setString(2, p.playerUUID.toString());
+                stmt.executeUpdate();
+                stmt.close();
 
-                preparedStatement = mysqlConn.prepareStatement(setDeathLocStatement);
-                preparedStatement.executeQuery();
-                preparedStatement = null;
-
+                stmt = mysqlConn.prepareStatement(setDeathLocStatement);
+                stmt.setString(1, deathLocStr);
+                stmt.setString(2, p.playerUUID.toString());
+                stmt.executeUpdate();
+                stmt.close();
             } catch(SQLException e) {
                 e.printStackTrace();
             }
         } else {// new entry
             Connection mysqlConn = MysqlConnector.getDatabaseConnection();
             try {
-                PreparedStatement preparedStatement = null;
-                String insertStatement = "INSERT INTO `players` (`player_id`,`player_uuid`,`isGodMode`,`isVanish`,`recieveMsgs`,`lastPlayerLogoutLocation`,`lastPlayerDeathLocation`) VALUES (NULL, "+p.playerUUID+", "+p.getIsGodMode()+", "+p.getIsVanish()+", "+p.getRecieveMsgs()+", "+logoutLocStr+", "+deathLocStr+");";
-                preparedStatement = mysqlConn.prepareStatement(insertStatement);
-                preparedStatement.executeQuery();
-                preparedStatement = null;
+                Statement statement = mysqlConn.createStatement();
+                String insertStatement = "INSERT INTO `players` (`player_uuid`,`isGodMode`,`isVanish`,`recieveMsgs`,`lastPlayerLogoutLocation`,`lastPlayerDeathLocation`) VALUES (?, ?, ?, ?, ?, ?);";
+                PreparedStatement stmt = mysqlConn.prepareStatement(insertStatement);
+                stmt.setString(1, p.playerUUID.toString());
+                stmt.setString(2, Boolean.toString(p.getIsGodMode()));
+                stmt.setString(3, Boolean.toString(p.getIsVanish()));
+                stmt.setString(4, Boolean.toString(p.getRecieveMsgs()));
+                stmt.setString(5, logoutLocStr);
+                stmt.setString(6, deathLocStr);
+                stmt.executeUpdate();
             } catch(SQLException e) {
                 e.printStackTrace();
             }

@@ -32,7 +32,7 @@ public class DamageEvents implements Listener {
 
     @EventHandler
     public void onPlayerRespawn(PlayerRespawnEvent e) {
-        if(plugin.getConfig().getBoolean("features.teleport.enabled")) {
+        if(plugin.getConfig().getBoolean("features.teleport.enabled") && plugin.getConfig().isSet("spawn")) {
             double x = plugin.getConfig().getDouble("spawn.x");
             double y = plugin.getConfig().getDouble("spawn.y");
             double z = plugin.getConfig().getDouble("spawn.z");
@@ -46,7 +46,7 @@ public class DamageEvents implements Listener {
 
     @EventHandler
     public void onPlayerSpawn(PlayerSpawnLocationEvent e) {
-        if(plugin.getConfig().getBoolean("features.teleport.enabled")) {
+        if(plugin.getConfig().getBoolean("features.teleport.enabled") && plugin.getConfig().isSet("spawn")) {
             double x = plugin.getConfig().getDouble("spawn.x");
             double y = plugin.getConfig().getDouble("spawn.y");
             double z = plugin.getConfig().getDouble("spawn.z");

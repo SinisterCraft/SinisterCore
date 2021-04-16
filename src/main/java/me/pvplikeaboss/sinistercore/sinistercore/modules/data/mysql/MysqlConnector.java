@@ -2,10 +2,8 @@ package me.pvplikeaboss.sinistercore.sinistercore.modules.data.mysql;
 
 import me.pvplikeaboss.sinistercore.sinistercore.SinisterCore;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
+import java.util.logging.Level;
 
 public class MysqlConnector {
     private static SinisterCore plugin = null;
@@ -19,6 +17,7 @@ public class MysqlConnector {
         plugin = p;
         if(plugin.getConfig().getBoolean("features.mysql.enabled")) {
             try {
+                Class.forName("com.mysql.jdbc.Driver");
                 String host = plugin.getConfig().getString("features.mysql.server.host");
                 String port = plugin.getConfig().getString("features.mysql.server.port");
                 String database = plugin.getConfig().getString("features.mysql.connection.database");
@@ -34,31 +33,15 @@ public class MysqlConnector {
                 }
                 databaseConnection = DriverManager.getConnection(url, user, pass);
                 if (databaseConnection != null) {
-
-                    StringBuilder mysqlQuery = new StringBuilder();
-                    mysqlQuery.append("SET SQL_MODE = \"NO_AUTO_VALUE_ON_ZERO\"              ");
-                    mysqlQuery.append("CREATE TABLE IF NOT EXISTS `players` (                ");
-                    mysqlQuery.append("  `player_id` INT(4) UNSIGNED NOT NULL AUTO_INCREMENT,");
-                    mysqlQuery.append("  `player_uuid` CHAR(36) NOT NULL UNIQUE,             ");
-                    mysqlQuery.append("  `isGodMode` CHAR(8) NOT NULL,                       ");
-                    mysqlQuery.append("  `isVanish` CHAR(8) NOT NULL,                        ");
-                    mysqlQuery.append("  `recieveMsgs` CHAR(8) NOT NULL,                     ");
-                    mysqlQuery.append("  `lastPlayerLogoutLocation` CHAR(64) NOT NULL,       ");
-                    mysqlQuery.append("  `lastPlayerDeathLocation` CHAR(64) NOT NULL,        ");
-                    mysqlQuery.append("  PRIMARY KEY (`player_id`),                          ");
-                    mysqlQuery.append("  KEY (`player_uuid`)                                 ");
-                    mysqlQuery.append(")                                                     ");
-                    mysqlQuery.append("ENGINE =InnoDB DEFAULT CHARSET =latin1;               ");
-
-                    PreparedStatement PrepareStatement;
-                    PrepareStatement = databaseConnection.prepareStatement(mysqlQuery.toString());
-                    PrepareStatement.execute();
-
+                    Statement playerTableStatement = databaseConnection.createStatement();
+                    playerTableStatement.executeUpdate("CREATE TABLE IF NOT EXISTS players (player_id INTEGER NOT NULL AUTO_INCREMENT, player_uuid varchar(36) NOT NULL UNIQUE, isGodMode varchar(8) NOT NULL, isVanish varchar(8) NOT NULL, recieveMsgs varchar(8) NOT NULL, lastPlayerLogoutLocation varchar(64) NOT NULL, lastPlayerDeathLocation varchar(64) NOT NULL, PRIMARY KEY (`player_id`), KEY (`player_uuid`));");
                     return true;
                 } else {
+                    plugin.getLogger().log(Level.SEVERE, "MYSQL Failed on getConnection");
                     return false;
                 }
-            } catch (SQLException e) {
+            } catch (SQLException | ClassNotFoundException e) {
+                e.printStackTrace();
                 return false;
             }
         }

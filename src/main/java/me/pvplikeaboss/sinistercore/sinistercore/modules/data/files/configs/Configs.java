@@ -34,6 +34,7 @@ public class Configs {
         plugin.saveResource("config.yml", false);
         plugin.saveResource("items.csv", false);
         plugin.reloadConfig();
+        plugin.saveDefaultConfig();
 
         cfgHomes = new HomeConfig(plugin);
         cfgKits = new KitConfig(plugin);

@@ -54,6 +54,11 @@ public class JoinLeaveEvents implements Listener {
     @EventHandler
     public void onJoin(PlayerJoinEvent e) {
         PlayerObject player = plugin.getPlayer(e.getPlayer().getUniqueId());
+        if(player == null) {
+            plugin.refreshPlayersOffline();
+            plugin.refreshPlayersOnline();
+            player = plugin.getPlayer(e.getPlayer().getUniqueId());
+        }
         player.setIsPlayerOnline(true);
 
         //init vanish
@@ -64,13 +69,13 @@ public class JoinLeaveEvents implements Listener {
         }
 
         if(player.getPlayer().hasPlayedBefore()) {
-            utilBroadcast.rawBroadcast("&8[&b+&8] &7" + player.playerDisplayName + " &6Has Joined!");
+            utilBroadcast.rawBroadcast("&8[&a+&8] &6" + player.playerDisplayName + " &7Has Joined!");
             Location lastLogoutLocation = player.getLastPlayerLogoutLocation();
             if(lastLogoutLocation != null) {
                 player.teleportPlayer(lastLogoutLocation, false);
             }
         } else {
-            utilBroadcast.rawBroadcast("&8[&b+&8] &7Welcome &6" + player.playerDisplayName + " &7Has Joined For The First Time!");
+            utilBroadcast.rawBroadcast("&8[&a+&8] &7Welcome &6" + player.playerDisplayName + " &7Has Joined For The First Time!");
             if(plugin.getConfig().getBoolean("features.teleport.enabled") && plugin.getConfig().isSet("spawn")) {
                 double x = plugin.getConfig().getDouble("spawn.x");
                 double y = plugin.getConfig().getDouble("spawn.y");
@@ -106,7 +111,7 @@ public class JoinLeaveEvents implements Listener {
         player.setLastPlayerLogoutLocation(e.getPlayer().getLocation());
 
         plugin.getServer().broadcastMessage(ChatColor.translateAlternateColorCodes('&',
-                "&8[&c+&8] &6" + player.playerDisplayName + " &7Has Left!"));
+                "&8[&c-&8] &6" + player.playerDisplayName + " &7Has Left!"));
         e.setQuitMessage("");
     }
 }

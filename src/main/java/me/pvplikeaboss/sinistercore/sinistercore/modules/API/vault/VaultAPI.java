@@ -2,6 +2,7 @@ package me.pvplikeaboss.sinistercore.sinistercore.modules.API.vault;
 
 import me.pvplikeaboss.sinistercore.sinistercore.Instances;
 import me.pvplikeaboss.sinistercore.sinistercore.SinisterCore;
+import me.pvplikeaboss.sinistercore.sinistercore.modules.economy.EconomyImplementer;
 import me.pvplikeaboss.sinistercore.sinistercore.utilites.misc.Messages;
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.plugin.Plugin;

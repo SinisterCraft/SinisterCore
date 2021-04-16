@@ -1,4 +1,4 @@
-package me.pvplikeaboss.sinistercore.sinistercore.modules.API.vault;
+package me.pvplikeaboss.sinistercore.sinistercore.modules.economy;
 
 import me.pvplikeaboss.sinistercore.sinistercore.Instances;
 import me.pvplikeaboss.sinistercore.sinistercore.SinisterCore;
@@ -14,20 +14,21 @@ import java.util.UUID;
 
 public class EconomyImplementer extends AbstractEconomy {
     private SinisterCore plugin;
-    private EconConfig cfgEcon;
-
+    private EconomyData econData;
+    private PlayerUtils playerUtils;
     public EconomyImplementer(SinisterCore p) {
         this.plugin = p;
-        this.cfgEcon = (EconConfig) Instances.getInstance(Instances.InstanceType.Config, 3);
+        this.econData = new EconomyData(this.plugin);
+        this.playerUtils = (PlayerUtils) Instances.getInstance(Instances.InstanceType.Utilities, 3);
     }
 
     public boolean isEnabled() {
-        return false;
+        return true;
     }
 
     
     public String getName() {
-        return null;
+        return "SinisterEcon";
     }
 
     
@@ -37,22 +38,22 @@ public class EconomyImplementer extends AbstractEconomy {
 
     
     public int fractionalDigits() {
-        return 0;
+        return 2;
     }
 
-    
+
     public String format(double v) {
-        return null;
+        return "$"+v;
     }
 
     
     public String currencyNamePlural() {
-        return null;
+        return "Dollars";
     }
 
     
     public String currencyNameSingular() {
-        return null;
+        return "Dollar";
     }
 
     
@@ -77,20 +78,13 @@ public class EconomyImplementer extends AbstractEconomy {
 
     
     public double getBalance(String s) {
-        PlayerUtils playerUtils = (PlayerUtils) Instances.getInstance(Instances.InstanceType.Utilities, 3);
         String pName = playerUtils.playerExists(s);
         if(pName != null) {
             if(plugin.getServer().getPlayer(pName) == null) {
                 return getBalance(plugin.getServer().getOfflinePlayer(pName));
             } else {
                 UUID playerUUID = plugin.getServer().getPlayer(pName).getUniqueId();
-                if (cfgEcon.getConfig().isSet("econ")) {
-                    for (String sUUID : cfgEcon.getConfig().getConfigurationSection("econ").getKeys(false)) {
-                        if (playerUUID.compareTo(UUID.fromString(sUUID)) == 0) {
-                            return cfgEcon.getConfig().getDouble("econ." + sUUID);
-                        }
-                    }
-                }
+                return econData.getBalance(playerUUID);
             }
         }
         return -1;
@@ -98,14 +92,7 @@ public class EconomyImplementer extends AbstractEconomy {
 
     
     public double getBalance(OfflinePlayer offlinePlayer) {
-        if (cfgEcon.getConfig().isSet("econ")) {
-            for (String sUUID : cfgEcon.getConfig().getConfigurationSection("econ").getKeys(false)) {
-                if (offlinePlayer.getUniqueId().compareTo(UUID.fromString(sUUID)) == 0) {
-                    return cfgEcon.getConfig().getDouble("econ." + sUUID);
-                }
-            }
-        }
-        return -1;
+        return econData.getBalance(offlinePlayer.getUniqueId());
     }
 
     
@@ -140,14 +127,21 @@ public class EconomyImplementer extends AbstractEconomy {
 
     
     public EconomyResponse withdrawPlayer(String s, double v) {
-        PlayerObject player = plugin.getPlayer(s);
         if(v >= 0) {
-            if (player != null) {
-                cfgEcon.getConfig().set("econ." + player.playerUUID.toString(), getBalance(s) - v);
-                cfgEcon.saveConfig();
-                return new EconomyResponse(v, getBalance(s), EconomyResponse.ResponseType.SUCCESS, "Success");
+            String pName = playerUtils.playerExists(s);
+            if(pName != null) {
+                if(plugin.getServer().getPlayer(pName) == null) {
+                    withdrawPlayer(plugin.getServer().getOfflinePlayer(pName), v);
+                    return new EconomyResponse(v, getBalance(s), EconomyResponse.ResponseType.SUCCESS, "Success(offline)");
+                }
+                double balance = getBalance(s);
+                if(balance >= v) {
+                    econData.setBalance(plugin.getServer().getPlayer(pName).getUniqueId(), balance-v);
+                    return new EconomyResponse(v, getBalance(s), EconomyResponse.ResponseType.SUCCESS, "Success");
+                }
+                return new EconomyResponse(v, balance, EconomyResponse.ResponseType.FAILURE, "Player does not have enough funds");
             }
-            return new EconomyResponse(v, -1, EconomyResponse.ResponseType.FAILURE, "PlayerObject is null?");
+            return new EconomyResponse(v, -1, EconomyResponse.ResponseType.FAILURE, "Player not exists?");
         }
         return new EconomyResponse(v, getBalance(s), EconomyResponse.ResponseType.FAILURE, "Withdrawing Negative Amounts");
     }
@@ -156,9 +150,12 @@ public class EconomyImplementer extends AbstractEconomy {
     public EconomyResponse withdrawPlayer(OfflinePlayer offlinePlayer, double v) {
         if(v >= 0) {
             if (offlinePlayer != null) {
-                cfgEcon.getConfig().set("econ." + offlinePlayer.getUniqueId().toString(), getBalance(offlinePlayer) - v);
-                cfgEcon.saveConfig();
-                return new EconomyResponse(v, getBalance(offlinePlayer), EconomyResponse.ResponseType.SUCCESS, "Success");
+                double balance = getBalance(offlinePlayer);
+                if(balance >= v) {
+                    econData.setBalance(offlinePlayer.getUniqueId(), balance-v);
+                    return new EconomyResponse(v, getBalance(offlinePlayer), EconomyResponse.ResponseType.SUCCESS, "Success");
+                }
+                return new EconomyResponse(v, getBalance(offlinePlayer), EconomyResponse.ResponseType.FAILURE, "Player does not have enough funds");
             }
             return new EconomyResponse(v, -1, EconomyResponse.ResponseType.FAILURE, "offlinePlayer is null?");
         }
@@ -177,14 +174,18 @@ public class EconomyImplementer extends AbstractEconomy {
 
     
     public EconomyResponse depositPlayer(String s, double v) {
-        PlayerObject player = plugin.getPlayer(s);
         if(v >= 0) {
-            if (player != null) {
-                cfgEcon.getConfig().set("econ." + player.playerUUID.toString(), getBalance(s) + v);
-                cfgEcon.saveConfig();
+            String pName = playerUtils.playerExists(s);
+            if(pName != null) {
+                if(plugin.getServer().getPlayer(pName) == null) {
+                    depositPlayer(plugin.getServer().getOfflinePlayer(pName), v);
+                    return new EconomyResponse(v, getBalance(s), EconomyResponse.ResponseType.SUCCESS, "Success(offline)");
+                }
+                double balance = getBalance(s);
+                econData.setBalance(plugin.getServer().getPlayer(pName).getUniqueId(), balance + v);
                 return new EconomyResponse(v, getBalance(s), EconomyResponse.ResponseType.SUCCESS, "Success");
             }
-            return new EconomyResponse(v, -1, EconomyResponse.ResponseType.FAILURE, "PlayerObject is null?");
+            return new EconomyResponse(v, -1, EconomyResponse.ResponseType.FAILURE, "Player not exists");
         }
         return new EconomyResponse(v, getBalance(s), EconomyResponse.ResponseType.FAILURE, "Depositing Negative Amounts");
     }
@@ -193,8 +194,8 @@ public class EconomyImplementer extends AbstractEconomy {
     public EconomyResponse depositPlayer(OfflinePlayer offlinePlayer, double v) {
         if(v >= 0) {
             if (offlinePlayer != null) {
-                cfgEcon.getConfig().set("econ." + offlinePlayer.getUniqueId().toString(), getBalance(offlinePlayer) + v);
-                cfgEcon.saveConfig();
+                double balance = getBalance(offlinePlayer);
+                econData.setBalance(offlinePlayer.getUniqueId(), balance+v);
                 return new EconomyResponse(v, getBalance(offlinePlayer), EconomyResponse.ResponseType.SUCCESS, "Success");
             }
             return new EconomyResponse(v, -1, EconomyResponse.ResponseType.FAILURE, "offlinePlayer is null?");

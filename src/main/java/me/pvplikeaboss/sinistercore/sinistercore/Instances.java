@@ -3,7 +3,7 @@ package me.pvplikeaboss.sinistercore.sinistercore;
 import me.pvplikeaboss.sinistercore.sinistercore.commands.Commands;
 import me.pvplikeaboss.sinistercore.sinistercore.events.Events;
 import me.pvplikeaboss.sinistercore.sinistercore.modules.API.permissionsex.PexAPI;
-import me.pvplikeaboss.sinistercore.sinistercore.modules.API.vault.EconomyImplementer;
+import me.pvplikeaboss.sinistercore.sinistercore.modules.economy.EconomyImplementer;
 import me.pvplikeaboss.sinistercore.sinistercore.modules.API.vault.VaultAPI;
 import me.pvplikeaboss.sinistercore.sinistercore.modules.chat.ChatHandler;
 import me.pvplikeaboss.sinistercore.sinistercore.modules.data.files.configs.Configs;
@@ -15,7 +15,6 @@ import net.milkbowl.vault.economy.Economy;
 
 import java.util.HashMap;
 import java.util.UUID;
-import java.util.logging.Level;
 
 public class Instances {
     private static SinisterCore plugin;

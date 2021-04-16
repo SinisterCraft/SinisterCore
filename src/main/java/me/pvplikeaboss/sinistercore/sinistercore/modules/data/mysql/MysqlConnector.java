@@ -33,8 +33,13 @@ public class MysqlConnector {
                 }
                 databaseConnection = DriverManager.getConnection(url, user, pass);
                 if (databaseConnection != null) {
-                    Statement playerTableStatement = databaseConnection.createStatement();
-                    playerTableStatement.executeUpdate("CREATE TABLE IF NOT EXISTS players (player_id INTEGER NOT NULL AUTO_INCREMENT, player_uuid varchar(36) NOT NULL UNIQUE, isGodMode varchar(8) NOT NULL, isVanish varchar(8) NOT NULL, recieveMsgs varchar(8) NOT NULL, lastPlayerLogoutLocation varchar(64) NOT NULL, lastPlayerDeathLocation varchar(64) NOT NULL, PRIMARY KEY (`player_id`), KEY (`player_uuid`));");
+                    Statement statement = databaseConnection.createStatement();
+                    statement.executeUpdate("CREATE TABLE IF NOT EXISTS players (player_id INTEGER NOT NULL AUTO_INCREMENT, player_uuid varchar(36) NOT NULL UNIQUE, isGodMode varchar(8) NOT NULL, isVanish varchar(8) NOT NULL, recieveMsgs varchar(8) NOT NULL, lastPlayerLogoutLocation varchar(64) NOT NULL, lastPlayerDeathLocation varchar(64) NOT NULL, PRIMARY KEY (`player_id`), KEY (`player_uuid`));");
+                    statement.close();
+
+                    statement = databaseConnection.createStatement();
+                    statement.executeUpdate("CREATE TABLE IF NOT EXISTS economy (player_id INTEGER NOT NULL AUTO_INCREMENT, player_uuid varchar(36) NOT NULL UNIQUE, balance DOUBLE(50,2) NOT NULL, PRIMARY KEY (`player_id`), KEY (`player_uuid`));");
+                    statement.close();
                     return true;
                 } else {
                     plugin.getLogger().log(Level.SEVERE, "MYSQL Failed on getConnection");

@@ -42,6 +42,8 @@ public class SinisterCore extends JavaPlugin {
         if(tmpPlayers != null) {// if no players in database or file
             players.addAll(tmpPlayers);
         }
+
+        refreshPlayersOffline();
     }
 
     public void refreshPlayersOnline() {// add new players

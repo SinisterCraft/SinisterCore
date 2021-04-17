@@ -14,11 +14,10 @@ import java.util.UUID;
 
 public class EconomyImplementer extends AbstractEconomy {
     private SinisterCore plugin;
-    private EconomyData econData;
     private PlayerUtils playerUtils;
+
     public EconomyImplementer(SinisterCore p) {
         this.plugin = p;
-        this.econData = new EconomyData(this.plugin);
         this.playerUtils = (PlayerUtils) Instances.getInstance(Instances.InstanceType.Utilities, 3);
     }
 
@@ -84,7 +83,7 @@ public class EconomyImplementer extends AbstractEconomy {
                 return getBalance(plugin.getServer().getOfflinePlayer(pName));
             } else {
                 UUID playerUUID = plugin.getServer().getPlayer(pName).getUniqueId();
-                return econData.getBalance(playerUUID);
+                return EconomyData.getBalance(plugin, playerUUID);
             }
         }
         return -1;
@@ -92,7 +91,7 @@ public class EconomyImplementer extends AbstractEconomy {
 
     
     public double getBalance(OfflinePlayer offlinePlayer) {
-        return econData.getBalance(offlinePlayer.getUniqueId());
+        return EconomyData.getBalance(plugin, offlinePlayer.getUniqueId());
     }
 
     
@@ -136,7 +135,7 @@ public class EconomyImplementer extends AbstractEconomy {
                 }
                 double balance = getBalance(s);
                 if(balance >= v) {
-                    econData.setBalance(plugin.getServer().getPlayer(pName).getUniqueId(), balance-v);
+                    EconomyData.setBalance(plugin, plugin.getServer().getPlayer(pName).getUniqueId(), balance-v);
                     return new EconomyResponse(v, getBalance(s), EconomyResponse.ResponseType.SUCCESS, "Success");
                 }
                 return new EconomyResponse(v, balance, EconomyResponse.ResponseType.FAILURE, "Player does not have enough funds");
@@ -152,7 +151,7 @@ public class EconomyImplementer extends AbstractEconomy {
             if (offlinePlayer != null) {
                 double balance = getBalance(offlinePlayer);
                 if(balance >= v) {
-                    econData.setBalance(offlinePlayer.getUniqueId(), balance-v);
+                    EconomyData.setBalance(plugin, offlinePlayer.getUniqueId(), balance-v);
                     return new EconomyResponse(v, getBalance(offlinePlayer), EconomyResponse.ResponseType.SUCCESS, "Success");
                 }
                 return new EconomyResponse(v, getBalance(offlinePlayer), EconomyResponse.ResponseType.FAILURE, "Player does not have enough funds");
@@ -182,7 +181,7 @@ public class EconomyImplementer extends AbstractEconomy {
                     return new EconomyResponse(v, getBalance(s), EconomyResponse.ResponseType.SUCCESS, "Success(offline)");
                 }
                 double balance = getBalance(s);
-                econData.setBalance(plugin.getServer().getPlayer(pName).getUniqueId(), balance + v);
+                EconomyData.setBalance(plugin, plugin.getServer().getPlayer(pName).getUniqueId(), balance + v);
                 return new EconomyResponse(v, getBalance(s), EconomyResponse.ResponseType.SUCCESS, "Success");
             }
             return new EconomyResponse(v, -1, EconomyResponse.ResponseType.FAILURE, "Player not exists");
@@ -195,7 +194,7 @@ public class EconomyImplementer extends AbstractEconomy {
         if(v >= 0) {
             if (offlinePlayer != null) {
                 double balance = getBalance(offlinePlayer);
-                econData.setBalance(offlinePlayer.getUniqueId(), balance+v);
+                EconomyData.setBalance(plugin, offlinePlayer.getUniqueId(), balance+v);
                 return new EconomyResponse(v, getBalance(offlinePlayer), EconomyResponse.ResponseType.SUCCESS, "Success");
             }
             return new EconomyResponse(v, -1, EconomyResponse.ResponseType.FAILURE, "offlinePlayer is null?");

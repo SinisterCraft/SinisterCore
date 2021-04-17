@@ -19,6 +19,7 @@ me\pvplikeaboss\sinistercore\sinistercore\utilites\misc\Messages.class
 me\pvplikeaboss\sinistercore\sinistercore\utilites\serverutils\BroadcastUtils.class
 me\pvplikeaboss\sinistercore\sinistercore\commands\util\base\ICommandContext.class
 me\pvplikeaboss\sinistercore\sinistercore\events\Events.class
+me\pvplikeaboss\sinistercore\sinistercore\modules\punishment\PunishmentData.class
 me\pvplikeaboss\sinistercore\sinistercore\utilites\misc\Misc$1.class
 me\pvplikeaboss\sinistercore\sinistercore\Instances$1.class
 me\pvplikeaboss\sinistercore\sinistercore\commands\executors\TeleportCommands$1.class

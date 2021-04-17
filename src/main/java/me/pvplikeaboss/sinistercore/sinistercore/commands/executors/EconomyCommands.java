@@ -3,6 +3,7 @@ package me.pvplikeaboss.sinistercore.sinistercore.commands.executors;
 import me.pvplikeaboss.sinistercore.sinistercore.Instances;
 import me.pvplikeaboss.sinistercore.sinistercore.SinisterCore;
 import me.pvplikeaboss.sinistercore.sinistercore.commands.util.CommandContext;
+import me.pvplikeaboss.sinistercore.sinistercore.modules.economy.EconomyData;
 import me.pvplikeaboss.sinistercore.sinistercore.modules.economy.EconomyEntry;
 import me.pvplikeaboss.sinistercore.sinistercore.modules.data.files.configs.yml.EconConfig;
 import me.pvplikeaboss.sinistercore.sinistercore.objects.PlayerObject;
@@ -20,15 +21,13 @@ public class EconomyCommands {
     private Messages utilMsgs;
     private PlayerUtils utilPlayers;
     private Economy ecoImplementer;
-    private EconConfig cfgEcon;
 
     public boolean onCommand(String name, CommandContext context) {
         plugin = context.getPlugin();
         utilMsgs = (Messages) Instances.getInstance(Instances.InstanceType.Utilities, 2);
         utilPlayers = (PlayerUtils) Instances.getInstance(Instances.InstanceType.Utilities, 3);
         ecoImplementer = (Economy) Instances.getInstance(Instances.InstanceType.Economy, -1);
-        cfgEcon = (EconConfig) Instances.getInstance(Instances.InstanceType.Config, 3);
-        
+
         List<String> args = context.getArgs();
 
         PlayerObject sender = null;
@@ -37,16 +36,9 @@ public class EconomyCommands {
         }
 
         if(name.equalsIgnoreCase("baltop")) {
-            List<EconomyEntry> entries = new ArrayList<>();
-            if (cfgEcon.getConfig().isSet("econ")) {
-                for (String sUUID : cfgEcon.getConfig().getConfigurationSection("econ").getKeys(false)) {
-                    PlayerObject p = plugin.getPlayer(UUID.fromString(sUUID));
-                    if(p == null) {
-                        continue;
-                    }
-                    entries.add(new EconomyEntry(p.playerUUID, p.playerDisplayName, BigDecimal.valueOf(cfgEcon.getConfig().getDouble("econ." + sUUID))));
-                }
-
+            List<EconomyEntry> entries;
+            entries = EconomyData.getAllEntries(plugin);
+            if(entries != null) {
                 entries.sort((entry1, entry2) -> entry2.getBalance().compareTo(entry1.getBalance()));
 
                 int total_pages;

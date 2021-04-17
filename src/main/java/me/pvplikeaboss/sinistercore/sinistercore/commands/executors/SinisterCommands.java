@@ -3,6 +3,8 @@ package me.pvplikeaboss.sinistercore.sinistercore.commands.executors;
 import me.pvplikeaboss.sinistercore.sinistercore.Instances;
 import me.pvplikeaboss.sinistercore.sinistercore.SinisterCore;
 import me.pvplikeaboss.sinistercore.sinistercore.commands.util.CommandContext;
+import me.pvplikeaboss.sinistercore.sinistercore.modules.data.PlayerData;
+import me.pvplikeaboss.sinistercore.sinistercore.modules.economy.EconomyData;
 import me.pvplikeaboss.sinistercore.sinistercore.objects.PlayerObject;
 import me.pvplikeaboss.sinistercore.sinistercore.utilites.misc.Messages;
 import me.pvplikeaboss.sinistercore.sinistercore.utilites.serverutils.PlayerUtils;
@@ -33,12 +35,37 @@ public class SinisterCommands {
                         utilMsgs.logInfoMessage("Reloaded SinisterCore");
                     }
                     return true;
+                } else if(subCMD.equalsIgnoreCase("convert")) {
+                    subCMD = context.argAt(1);
+                    if(subCMD.equalsIgnoreCase("fromdatabase")) {
+                        PlayerData.convert(plugin, false);
+                        EconomyData.convert(plugin, false);
+                        if(context.isPlayer()) {
+                            utilMsgs.infoMessage(sender, "&7Converted SinisterCore data to files");
+                        } else {
+                            utilMsgs.logInfoMessage("&7Converted SinisterCore data to files");
+                        }
+                        return true;
+                    } else if(subCMD.equalsIgnoreCase("fromfile")) {
+                        PlayerData.convert(plugin, true);
+                        EconomyData.convert(plugin, true);
+                        if(context.isPlayer()) {
+                            utilMsgs.infoMessage(sender, "&7Converted SinisterCore data to database");
+                        } else {
+                            utilMsgs.logInfoMessage("&7Converted SinisterCore data to database");
+                        }
+                        return true;
+                    }
                 }
             }
             if(context.isPlayer()) {
                 utilMsgs.infoMessage(sender, "&7Usage: /sinistercore reload");
+                utilMsgs.infoMessage(sender, "&7Usage: /sinistercore convert fromdatabase");
+                utilMsgs.infoMessage(sender, "&7Usage: /sinistercore convert fromfile");
             } else {
-                utilMsgs.logInfoMessage("Usage: /sinistercore reload");
+                utilMsgs.logInfoMessage("&7Usage: /sinistercore reload");
+                utilMsgs.logInfoMessage("&7Usage: /sinistercore convert fromdatabase");
+                utilMsgs.logInfoMessage("&7Usage: /sinistercore convert fromfile");
             }
             return true;
         }

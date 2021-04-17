@@ -40,6 +40,10 @@ public class MysqlConnector {
                     statement = databaseConnection.createStatement();
                     statement.executeUpdate("CREATE TABLE IF NOT EXISTS economy (player_id INTEGER NOT NULL AUTO_INCREMENT, player_uuid varchar(36) NOT NULL UNIQUE, balance DOUBLE(50,2) NOT NULL, PRIMARY KEY (`player_id`), KEY (`player_uuid`));");
                     statement.close();
+
+                    statement = databaseConnection.createStatement();
+                    statement.executeUpdate("CREATE TABLE IF NOT EXISTS punishment (entry_id INTEGER NOT NULL AUTO_INCREMENT, player_uuid varchar(36) NOT NULL, active varchar(8) NOT NULL, type varchar(16) NOT NULL, whoBanned varchar(48) NOT NULL, reason varchar(48) NOT NULL, startdate varchar(32) NOT NULL, enddate varchar(32) NOT NULL, PRIMARY KEY (`entry_id`), KEY (`player_uuid`));");
+                    statement.close();
                     return true;
                 } else {
                     plugin.getLogger().log(Level.SEVERE, "MYSQL Failed on getConnection");

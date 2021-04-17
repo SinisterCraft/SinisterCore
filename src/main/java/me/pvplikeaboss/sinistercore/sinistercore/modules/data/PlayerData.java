@@ -13,6 +13,14 @@ import java.util.UUID;
 
 public class PlayerData {
 
+    public static void convert(SinisterCore plugin, boolean toDatabase) {
+        List<PlayerObject> players;
+        plugin.useMysql = !toDatabase;
+        players = getAllPlayers(plugin);
+        plugin.useMysql = toDatabase;
+        savePlayers(plugin, players);
+    }
+
     public static void savePlayers(SinisterCore plugin, List<PlayerObject> players) {
         if(!plugin.useMysql)
         {// use players.yml

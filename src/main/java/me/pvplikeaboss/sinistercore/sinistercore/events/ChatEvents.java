@@ -23,16 +23,18 @@ public class ChatEvents implements Listener {
 
     @EventHandler
     public void onSendChat(AsyncPlayerChatEvent e) {
+        PlayerObject player = plugin.getPlayer(e.getPlayer().getUniqueId());
+
+        if(plugin.getConfig().getBoolean("features.punishment.enabled")) {
+            if (player.isMuted()) {
+                e.setCancelled(true);
+                utilMsgs.errorMessage(player, "&7You are &6muted&7!");
+                return;
+            }
+        }
+
         if(plugin.getConfig().getBoolean("features.chat.enabled")) {
             e.setCancelled(true);
-            PlayerObject player = plugin.getPlayer(e.getPlayer().getUniqueId());
-
-            if(plugin.getConfig().getBoolean("features.punishment.enabled")) {
-                if (player.isMuted()) {
-                    utilMsgs.errorMessage(player, "&7You are &6muted&7!");
-                    return;
-                }
-            }
 
             String origMessage = e.getMessage();
             for (Player p : plugin.getServer().getOnlinePlayers()) {

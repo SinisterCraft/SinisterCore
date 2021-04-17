@@ -160,6 +160,11 @@ public class SinisterCore extends JavaPlugin {
 
     public void unloadAll() {
         PlayerUtils playerUtils = (PlayerUtils) Instances.getInstance(Instances.InstanceType.Utilities, 3);
+        for(PlayerObject p : players) {
+            if(p.isPlayerOnline) {
+                p.setLastPlayerLogoutLocation(p.getPlayer().getLocation());
+            }
+        }
         playerUtils.savePlayers(players);
         players.clear();
         Instances.unload_instances();

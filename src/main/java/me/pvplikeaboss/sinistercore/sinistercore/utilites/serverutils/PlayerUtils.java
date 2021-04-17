@@ -44,6 +44,22 @@ public class PlayerUtils {
         return null;
     }
 
+    public String playerExists(UUID uuid) {
+        for(OfflinePlayer player : plugin.getServer().getOfflinePlayers()) {
+            if(player.getUniqueId().equals(uuid)) {
+                return player.getName();
+            }
+        }
+
+        for(Player p : plugin.getServer().getOnlinePlayers()) {
+            if(p.getUniqueId().equals(uuid)) {
+                return p.getName();
+            }
+        }
+
+        return null;
+    }
+
     public String playerOnline(String pName) {
         for(Player p : plugin.getServer().getOnlinePlayers()) {
             if(p.getName().equalsIgnoreCase(pName) || p.getDisplayName().equalsIgnoreCase(pName)) {

@@ -12,9 +12,10 @@ import java.util.UUID;
 public class PunishmentDatabase {
     public static int getEntryID(PlayerObject player, String type) {
         Connection mysqlConn = MysqlConnector.getDatabaseConnection();
+        String punishTable = MysqlConnector.getPunishTable();
         try {
             PreparedStatement preparedStatement = null;
-            String getQueryStatement = "SELECT * FROM punishment";
+            String getQueryStatement = "SELECT * FROM "+punishTable;
             preparedStatement = mysqlConn.prepareStatement(getQueryStatement);
             ResultSet rs = preparedStatement.executeQuery();
             while (rs.next()) {
@@ -34,9 +35,10 @@ public class PunishmentDatabase {
 
     public static String getReason(int entry_id) {
         Connection mysqlConn = MysqlConnector.getDatabaseConnection();
+        String punishTable = MysqlConnector.getPunishTable();
         try {
             PreparedStatement preparedStatement = null;
-            String getQueryStatement = "SELECT * FROM punishment";
+            String getQueryStatement = "SELECT * FROM "+punishTable;
             preparedStatement = mysqlConn.prepareStatement(getQueryStatement);
             ResultSet rs = preparedStatement.executeQuery();
             while (rs.next()) {
@@ -53,9 +55,10 @@ public class PunishmentDatabase {
 
     public static String getStartDate(int entry_id) {
         Connection mysqlConn = MysqlConnector.getDatabaseConnection();
+        String punishTable = MysqlConnector.getPunishTable();
         try {
             PreparedStatement preparedStatement = null;
-            String getQueryStatement = "SELECT * FROM punishment";
+            String getQueryStatement = "SELECT * FROM "+punishTable;
             preparedStatement = mysqlConn.prepareStatement(getQueryStatement);
             ResultSet rs = preparedStatement.executeQuery();
             while (rs.next()) {
@@ -72,9 +75,10 @@ public class PunishmentDatabase {
 
     public static String getEndDate(int entry_id) {
         Connection mysqlConn = MysqlConnector.getDatabaseConnection();
+        String punishTable = MysqlConnector.getPunishTable();
         try {
             PreparedStatement preparedStatement = null;
-            String getQueryStatement = "SELECT * FROM punishment";
+            String getQueryStatement = "SELECT * FROM "+punishTable;
             preparedStatement = mysqlConn.prepareStatement(getQueryStatement);
             ResultSet rs = preparedStatement.executeQuery();
             while (rs.next()) {
@@ -91,8 +95,9 @@ public class PunishmentDatabase {
 
     public static void setActive(int entry_id, boolean state) {
         Connection mysqlConn = MysqlConnector.getDatabaseConnection();
+        String punishTable = MysqlConnector.getPunishTable();
         try {
-            String setGodModeStatement = "UPDATE punishment SET active = ? WHERE entry_id = ?;";
+            String setGodModeStatement = "UPDATE "+punishTable+" SET active = ? WHERE entry_id = ?;";
             PreparedStatement stmt = mysqlConn.prepareStatement(setGodModeStatement);
             stmt.setString(1, Boolean.toString(state));
             stmt.setInt(2, entry_id);
@@ -108,8 +113,9 @@ public class PunishmentDatabase {
         Date startDate = Time.getCurrentDateTime();
 
         Connection mysqlConn = MysqlConnector.getDatabaseConnection();
+        String punishTable = MysqlConnector.getPunishTable();
         try {
-            String insertStatement = "INSERT INTO `punishment` (`player_uuid`,`active`,`type`,`whoBanned`,`reason`,`startdate`,`enddate`) VALUES (?, ?, ?, ?, ?, ?, ?);";
+            String insertStatement = "INSERT INTO `"+punishTable+"` (`player_uuid`,`active`,`type`,`whoBanned`,`reason`,`startdate`,`enddate`) VALUES (?, ?, ?, ?, ?, ?, ?);";
             PreparedStatement stmt = mysqlConn.prepareStatement(insertStatement);
             stmt.setString(1, player.playerUUID.toString());
             stmt.setString(2, "true");

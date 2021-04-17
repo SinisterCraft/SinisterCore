@@ -14,9 +14,10 @@ import java.util.UUID;
 public class PlayerDatabase {
     public static boolean playerExists(UUID pUUID) {
         Connection mysqlConn = MysqlConnector.getDatabaseConnection();
+        String playerTable = MysqlConnector.getPlayerTable();
         try {
             PreparedStatement preparedStatement = null;
-            String getQueryStatement = "SELECT * FROM players";
+            String getQueryStatement = "SELECT * FROM "+playerTable;
             preparedStatement = mysqlConn.prepareStatement(getQueryStatement);
             ResultSet rs = preparedStatement.executeQuery();
             while (rs.next()) {
@@ -33,9 +34,10 @@ public class PlayerDatabase {
 
     public static PlayerObject getPlayer(SinisterCore plugin, String pUUID) {
         Connection mysqlConn = MysqlConnector.getDatabaseConnection();
+        String playerTable = MysqlConnector.getPlayerTable();
         try {
             PreparedStatement preparedStatement = null;
-            String getQueryStatement = "SELECT * FROM players";
+            String getQueryStatement = "SELECT * FROM "+playerTable;
             preparedStatement = mysqlConn.prepareStatement(getQueryStatement);
             ResultSet rs = preparedStatement.executeQuery();
             while (rs.next()) {
@@ -90,11 +92,11 @@ public class PlayerDatabase {
 
     public static List<PlayerObject> getAllPlayers(SinisterCore plugin) {
         List<PlayerObject> players = null;// leave null until first player is found
-
         Connection mysqlConn = MysqlConnector.getDatabaseConnection();
+        String playerTable = MysqlConnector.getPlayerTable();
         try {
             PreparedStatement preparedStatement = null;
-            String getQueryStatement = "SELECT * FROM players";
+            String getQueryStatement = "SELECT * FROM "+playerTable;
             preparedStatement = mysqlConn.prepareStatement(getQueryStatement);
             ResultSet rs = preparedStatement.executeQuery();
             while (rs.next()) {
@@ -162,15 +164,17 @@ public class PlayerDatabase {
             deathLocStr = p.getLastPlayerDeathLocation().getX()+","+p.getLastPlayerDeathLocation().getY()+","+p.getLastPlayerDeathLocation().getZ()+","+p.getLastPlayerDeathLocation().getWorld().getName();
         }
 
+        String playerTable = MysqlConnector.getPlayerTable();
+
         if(playerExists(p.playerUUID)) {// update
             Connection mysqlConn = MysqlConnector.getDatabaseConnection();
             try {
-                String setGodModeStatement = "UPDATE players SET isGodMode = ? WHERE player_uuid = ?;";
-                String setVanishStatement = "UPDATE players SET isVanish = ? WHERE player_uuid = ?;";
-                String setRecvMsgsStatement = "UPDATE players SET recieveMsgs = ? WHERE player_uuid = ?;";
+                String setGodModeStatement = "UPDATE "+playerTable+" SET isGodMode = ? WHERE player_uuid = ?;";
+                String setVanishStatement = "UPDATE "+playerTable+" SET isVanish = ? WHERE player_uuid = ?;";
+                String setRecvMsgsStatement = "UPDATE "+playerTable+" SET recieveMsgs = ? WHERE player_uuid = ?;";
 
-                String setLogoutLocStatement = "UPDATE players SET lastPlayerLogoutLocation = ? WHERE player_uuid = ?;";
-                String setDeathLocStatement = "UPDATE players SET lastPlayerDeathLocation = ? WHERE player_uuid = ?;";
+                String setLogoutLocStatement = "UPDATE "+playerTable+" SET lastPlayerLogoutLocation = ? WHERE player_uuid = ?;";
+                String setDeathLocStatement = "UPDATE "+playerTable+" SET lastPlayerDeathLocation = ? WHERE player_uuid = ?;";
 
                 PreparedStatement stmt = mysqlConn.prepareStatement(setGodModeStatement);
                 stmt.setString(1, Boolean.toString(p.getIsGodMode()));
@@ -208,7 +212,7 @@ public class PlayerDatabase {
             Connection mysqlConn = MysqlConnector.getDatabaseConnection();
             try {
                 Statement statement = mysqlConn.createStatement();
-                String insertStatement = "INSERT INTO `players` (`player_uuid`,`isGodMode`,`isVanish`,`recieveMsgs`,`lastPlayerLogoutLocation`,`lastPlayerDeathLocation`) VALUES (?, ?, ?, ?, ?, ?);";
+                String insertStatement = "INSERT INTO `"+playerTable+"` (`player_uuid`,`isGodMode`,`isVanish`,`recieveMsgs`,`lastPlayerLogoutLocation`,`lastPlayerDeathLocation`) VALUES (?, ?, ?, ?, ?, ?);";
                 PreparedStatement stmt = mysqlConn.prepareStatement(insertStatement);
                 stmt.setString(1, p.playerUUID.toString());
                 stmt.setString(2, Boolean.toString(p.getIsGodMode()));

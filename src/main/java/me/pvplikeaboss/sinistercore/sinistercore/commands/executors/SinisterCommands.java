@@ -4,6 +4,7 @@ import me.pvplikeaboss.sinistercore.sinistercore.Instances;
 import me.pvplikeaboss.sinistercore.sinistercore.SinisterCore;
 import me.pvplikeaboss.sinistercore.sinistercore.commands.util.CommandContext;
 import me.pvplikeaboss.sinistercore.sinistercore.modules.data.PlayerData;
+import me.pvplikeaboss.sinistercore.sinistercore.modules.data.mysql.MysqlConnector;
 import me.pvplikeaboss.sinistercore.sinistercore.modules.economy.EconomyData;
 import me.pvplikeaboss.sinistercore.sinistercore.objects.PlayerObject;
 import me.pvplikeaboss.sinistercore.sinistercore.utilites.misc.Messages;
@@ -40,6 +41,10 @@ public class SinisterCommands {
                     if(subCMD.equalsIgnoreCase("fromdatabase")) {
                         PlayerData.convert(plugin, false);
                         EconomyData.convert(plugin, false);
+                        plugin.getConfig().set("features.mysql.enabled", false);
+                        if(MysqlConnector.getDatabaseConnection() != null) {
+                            MysqlConnector.closeMysqlConnection();
+                        }
                         if(context.isPlayer()) {
                             utilMsgs.infoMessage(sender, "&7Converted SinisterCore data to files");
                         } else {
@@ -47,6 +52,10 @@ public class SinisterCommands {
                         }
                         return true;
                     } else if(subCMD.equalsIgnoreCase("fromfile")) {
+                        plugin.getConfig().set("features.mysql.enabled", true);
+                        if(MysqlConnector.getDatabaseConnection() == null) {
+                            MysqlConnector.initMysqlConnection(plugin);
+                        }
                         PlayerData.convert(plugin, true);
                         EconomyData.convert(plugin, true);
                         if(context.isPlayer()) {

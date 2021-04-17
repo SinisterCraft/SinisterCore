@@ -19,9 +19,10 @@ public class EconomyDatabase {
         PlayerUtils utilPlayers = (PlayerUtils) Instances.getInstance(Instances.InstanceType.Utilities, 3);
         List<EconomyEntry> ret = null;
         Connection mysqlConn = MysqlConnector.getDatabaseConnection();
+        String economyTable = MysqlConnector.getEconTable();
         try {
             PreparedStatement preparedStatement = null;
-            String getQueryStatement = "SELECT * FROM economy";
+            String getQueryStatement = "SELECT * FROM "+economyTable;
             preparedStatement = mysqlConn.prepareStatement(getQueryStatement);
             ResultSet rs = preparedStatement.executeQuery();
             while (rs.next()) {
@@ -41,9 +42,10 @@ public class EconomyDatabase {
 
     public static boolean accountExists(UUID playerUUID) {
         Connection mysqlConn = MysqlConnector.getDatabaseConnection();
+        String economyTable = MysqlConnector.getEconTable();
         try {
             PreparedStatement preparedStatement = null;
-            String getQueryStatement = "SELECT * FROM economy";
+            String getQueryStatement = "SELECT * FROM "+economyTable;
             preparedStatement = mysqlConn.prepareStatement(getQueryStatement);
             ResultSet rs = preparedStatement.executeQuery();
             while (rs.next()) {
@@ -60,9 +62,10 @@ public class EconomyDatabase {
 
     public static double getBalance(UUID playerUUID) {
         Connection mysqlConn = MysqlConnector.getDatabaseConnection();
+        String economyTable = MysqlConnector.getEconTable();
         try {
             PreparedStatement preparedStatement = null;
-            String getQueryStatement = "SELECT * FROM economy";
+            String getQueryStatement = "SELECT * FROM "+economyTable;
             preparedStatement = mysqlConn.prepareStatement(getQueryStatement);
             ResultSet rs = preparedStatement.executeQuery();
             while (rs.next()) {
@@ -78,8 +81,9 @@ public class EconomyDatabase {
     }
 
     public static void setBalance(UUID playerUUID, double balance) {
+        String economyTable = MysqlConnector.getEconTable();
         if(accountExists(playerUUID)) {// update query
-            String setBalanceStatement = "UPDATE economy SET balance = ? WHERE player_uuid = ?;";
+            String setBalanceStatement = "UPDATE "+economyTable+" SET balance = ? WHERE player_uuid = ?;";
             Connection mysqlConn = MysqlConnector.getDatabaseConnection();
             try {
                 PreparedStatement stmt = mysqlConn.prepareStatement(setBalanceStatement);
@@ -94,7 +98,7 @@ public class EconomyDatabase {
             Connection mysqlConn = MysqlConnector.getDatabaseConnection();
             try {
                 Statement statement = mysqlConn.createStatement();
-                String insertStatement = "INSERT INTO `economy` (`player_uuid`,`balance`) VALUES (?, ?);";
+                String insertStatement = "INSERT INTO `"+economyTable+"` (`player_uuid`,`balance`) VALUES (?, ?);";
                 PreparedStatement stmt = mysqlConn.prepareStatement(insertStatement);
                 stmt.setString(1, playerUUID.toString());
                 stmt.setDouble(2, balance);

@@ -25,6 +25,9 @@ features:
       username: "permissionsex"
       password: "ilovethe69"
       params: "characterEncoding=latin1&useConfigs=maxPerformance"
+      player-table: "players_factions"
+      econ-table: "economy_factions"
+      punish-table: "punishment_global"
 combat-log:
   allowed-cmds:
     - msg

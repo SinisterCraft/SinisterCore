@@ -24,7 +24,7 @@ features:
       database: "sinistercore"
       username: "permissionsex"
       password: "ilovethe69"
-      params: "characterEncoding=latin1&useConfigs=maxPerformance"
+      params: "characterEncoding=latin1&useConfigs=maxPerformance&autoReconnect=true"
       player-table: "players_factions"
       econ-table: "economy_factions"
       punish-table: "punishment_global"

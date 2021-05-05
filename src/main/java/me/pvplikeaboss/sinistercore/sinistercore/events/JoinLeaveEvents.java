@@ -12,6 +12,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
@@ -51,7 +52,7 @@ public class JoinLeaveEvents implements Listener {
         }
     }
 
-    @EventHandler
+    @EventHandler (priority = EventPriority.HIGHEST)
     public void onJoin(PlayerJoinEvent e) {
         PlayerObject player = plugin.getPlayer(e.getPlayer().getUniqueId());
         if(player == null) {
@@ -101,7 +102,7 @@ public class JoinLeaveEvents implements Listener {
         e.setJoinMessage("");
     }
 
-    @EventHandler
+    @EventHandler (priority = EventPriority.LOWEST)
     public void onLeave(PlayerQuitEvent e) {
         PlayerObject player = plugin.getPlayer(e.getPlayer().getUniqueId());
 

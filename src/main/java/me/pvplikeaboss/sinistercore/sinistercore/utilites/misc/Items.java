@@ -75,7 +75,7 @@ public class Items {
                 String[] ss = s.split(":");
                 enchantmentIntegerMap.put(Enchantment.getByName(ss[0]), Integer.parseInt(ss[1]));
             }
-            pItem.addEnchantments(enchantmentIntegerMap);
+            pItem.addUnsafeEnchantments(enchantmentIntegerMap);
         }
         ItemMeta pItemMeta = pItem.getItemMeta();
         if(name != null) {

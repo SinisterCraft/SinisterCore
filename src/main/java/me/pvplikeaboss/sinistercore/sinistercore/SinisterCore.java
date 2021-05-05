@@ -1,5 +1,6 @@
 package me.pvplikeaboss.sinistercore.sinistercore;
 
+import me.pvplikeaboss.sinistercore.sinistercore.API.SinisterAPI;
 import me.pvplikeaboss.sinistercore.sinistercore.modules.clearlag.ClearlagModule;
 import me.pvplikeaboss.sinistercore.sinistercore.modules.data.mysql.MysqlConnector;
 import me.pvplikeaboss.sinistercore.sinistercore.objects.PlayerObject;
@@ -18,6 +19,7 @@ public class SinisterCore extends JavaPlugin {
     public List<PlayerObject> players = null;
 
     private Messages utilMsgs = null;
+    private SinisterAPI api = null;
 
     public String prefix = "[SinisterCore]";
 
@@ -31,6 +33,13 @@ public class SinisterCore extends JavaPlugin {
 
     public void onDisable() {
         this.unloadAll();
+    }
+
+    public SinisterAPI getAPI() {
+        if(api == null) {
+            api = new SinisterAPI(this);
+        }
+        return api;
     }
 
     public void loadPlayers() {
@@ -57,7 +66,9 @@ public class SinisterCore extends JavaPlugin {
             }
 
             if(found == false) {
-                players.add(new PlayerObject(this, player.getUniqueId()));
+                PlayerObject playerObject = new PlayerObject(this, player.getUniqueId());
+                playerObject.setIsPlayerOnline(true);
+                players.add(playerObject);
             }
         }
     }

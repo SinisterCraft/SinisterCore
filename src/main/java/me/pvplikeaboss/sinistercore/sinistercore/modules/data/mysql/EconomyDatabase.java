@@ -1,8 +1,5 @@
 package me.pvplikeaboss.sinistercore.sinistercore.modules.data.mysql;
 
-import jdk.jfr.internal.LogLevel;
-import jdk.jfr.internal.LogTag;
-import jdk.jfr.internal.Logger;
 import me.pvplikeaboss.sinistercore.sinistercore.Instances;
 import me.pvplikeaboss.sinistercore.sinistercore.modules.economy.EconomyEntry;
 import me.pvplikeaboss.sinistercore.sinistercore.utilites.serverutils.PlayerUtils;

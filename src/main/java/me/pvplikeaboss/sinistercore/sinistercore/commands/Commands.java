@@ -30,6 +30,10 @@ public class Commands {
         this.cmdMap = new CommandMapp(plugin);
     }
 
+    public CommandMapp getCmdMap() {
+        return cmdMap;
+    }
+
     public void load() {
         sinisterCmd = new SinisterCommands();
         msgCmd = new MessageCommands();
@@ -92,7 +96,7 @@ public class Commands {
         cmds.add(new CommandBuilder(plugin, "godmode").executor(playerCmd::onCommand).usage("/godmode").aliases("god").description("Custom SinisterCore PlayerCmds").completer(tabCompleter).permission("sinistercore.godmode").build());
         cmds.add(new CommandBuilder(plugin, "clearinventory").executor(playerCmd::onCommand).usage("/clearinventory").aliases("clear", "ci").description("Custom SinisterCore PlayerCmds").completer(tabCompleter).permission("sinistercore.clearinventory").build());
         cmds.add(new CommandBuilder(plugin, "rename").executor(playerCmd::onCommand).usage("/rename").aliases("setname").description("Custom SinisterCore PlayerCmds").completer(tabCompleter).permission("sinistercore.rename").build());
-        cmds.add(new CommandBuilder(plugin, "relore").executor(playerCmd::onCommand).usage("/relore").aliases("setlore").description("Custom SinisterCore PlayerCmds").completer(tabCompleter).permission("sinistercore.rename").build());
+        cmds.add(new CommandBuilder(plugin, "relore").executor(playerCmd::onCommand).usage("/relore").aliases("setlore").description("Custom SinisterCore PlayerCmds").completer(tabCompleter).permission("sinistercore.relore").build());
         cmds.add(new CommandBuilder(plugin, "nickname").executor(playerCmd::onCommand).usage("/nickname").aliases("nick").description("Custom SinisterCore PlayerCmds").completer(tabCompleter).permission("sinistercore.nickname").build());
         cmds.add(new CommandBuilder(plugin, "fix").executor(playerCmd::onCommand).usage("/fix").aliases("repair").description("Custom SinisterCore PlayerCmds").completer(tabCompleter).permission("sinistercore.repair").build());
         cmds.add(new CommandBuilder(plugin, "feed").executor(playerCmd::onCommand).usage("/feed").description("Custom SinisterCore PlayerCmds").completer(tabCompleter).permission("sinistercore.feed").build());

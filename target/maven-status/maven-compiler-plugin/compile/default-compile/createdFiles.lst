@@ -42,6 +42,7 @@ me\pvplikeaboss\sinistercore\sinistercore\commands\util\base\AbstractTabContext.
 me\pvplikeaboss\sinistercore\sinistercore\utilites\Utilities.class
 me\pvplikeaboss\sinistercore\sinistercore\events\MovementEvents.class
 me\pvplikeaboss\sinistercore\sinistercore\modules\clearlag\ClearlagModule$2.class
+me\pvplikeaboss\sinistercore\sinistercore\API\SinisterAPI.class
 me\pvplikeaboss\sinistercore\sinistercore\utilites\misc\Misc.class
 me\pvplikeaboss\sinistercore\sinistercore\events\ChatEvents.class
 me\pvplikeaboss\sinistercore\sinistercore\objects\KitObject.class

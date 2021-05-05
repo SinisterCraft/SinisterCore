@@ -2,9 +2,11 @@ package me.pvplikeaboss.sinistercore.sinistercore.modules.API.permissionsex;
 
 import me.pvplikeaboss.sinistercore.sinistercore.SinisterCore;
 import me.pvplikeaboss.sinistercore.sinistercore.objects.PlayerObject;
+import ru.tehkode.permissions.PermissionGroup;
 import ru.tehkode.permissions.PermissionUser;
 import ru.tehkode.permissions.bukkit.PermissionsEx;
 
+import java.util.Collection;
 import java.util.List;
 
 public class PexAPI {
@@ -24,10 +26,27 @@ public class PexAPI {
         }
 
         if(user == null) {
-            return null;
+            return "";
         }
 
         return user.getPrefix();
+    }
+
+    public static String getGroupPrefix(String groupName) {
+        PermissionGroup group = null;
+
+        Collection<String> groups = PermissionsEx.getPermissionManager().getGroupNames();
+        for(String tmp : groups) {
+            if(tmp.equalsIgnoreCase(groupName)) {
+                group = PermissionsEx.getPermissionManager().getGroup(groupName);
+            }
+        }
+
+        if(group == null) {
+            return "";
+        }
+
+        return group.getPrefix();
     }
 
     public static List<String> getPlayerPermissions(PlayerObject playerObject) {

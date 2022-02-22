@@ -1,8 +1,8 @@
 package me.pvplikeaboss.sinistercore.sinistercore.utilites.misc;
 
-import net.minecraft.server.v1_8_R3.BlockPosition;
-import net.minecraft.server.v1_8_R3.ContainerAnvil;
-import net.minecraft.server.v1_8_R3.EntityHuman;
+import net.minecraft.server.v1_12_R1.BlockPosition;
+import net.minecraft.server.v1_12_R1.ContainerAnvil;
+import net.minecraft.server.v1_12_R1.EntityHuman;
 
 public final class FakeAnvil extends ContainerAnvil {
 
@@ -10,8 +10,6 @@ public final class FakeAnvil extends ContainerAnvil {
         super(entityHuman.inventory, entityHuman.world, new BlockPosition(0,0,0), entityHuman);
     }
 
-
-    @Override
     public boolean a(EntityHuman entityHuman) {
         return true;
     }

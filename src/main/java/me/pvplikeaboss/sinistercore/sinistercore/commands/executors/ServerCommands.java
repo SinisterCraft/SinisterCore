@@ -66,51 +66,51 @@ public class ServerCommands {
                     World world = sender.getPlayer().getWorld();
                     Location TargetLocation = sender.getPlayer().getLocation();
                     if(context.argAt(0).equalsIgnoreCase("Wolf")) {
-                        world.spawnCreature(TargetLocation, EntityType.WOLF);
+                        world.spawnEntity(TargetLocation, EntityType.WOLF);
                     } else if(context.argAt(0).equalsIgnoreCase("Pig")) {
-                        world.spawnCreature(TargetLocation, EntityType.PIG);
+                        world.spawnEntity(TargetLocation, EntityType.PIG);
                     } else if(context.argAt(0).equalsIgnoreCase("PigZombie")) {
-                        world.spawnCreature(TargetLocation, EntityType.PIG_ZOMBIE);
+                        world.spawnEntity(TargetLocation, EntityType.PIG_ZOMBIE);
                     } else if(context.argAt(0).equalsIgnoreCase("Cow")) {
-                        world.spawnCreature(TargetLocation, EntityType.COW);
+                        world.spawnEntity(TargetLocation, EntityType.COW);
                     } else if(context.argAt(0).equalsIgnoreCase("Blaze")) {
-                        world.spawnCreature(TargetLocation, EntityType.BLAZE);
+                        world.spawnEntity(TargetLocation, EntityType.BLAZE);
                     } else if(context.argAt(0).equalsIgnoreCase("CaveSpider")) {
-                        world.spawnCreature(TargetLocation, EntityType.CAVE_SPIDER);
+                        world.spawnEntity(TargetLocation, EntityType.CAVE_SPIDER);
                     } else if(context.argAt(0).equalsIgnoreCase("Chicken")) {
-                        world.spawnCreature(TargetLocation, EntityType.CHICKEN);
+                        world.spawnEntity(TargetLocation, EntityType.CHICKEN);
                     } else if(context.argAt(0).equalsIgnoreCase("Creeper")) {
-                        world.spawnCreature(TargetLocation, EntityType.CREEPER);
+                        world.spawnEntity(TargetLocation, EntityType.CREEPER);
                     } else if(context.argAt(0).equalsIgnoreCase("EnderDragon")) {
-                        world.spawnCreature(TargetLocation, EntityType.ENDER_DRAGON);
+                        world.spawnEntity(TargetLocation, EntityType.ENDER_DRAGON);
                     } else if(context.argAt(0).equalsIgnoreCase("Enderman")) {
-                        world.spawnCreature(TargetLocation, EntityType.ENDERMAN);
+                        world.spawnEntity(TargetLocation, EntityType.ENDERMAN);
                     } else if(context.argAt(0).equalsIgnoreCase("Ghast")) {
-                        world.spawnCreature(TargetLocation, EntityType.GHAST);
+                        world.spawnEntity(TargetLocation, EntityType.GHAST);
                     } else if(context.argAt(0).equalsIgnoreCase("Giant")) {
-                        world.spawnCreature(TargetLocation, EntityType.GIANT);
+                        world.spawnEntity(TargetLocation, EntityType.GIANT);
                     } else if(context.argAt(0).equalsIgnoreCase("IronGolem")) {
-                        world.spawnCreature(TargetLocation, EntityType.IRON_GOLEM);
+                        world.spawnEntity(TargetLocation, EntityType.IRON_GOLEM);
                     } else if(context.argAt(0).equalsIgnoreCase("MagmaCube")) {
-                        world.spawnCreature(TargetLocation, EntityType.MAGMA_CUBE);
+                        world.spawnEntity(TargetLocation, EntityType.MAGMA_CUBE);
                     } else if(context.argAt(0).equalsIgnoreCase("Ocelot")) {
-                        world.spawnCreature(TargetLocation, EntityType.OCELOT);
+                        world.spawnEntity(TargetLocation, EntityType.OCELOT);
                     } else if(context.argAt(0).equalsIgnoreCase("Sheep")) {
-                        world.spawnCreature(TargetLocation, EntityType.SHEEP);
+                        world.spawnEntity(TargetLocation, EntityType.SHEEP);
                     } else if(context.argAt(0).equalsIgnoreCase("SilverFish")) {
-                        world.spawnCreature(TargetLocation, EntityType.SILVERFISH);
+                        world.spawnEntity(TargetLocation, EntityType.SILVERFISH);
                     } else if(context.argAt(0).equalsIgnoreCase("Skeleton")) {
-                        world.spawnCreature(TargetLocation, EntityType.SKELETON);
+                        world.spawnEntity(TargetLocation, EntityType.SKELETON);
                     } else if(context.argAt(0).equalsIgnoreCase("Slime")) {
-                        world.spawnCreature(TargetLocation, EntityType.SLIME);
+                        world.spawnEntity(TargetLocation, EntityType.SLIME);
                     } else if(context.argAt(0).equalsIgnoreCase("Spider")) {
-                        world.spawnCreature(TargetLocation, EntityType.SPIDER);
+                        world.spawnEntity(TargetLocation, EntityType.SPIDER);
                     } else if(context.argAt(0).equalsIgnoreCase("Squid")) {
-                        world.spawnCreature(TargetLocation, EntityType.SQUID);
+                        world.spawnEntity(TargetLocation, EntityType.SQUID);
                     } else if(context.argAt(0).equalsIgnoreCase("Villager")) {
-                        world.spawnCreature(TargetLocation, EntityType.VILLAGER);
+                        world.spawnEntity(TargetLocation, EntityType.VILLAGER);
                     } else if(context.argAt(0).equalsIgnoreCase("Zombie")) {
-                        world.spawnCreature(TargetLocation, EntityType.ZOMBIE);
+                        world.spawnEntity(TargetLocation, EntityType.ZOMBIE);
                     } else {
                         utilMsgs.errorMessage(sender, "&7Invalid mob type!");
                         //utilMsgs.infoMessage(sender, "&7Mob Types: &7Zombie&9, &bVillager&9, &bSquid&9, &bSpider&9, &bSlime");

@@ -59,6 +59,11 @@ public class JoinLeaveEvents implements Listener {
             plugin.refreshPlayersOffline();
             plugin.refreshPlayersOnline();
             player = plugin.getPlayer(e.getPlayer().getUniqueId());
+            if(player == null)
+            {
+                player = new PlayerObject(plugin, e.getPlayer().getUniqueId());
+                plugin.getPlayers().add(player);
+            }
         }
         player.setIsPlayerOnline(true);
 

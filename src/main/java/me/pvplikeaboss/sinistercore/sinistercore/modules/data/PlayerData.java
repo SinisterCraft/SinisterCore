@@ -60,33 +60,35 @@ public class PlayerData {
         if(!plugin.useMysql) {// use players.yml
             List<PlayerObject> ret = new ArrayList<PlayerObject>();
             PlayerConfig playerCfg = (PlayerConfig) Instances.getInstance(Instances.InstanceType.Config, 5);
-            for (String pUUIDStr : playerCfg.getConfig().getConfigurationSection("players").getKeys(false)) {
-                PlayerObject player = new PlayerObject(plugin, UUID.fromString(pUUIDStr));
+            if(playerCfg.getConfig().isSet("players")) {
+                for (String pUUIDStr : playerCfg.getConfig().getConfigurationSection("players").getKeys(false)) {
+                    PlayerObject player = new PlayerObject(plugin, UUID.fromString(pUUIDStr));
 
-                player.setIsGodMode(playerCfg.getConfig().getBoolean("players." + player.playerUUID + ".isGodMode"));
-                player.setIsVanish(playerCfg.getConfig().getBoolean("players." + player.playerUUID + ".isVanish"));
-                player.setRecieveMsgs(playerCfg.getConfig().getBoolean("players." + player.playerUUID + ".recieveMsgs"));
+                    player.setIsGodMode(playerCfg.getConfig().getBoolean("players." + player.playerUUID + ".isGodMode"));
+                    player.setIsVanish(playerCfg.getConfig().getBoolean("players." + player.playerUUID + ".isVanish"));
+                    player.setRecieveMsgs(playerCfg.getConfig().getBoolean("players." + player.playerUUID + ".recieveMsgs"));
 
-                double x, y, z;
-                String worldStr;
+                    double x, y, z;
+                    String worldStr;
 
-                if (playerCfg.getConfig().isSet("players." + player.playerUUID + ".lastPlayerDeathLocation")) {
-                    x = playerCfg.getConfig().getDouble("players." + player.playerUUID + ".lastPlayerDeathLocation.x");
-                    y = playerCfg.getConfig().getDouble("players." + player.playerUUID + ".lastPlayerDeathLocation.y");
-                    z = playerCfg.getConfig().getDouble("players." + player.playerUUID + ".lastPlayerDeathLocation.z");
-                    worldStr = playerCfg.getConfig().getString("players." + player.playerUUID + ".lastPlayerDeathLocation.world");
-                    player.setLastPlayerDeathLocation(new Location(plugin.getServer().getWorld(worldStr), x, y, z));
+                    if (playerCfg.getConfig().isSet("players." + player.playerUUID + ".lastPlayerDeathLocation")) {
+                        x = playerCfg.getConfig().getDouble("players." + player.playerUUID + ".lastPlayerDeathLocation.x");
+                        y = playerCfg.getConfig().getDouble("players." + player.playerUUID + ".lastPlayerDeathLocation.y");
+                        z = playerCfg.getConfig().getDouble("players." + player.playerUUID + ".lastPlayerDeathLocation.z");
+                        worldStr = playerCfg.getConfig().getString("players." + player.playerUUID + ".lastPlayerDeathLocation.world");
+                        player.setLastPlayerDeathLocation(new Location(plugin.getServer().getWorld(worldStr), x, y, z));
+                    }
+
+                    if (playerCfg.getConfig().isSet("players." + player.playerUUID + ".lastPlayerLogoutLocation")) {
+                        x = playerCfg.getConfig().getDouble("players." + player.playerUUID + ".lastPlayerLogoutLocation.x");
+                        y = playerCfg.getConfig().getDouble("players." + player.playerUUID + ".lastPlayerLogoutLocation.y");
+                        z = playerCfg.getConfig().getDouble("players." + player.playerUUID + ".lastPlayerLogoutLocation.z");
+                        worldStr = playerCfg.getConfig().getString("players." + player.playerUUID + ".lastPlayerLogoutLocation.world");
+                        player.setLastPlayerLogoutLocation(new Location(plugin.getServer().getWorld(worldStr), x, y, z));
+                    }
+
+                    ret.add(player);
                 }
-
-                if (playerCfg.getConfig().isSet("players." + player.playerUUID + ".lastPlayerLogoutLocation")) {
-                    x = playerCfg.getConfig().getDouble("players." + player.playerUUID + ".lastPlayerLogoutLocation.x");
-                    y = playerCfg.getConfig().getDouble("players." + player.playerUUID + ".lastPlayerLogoutLocation.y");
-                    z = playerCfg.getConfig().getDouble("players." + player.playerUUID + ".lastPlayerLogoutLocation.z");
-                    worldStr = playerCfg.getConfig().getString("players." + player.playerUUID + ".lastPlayerLogoutLocation.world");
-                    player.setLastPlayerLogoutLocation(new Location(plugin.getServer().getWorld(worldStr), x, y, z));
-                }
-
-                ret.add(player);
             }
             return ret;
         } else {

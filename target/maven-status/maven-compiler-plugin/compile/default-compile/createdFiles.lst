@@ -90,7 +90,6 @@ me/pvplikeaboss/sinistercore/sinistercore/modules/data/files/configs/yml/Punishm
 me/pvplikeaboss/sinistercore/sinistercore/commands/Commands.class
 me/pvplikeaboss/sinistercore/sinistercore/modules/data/files/configs/csv/items/LegacyItemDB$LengthCompare.class
 me/pvplikeaboss/sinistercore/sinistercore/utilites/Utilities.class
-me/pvplikeaboss/sinistercore/sinistercore/modules/clearlag/ClearlagModule$3.class
 me/pvplikeaboss/sinistercore/sinistercore/utilites/misc/Cooldown$KitCooldownMap.class
 me/pvplikeaboss/sinistercore/sinistercore/modules/data/files/configs/csv/items/LegacyItemDB.class
 me/pvplikeaboss/sinistercore/sinistercore/modules/data/files/configs/Configs.class

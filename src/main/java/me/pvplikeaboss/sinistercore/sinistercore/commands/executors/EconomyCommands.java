@@ -188,7 +188,7 @@ public class EconomyCommands {
                     String newName = null;
                     if((newName = utilPlayers.playerExists(pname)) != null) {
                         PlayerObject targetPlayer = plugin.getPlayer(newName);
-                        if(ecoImplementer.getBalance(sender.playerName) < amount) {// check if player has enough money
+                        if(ecoImplementer.getBalance(sender.getOfflinePlayer()) < amount) {// check if player has enough money
                             utilMsgs.errorMessage(sender, "&7You do not have enough funds!");
                             return true;
                         }
@@ -196,7 +196,7 @@ public class EconomyCommands {
                         ecoImplementer.withdrawPlayer(sender.getPlayer(), amount);
 
                         if (utilPlayers.playerOnline(pname) != null) {
-                            ecoImplementer.depositPlayer(targetPlayer.playerName, amount);
+                            ecoImplementer.depositPlayer(targetPlayer.getOfflinePlayer(), amount);
                             utilMsgs.infoMessage(targetPlayer, "&7Player &6"+sender.playerName+"&7 has sent you &6$"+amount+"&7!");
                         } else {
                             ecoImplementer.depositPlayer(targetPlayer.getOfflinePlayer(), amount);
@@ -237,7 +237,7 @@ public class EconomyCommands {
                         if((newName = utilPlayers.playerExists(playername)) != null) {
                             PlayerObject targetPlayer = plugin.getPlayer(newName);
                             if(utilPlayers.playerOnline(newName) != null) {
-                                ecoImplementer.depositPlayer(targetPlayer.playerName, amount);
+                                ecoImplementer.depositPlayer(targetPlayer.getOfflinePlayer(), amount);
                             } else {
                                 ecoImplementer.depositPlayer(targetPlayer.getOfflinePlayer(), amount);
                             }
@@ -283,7 +283,7 @@ public class EconomyCommands {
                         if((newName = utilPlayers.playerExists(playername)) != null) {
                             PlayerObject targetPlayer = plugin.getPlayer(newName);
                             if(utilPlayers.playerOnline(newName) != null) {
-                                ecoImplementer.withdrawPlayer(targetPlayer.playerName, amount);
+                                ecoImplementer.withdrawPlayer(targetPlayer.getOfflinePlayer(), amount);
                             } else {
                                 ecoImplementer.withdrawPlayer(targetPlayer.getOfflinePlayer(), amount);
                             }
@@ -328,9 +328,9 @@ public class EconomyCommands {
                         if((newName = utilPlayers.playerExists(playername)) != null) {
                             PlayerObject targetPlayer = plugin.getPlayer(newName);
                             if(utilPlayers.playerOnline(newName) != null) {
-                                double balance = ecoImplementer.getBalance(targetPlayer.playerName);
-                                ecoImplementer.withdrawPlayer(targetPlayer.playerName, balance);
-                                ecoImplementer.depositPlayer(targetPlayer.playerName, amount);
+                                double balance = ecoImplementer.getBalance(targetPlayer.getOfflinePlayer());
+                                ecoImplementer.withdrawPlayer(targetPlayer.getOfflinePlayer(), balance);
+                                ecoImplementer.depositPlayer(targetPlayer.getOfflinePlayer(), amount);
                             } else {
                                 double balance = ecoImplementer.getBalance(targetPlayer.getOfflinePlayer());
                                 ecoImplementer.withdrawPlayer(targetPlayer.getOfflinePlayer(), balance);

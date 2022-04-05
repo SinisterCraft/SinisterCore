@@ -37,6 +37,7 @@ public class PlayerObject implements Comparable<PlayerObject> {
     public Date endOfCombat = null;
     public Location lastPlayerDeathLocation = null;
     public Location lastPlayerLogoutLocation = null;
+    public String playerPrefix = null;
 
     enum Permission {
         PERMISSION_FOUND,
@@ -55,6 +56,22 @@ public class PlayerObject implements Comparable<PlayerObject> {
             this.playerDisplayName = p.getServer().getPlayer(pUUID).getDisplayName();
         } else {
             this.playerName = p.getServer().getOfflinePlayer(pUUID).getName();
+            this.playerDisplayName = this.playerName;//cant get displayname cus offline
+        }
+        this.thisObject = this;
+    }
+
+    public PlayerObject(SinisterCore p, PlayerObject player) {
+        this.plugin = p;
+        this.utilPlayer = (PlayerUtils) Instances.getInstance(Instances.InstanceType.Utilities, 3);
+        this.utilMsgs = (Messages) Instances.getInstance(Instances.InstanceType.Utilities, 2);
+        this.punish = (Punishment) Instances.getInstance(Instances.InstanceType.Punishment, -1);
+        this.playerUUID = player.playerUUID;
+        if(this.isPlayerOnline = this.utilPlayer.playerOnline(player.playerUUID)) {
+            this.playerName = p.getServer().getPlayer(player.playerUUID).getName();
+            this.playerDisplayName = p.getServer().getPlayer(player.playerUUID).getDisplayName();
+        } else {
+            this.playerName = p.getServer().getOfflinePlayer(player.playerUUID).getName();
             this.playerDisplayName = this.playerName;//cant get displayname cus offline
         }
         this.thisObject = this;
@@ -85,6 +102,15 @@ public class PlayerObject implements Comparable<PlayerObject> {
     Get/Set Strings
 
      */
+
+    public String getPlayerPrefix() { return thisObject.playerPrefix; }
+    public void setPlayerPrefix(String name) {
+        if(name != null) {
+            thisObject.playerPrefix = name;
+        }
+        return;
+    }
+
 
     public String getPlayerName() { return thisObject.playerName; }
     public void setPlayerName(String name) {

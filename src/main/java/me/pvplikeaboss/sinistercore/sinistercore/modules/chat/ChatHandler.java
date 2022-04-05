@@ -26,6 +26,12 @@ public class ChatHandler {
             return null;//sinistercore chat not enabled
         }
 
+        if(player.getPlayerPrefix() != null)
+        {
+            newMessage.append(player.getPlayerPrefix());
+            newMessage.append(" &7");
+        }
+
         if(plugin.getConfig().getBoolean("features.chat.factions")) {
             String factionName = FactionsAPI.getPlayerFactionTagRelation(this.plugin, player, recipient);
             newMessage.append("&7(" + factionName + "&7) ");
@@ -35,6 +41,23 @@ public class ChatHandler {
         for(String group : playerGroups) {
             newMessage.append(PexAPI.getGroupPrefix(group));
             newMessage.append(" &7");
+        }
+
+        String playerPrefix = PexAPI.getPlayerPrefix(player);
+        if(playerPrefix != null)
+        {
+            boolean found = false;
+            for(String group : playerGroups) {
+                if(PexAPI.getGroupPrefix(group).equalsIgnoreCase(playerPrefix))
+                {
+                    found = true;
+                    break;
+                }
+            }
+            if(found != true) {
+                newMessage.append(playerPrefix);
+                newMessage.append(" &7");
+            }
         }
 
         newMessage.append(player.playerDisplayName);

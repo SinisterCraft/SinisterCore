@@ -95,8 +95,8 @@ public class JoinLeaveEvents implements Listener {
         }
 
         if(plugin.getConfig().getBoolean("features.economy.enabled")) {
-            if (ecoImplementer.getBalance(player.playerName) == -1) {
-                final EconomyResponse result = ecoImplementer.depositPlayer(player.playerName, 5000);
+            if (ecoImplementer.getBalance(player.getOfflinePlayer()) == -1) {
+                final EconomyResponse result = ecoImplementer.depositPlayer(player.getOfflinePlayer(), 5000);
                 if(!result.transactionSuccess()) {
                     utilMsgs.logErrorMessage("Failed to set default balance on player "+player.playerName+"!");
                     utilMsgs.infoMessage(player, "&7Failed to set default balance. Contact staff!");

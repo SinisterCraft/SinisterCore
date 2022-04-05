@@ -6,6 +6,7 @@ import me.pvplikeaboss.sinistercore.sinistercore.commands.Commands;
 import me.pvplikeaboss.sinistercore.sinistercore.commands.util.CommandMapp;
 import me.pvplikeaboss.sinistercore.sinistercore.modules.economy.EconomyImplementer;
 import me.pvplikeaboss.sinistercore.sinistercore.objects.PlayerObject;
+import ru.tehkode.permissions.bukkit.PermissionsEx;
 
 import java.util.List;
 import java.util.UUID;
@@ -27,6 +28,16 @@ public class SinisterAPI {
 
     public PlayerObject getPlayer(String pName) {
         return plugin.getPlayer(pName);
+    }
+
+    public void setPlayerPrefix(UUID pUUID, String prefix) {
+        plugin.getPlayer(pUUID).setPlayerPrefix(prefix);
+        return;
+    }
+
+    public void setPlayerPrefix(String pName, String prefix) {
+        plugin.getPlayer(pName).setPlayerPrefix(prefix);
+        return;
     }
 
     public List<PlayerObject> getAllPlayers() {

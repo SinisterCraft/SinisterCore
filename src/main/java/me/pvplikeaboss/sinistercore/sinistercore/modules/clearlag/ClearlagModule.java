@@ -62,36 +62,29 @@ public class ClearlagModule {
     }
 
     private static void startWarningMessages(Date timeOfClear) {
-        int timeDelay[] =  {
-                Time.getTimeLeft(timeOfClear) - 60,// 60 second remaining
-                Time.getTimeLeft(timeOfClear) - (30),// 30 second remaining
-                Time.getTimeLeft(timeOfClear) - (10),// 10 second remaining
-                Time.getTimeLeft(timeOfClear) - (3),// 3 second remaining
-                Time.getTimeLeft(timeOfClear) - (2), // 2 second remaining
-                Time.getTimeLeft(timeOfClear) - (1), // 1 second remaining
-                Time.getTimeLeft(timeOfClear)//clearlagg
-        };
-
-        int x;
-        for(x = 0; x < timeDelay.length; x++) {
-            if(x == timeDelay.length-1) {
-                messageTaskId = (BukkitTask) new BukkitRunnable() {
-                    @Override
-                    public void run() {
-                        int clearedEntities = clearLag(true);
-                        utilBroadcast.rawBroadcast("&9Sinister&3Lagg &8>> &bCleared &9"+clearedEntities+" &bentities from server!");
-                    }
-                }.runTaskLater(plugin, (Time.getTimeLeft(timeOfClear))*20L);
-                break;
-            }
-
-            messageTaskId = (BukkitTask) new BukkitRunnable() {
-                @Override
-                public void run() {
-                    utilBroadcast.rawBroadcast("&9Sinister&3Lagg &8>> &bClearing entities from server in &9"+ Time.getTimeLeft(timeOfClear) +"s&b!");
+        messageTaskId = (BukkitTask) new BukkitRunnable() {
+            @Override
+            public void run() {
+                try {
+                    utilBroadcast.rawBroadcast("&9Sinister&3Lagg &8>> &bClearing entities from server in &960s&b!");
+                    Thread.sleep(1000*30);
+                    utilBroadcast.rawBroadcast("&9Sinister&3Lagg &8>> &bClearing entities from server in &930s&b!");
+                    Thread.sleep(1000*15);
+                    utilBroadcast.rawBroadcast("&9Sinister&3Lagg &8>> &bClearing entities from server in &915s&b!");
+                    Thread.sleep(1000*(15-3));
+                    utilBroadcast.rawBroadcast("&9Sinister&3Lagg &8>> &bClearing entities from server in &93s&b!");
+                    Thread.sleep(1000*1);
+                    utilBroadcast.rawBroadcast("&9Sinister&3Lagg &8>> &bClearing entities from server in &92s&b!");
+                    Thread.sleep(1000*1);
+                    utilBroadcast.rawBroadcast("&9Sinister&3Lagg &8>> &bClearing entities from server in &91s&b!");
+                    Thread.sleep(1000*1);
+                    utilBroadcast.rawBroadcast("&9Sinister&3Lagg &8>> &bCleared &9"+clearLag(true)+"&b entities");
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
                 }
-            }.runTaskLater(plugin, (timeDelay[x])*20L);
-        }
+
+            }
+        }.runTaskLaterAsynchronously(plugin, (Time.getTimeLeft(timeOfClear)-60)*20L);
     }
 
     public static boolean getRunning() {

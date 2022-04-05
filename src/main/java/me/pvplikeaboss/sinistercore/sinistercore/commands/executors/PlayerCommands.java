@@ -199,14 +199,9 @@ public class PlayerCommands {
             if(sender != null) {
                 EntityPlayer entityPlayer = sender.getCraftPlayer().getHandle();
                 FakeAnvil fakeAnvil = new FakeAnvil(entityPlayer);
-                int containerId = entityPlayer.nextContainerCounter();
-                entityPlayer.playerConnection.sendPacket(new PacketPlayOutOpenWindow(containerId, "minecraft:anvil", new ChatMessage("Repairing", new Object[]{}), 0));
-                entityPlayer.activeContainer = fakeAnvil;
-                entityPlayer.activeContainer.windowId = containerId;
-                entityPlayer.activeContainer.addSlotListener(entityPlayer);
-                entityPlayer.activeContainer = fakeAnvil;
-                entityPlayer.activeContainer.windowId = containerId;
+                fakeAnvil.canUse(sender.getCraftPlayer().getHandle());
                 Inventory inv = fakeAnvil.getBukkitView().getTopInventory();
+                sender.getPlayer().openInventory(inv);
                 utilMsgs.infoMessage(sender, "&7Opening Anvil GUI");
                 return true;
             }

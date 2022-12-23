@@ -1,5 +1,7 @@
 SinisterCore
-By, ~Nyaa#0288 & DaddyPvP#1230!
-<hr>
+By DaddyL33T
+
 SinisterCore is a Internal Software of SinisterMC.xyz!
-Distribution is illegal!
+
+Credits:
+  ~Nyaa#0288: a very good friend and helped in some functions
